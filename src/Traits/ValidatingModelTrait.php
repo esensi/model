@@ -9,7 +9,7 @@ use \Watson\Validating\ValidatingTrait;
  * @author daniel <daniel@bexarcreative.com>
  * @see \Esensi\Model\Contracts\ValidatingModelInterface
  */
-trait ValidatingModelTrait{
+trait ValidatingModelTrait {
 
     /**
      * Use Watson's trait as a base

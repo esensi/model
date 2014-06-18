@@ -10,18 +10,6 @@ use \Watson\Validating\ValidatingObserver;
  * @see \Esensi\Model\Traits\ValidatingModelTrait
  * @see \Watson\Validating\ValidatingObserver
  */
-class ValidatingModelObserver extends ValidatingObserver{
-
-    /**
-     * Register an event listener for the restoring event.
-     * Listener validates against the restoring ruleset.
-     *
-     * @param \Esensi\Model\Model $model
-     * @return boolean
-     */
-    public function restoring( Model $model )
-    {
-        return $this->performValidation( $model, 'restoring' );
-    }
+class ValidatingModelObserver extends ValidatingObserver {
 
 }

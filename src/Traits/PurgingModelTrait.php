@@ -9,7 +9,7 @@ use \Illuminate\Support\Str;
  * @author daniel <daniel@bexarcreative.com>
  * @see \Esensi\Model\Contracts\PurgingModelInterface
  */
-trait PurgingModelTrait{
+trait PurgingModelTrait {
 
     /**
      * Whether the model is purging or not
