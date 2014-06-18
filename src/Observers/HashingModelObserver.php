@@ -42,7 +42,7 @@ class HashingModelObserver {
      * @param string $event name
      * @return void
      */
-    protected function performHashing( Model $model, $event = 'saving' )
+    protected function performHashing( Model $model, $event )
     {
         if( $model->getHashing() )
         {

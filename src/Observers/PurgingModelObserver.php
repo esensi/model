@@ -42,7 +42,7 @@ class PurgingModelObserver {
      * @param string $event name
      * @return void
      */
-    protected function performPurging( Model $model, $event = 'saving' )
+    protected function performPurging( Model $model, $event )
     {
         if( $model->getPurging() )
         {
