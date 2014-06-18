@@ -21,12 +21,18 @@
         "illuminate/hashing": "4.2.*",
         "illuminate/support": "4.2.*",
         "illuminate/validation": "4.2.*",
-        "watson/validating": "0.7.*"
+        "watson/validating": "dev-develop"
     },
     "require-dev": {
         "phpunit/phpunit": "4.0.*",
         "mockery/mockery": "dev-master"
     },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/dalabarge/validating.git"
+        }
+    ],
     "autoload": {
         "psr-4": {
             "Esensi\\Model\\": "src/"
