@@ -1,0 +1,21 @@
+# Esensi Editor Config
+# =================================================
+
+root = true
+
+# All files
+[*]
+indent_style = space
+end_of_line = lf
+charset = utf-8
+trim_trailing_whitespace = true
+insert_final_newline = true
+spaces_around_operators = true
+
+# 4-spaced files
+[{**.js, **.json, **.php, **.xml, **.yml, **.md, !vendor/**}]
+indent_size = 4
+
+# 2-spaced files
+[{**.css, **.less, **.sass, **.html, **.xhtml, **.blade.php, !vendor/**}]
+indent_size = 2

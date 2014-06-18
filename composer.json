@@ -1,0 +1,35 @@
+{
+    "name": "esensi/model",
+    "description": "The base model traits of Esensi",
+    "keywords": ["emersonmedia", "esensi", "laravel", "model", "trait", "eloquent", "validating", "validation", "encrypting", "hashing", "purge", "purging"],
+    "authors": [
+        {
+            "name": "Emerson Media, LP.",
+            "email": "wishlist@emersonmedia.com"
+        },
+        {
+            "name": "Bexar Creative, Inc.",
+            "email": "web@bexarcreative.com"
+        }
+    ],
+    "license": "MIT",
+    "require": {
+        "php": ">=5.4.0",
+        "illuminate/database": "4.2.*",
+        "illuminate/encryption": "4.2.*",
+        "illuminate/hashing": "4.2.*",
+        "illuminate/support": "4.2.*",
+        "illuminate/validation": "4.2.*",
+        "watson/validating": "0.7.*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "4.0.*",
+        "mockery/mockery": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "Esensi\\Model\\": "src/"
+        }
+    },
+    "minimum-stability": "dev"
+}
