@@ -8,8 +8,8 @@
             "email": "wishlist@emersonmedia.com"
         },
         {
-            "name": "Bexar Creative, Inc.",
-            "email": "web@bexarcreative.com"
+            "name": "Daniel LaBarge",
+            "email": "daniel@bexarcreative.com"
         }
     ],
     "license": "MIT",
@@ -24,8 +24,8 @@
         "watson/validating": "dev-develop"
     },
     "require-dev": {
-        "phpunit/phpunit": "4.0.*",
-        "mockery/mockery": "dev-master"
+        "phpunit/phpunit": "4.1.*",
+        "mockery/mockery": "0.9.*"
     },
     "repositories": [
         {
