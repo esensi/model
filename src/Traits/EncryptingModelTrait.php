@@ -6,7 +6,12 @@ use \Illuminate\Encryption\DecryptException;
 /**
  * Trait that implements the EncryptingModelInterface
  *
- * @author daniel <daniel@bexarcreative.com>
+ * @package Esensi\Model
+ * @author Daniel LaBarge <wishlist@emersonmedia.com>
+ * @copyright 2014 Emerson Media LP
+ * @license https://github.com/esensi/model/blob/master/LICENSE.txt MIT License
+ * @link http://www.emersonmedia.com
+ *
  * @see \Esensi\Model\Contracts\EncryptionModelInterface
  */
 trait EncryptingModelTrait {

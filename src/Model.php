@@ -15,7 +15,12 @@ use \Illuminate\Database\Eloquent\Model as Eloquent;
 /**
  * Base Model
  *
- * @author daniel <daniel@bexarcreative.com>
+ * @package Esensi\Model
+ * @author Daniel LaBarge <wishlist@emersonmedia.com>
+ * @copyright 2014 Emerson Media LP
+ * @license https://github.com/esensi/model/blob/master/LICENSE.txt MIT License
+ * @link http://www.emersonmedia.com
+ *
  * @see \Illuminate\Database\Eloquent\Model
  * @see \Esensi\Model\Contracts\EncryptingModelInterface
  * @see \Esensi\Model\Contracts\HashingModelInterface

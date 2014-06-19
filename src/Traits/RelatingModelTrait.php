@@ -7,7 +7,12 @@ use \Illuminate\Database\Eloquent\Relations\MorphTo;
 /**
  * Trait that implements the RelatingModelInterface
  *
- * @author daniel <daniel@bexarcreative.com>
+ * @package Esensi\Model
+ * @author Daniel LaBarge <wishlist@emersonmedia.com>
+ * @copyright 2014 Emerson Media LP
+ * @license https://github.com/esensi/model/blob/master/LICENSE.txt MIT License
+ * @link http://www.emersonmedia.com
+ *
  * @see \Esensi\Model\Contracts\RelatingModelInterface
  */
 trait RelatingModelTrait {
