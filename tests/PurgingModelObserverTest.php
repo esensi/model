@@ -106,7 +106,7 @@ class PurgingModelObserverTest extends PHPUnit {
     {
         $this->enablePurgingOnMock();
 
-        // Check that purging is not performed
+        // Check that purging is performed
         $this->model->shouldReceive('purgeAttributes')
             ->once();
 
@@ -123,7 +123,7 @@ class PurgingModelObserverTest extends PHPUnit {
     {
         $this->enablePurgingOnMock();
 
-        // Check that purging is not performed
+        // Check that purging is performed
         $this->model->shouldReceive('purgeAttributes')
             ->once();
 

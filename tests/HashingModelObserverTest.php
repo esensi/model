@@ -106,7 +106,7 @@ class HashingModelObserverTest extends PHPUnit {
     {
         $this->enableHashingOnMock();
 
-        // Check that hashing is not performed
+        // Check that hashing is performed
         $this->model->shouldReceive('hashAttributes')
             ->once();
 
@@ -123,7 +123,7 @@ class HashingModelObserverTest extends PHPUnit {
     {
         $this->enableHashingOnMock();
 
-        // Check that hashing is not performed
+        // Check that hashing is performed
         $this->model->shouldReceive('hashAttributes')
             ->once();
 
