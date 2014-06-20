@@ -40,16 +40,37 @@ class PurgingModelObserverTest extends PHPUnit {
     }
 
     /**
+     * Enables purging on mock
+     *
+     * @return void
+     */
+    protected function enablePurgingOnMock()
+    {
+        // Enable purging on mock
+        $this->model->shouldReceive('getPurging')
+            ->andReturn(true);
+    }
+
+    /**
+     * Disables purging on mock
+     *
+     * @return void
+     */
+    protected function disablePurgingOnMock()
+    {
+        // Enable purging on mock
+        $this->model->shouldReceive('getPurging')
+            ->andReturn(false);
+    }
+
+    /**
      * Test that purgeAttributes() is called when getPurging() returns true
      *
      * @return void
      */
     public function testPurgingIsPerformedWhenEnabled()
     {
-        // Enable purging on mock
-        $this->model->shouldReceive('getPurging')
-            ->once()
-            ->andReturn(true);
+        $this->enablePurgingOnMock();
 
         // Check that purging is performed
         $this->model->shouldReceive('purgeAttributes')
@@ -66,10 +87,7 @@ class PurgingModelObserverTest extends PHPUnit {
      */
     public function testPurgingIsNotPerformedWhenDisabled()
     {
-        // Enable purging on mock
-        $this->model->shouldReceive('getPurging')
-            ->once()
-            ->andReturn(false);
+        $this->disablePurgingOnMock();
 
         // Check that purging is not performed
         $this->model->shouldReceive('purgeAttributes')
@@ -86,10 +104,7 @@ class PurgingModelObserverTest extends PHPUnit {
      */
     public function testPurgingIsPerformedWhenCreating()
     {
-        // Enable purging on mock
-        $this->model->shouldReceive('getPurging')
-            ->once()
-            ->andReturn(true);
+        $this->enablePurgingOnMock();
 
         // Check that purging is not performed
         $this->model->shouldReceive('purgeAttributes')
@@ -106,10 +121,7 @@ class PurgingModelObserverTest extends PHPUnit {
      */
     public function testPurgingIsPerformedWhenUpdating()
     {
-        // Enable purging on mock
-        $this->model->shouldReceive('getPurging')
-            ->once()
-            ->andReturn(true);
+        $this->enablePurgingOnMock();
 
         // Check that purging is not performed
         $this->model->shouldReceive('purgeAttributes')

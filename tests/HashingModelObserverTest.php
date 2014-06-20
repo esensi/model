@@ -40,18 +40,39 @@ class HashingModelObserverTest extends PHPUnit {
     }
 
     /**
+     * Enables hashing on mock
+     *
+     * @return void
+     */
+    protected function enableHashingOnMock()
+    {
+        // Enable hashing on mock
+        $this->model->shouldReceive('getHashing')
+            ->andReturn(true);
+    }
+
+    /**
+     * Disables hashing on mock
+     *
+     * @return void
+     */
+    protected function disableHashingOnMock()
+    {
+        // Enable hashing on mock
+        $this->model->shouldReceive('getHashing')
+            ->andReturn(false);
+    }
+
+    /**
      * Test that hashAttributes() is called when getHashing() returns true
      *
      * @return void
      */
     public function testHashingIsPerformedWhenEnabled()
     {
-        // Enable purging on mock
-        $this->model->shouldReceive('getHashing')
-            ->once()
-            ->andReturn(true);
+        $this->enableHashingOnMock();
 
-        // Check that purging is performed
+        // Check that hashing is performed
         $this->model->shouldReceive('hashAttributes')
             ->once();
 
@@ -66,12 +87,9 @@ class HashingModelObserverTest extends PHPUnit {
      */
     public function testHashingIsNotPerformedWhenDisabled()
     {
-        // Enable purging on mock
-        $this->model->shouldReceive('getHashing')
-            ->once()
-            ->andReturn(false);
+        $this->disableHashingOnMock();
 
-        // Check that purging is not performed
+        // Check that hashing is not performed
         $this->model->shouldReceive('hashAttributes')
             ->never();
 
@@ -86,12 +104,9 @@ class HashingModelObserverTest extends PHPUnit {
      */
     public function testHashingIsPerformedWhenCreating()
     {
-        // Enable purging on mock
-        $this->model->shouldReceive('getHashing')
-            ->once()
-            ->andReturn(true);
+        $this->enableHashingOnMock();
 
-        // Check that purging is not performed
+        // Check that hashing is not performed
         $this->model->shouldReceive('hashAttributes')
             ->once();
 
@@ -106,12 +121,9 @@ class HashingModelObserverTest extends PHPUnit {
      */
     public function testHashingIsPerformedWhenUpdating()
     {
-        // Enable purging on mock
-        $this->model->shouldReceive('getHashing')
-            ->once()
-            ->andReturn(true);
+        $this->enableHashingOnMock();
 
-        // Check that purging is not performed
+        // Check that hashing is not performed
         $this->model->shouldReceive('hashAttributes')
             ->once();
 
