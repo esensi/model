@@ -92,7 +92,7 @@ trait HashingModelTrait {
      */
     public function getHasher()
     {
-        return $this->hasher ?: new Hash;
+        return $this->hasher ?: Hash::getFacadeRoot();
     }
 
     /**

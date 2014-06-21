@@ -82,7 +82,7 @@ trait EncryptingModelTrait {
      */
     public function getEncrypter()
     {
-        return $this->encrypter ?: new Crypt;
+        return $this->encrypter ?: Crypt::getFacadeRoot();
     }
 
     /**
