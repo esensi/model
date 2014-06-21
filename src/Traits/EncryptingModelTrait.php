@@ -78,7 +78,7 @@ trait EncryptingModelTrait {
     /**
      * Set the Encrypter to use for encryption
      *
-     * @return \Illuminate\Encryption\Encrypter $encrypter
+     * @return \Illuminate\Encryption\Encrypter
      */
     public function getEncrypter()
     {
@@ -165,7 +165,8 @@ trait EncryptingModelTrait {
      */
     public function encrypt( $value )
     {
-        return $this->getEncrypter()->encrypt( $value );
+        return $this->getEncrypter()
+            ->encrypt( $value );
     }
 
     /**
@@ -176,7 +177,8 @@ trait EncryptingModelTrait {
      */
     public function decrypt( $value )
     {
-        return $this->getEncrypter()->decrypt( $value );
+        return $this->getEncrypter()
+            ->decrypt( $value );
     }
 
     /**

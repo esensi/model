@@ -429,7 +429,7 @@ class ModelEncryptingStub extends Model {
     /**
      * Create a new model instance
      *
-     * @return EncrypterStub
+     * @return ModelEncryptingStub
      */
     public function __construct(){
 

@@ -1,6 +1,7 @@
 <?php namespace Esensi\Model\Traits;
 
 use \Esensi\Model\Observers\HashingModelObserver;
+use \Illuminate\Hashing\HasherInterface;
 use \Illuminate\Support\Facades\Hash;
 
 /**
@@ -22,6 +23,13 @@ trait HashingModelTrait {
      * @var boolean
      */
     protected $hashing = true;
+
+    /**
+     * The Hasher to use for hashing
+     *
+     * @var \Illuminate\Hashing\HasherInterface
+     */
+    protected $hasher;
 
     /**
      * Boot the trait's observers
@@ -78,6 +86,27 @@ trait HashingModelTrait {
     }
 
     /**
+     * Set the Hasher to use for hashing
+     *
+     * @return \Illuminate\Hashing\HasherInterface
+     */
+    public function getHasher()
+    {
+        return $this->hasher ?: new Hash;
+    }
+
+    /**
+     * Set the Hasher to use for hashing
+     *
+     * @param \Illuminate\Hashing\HasherInterface $hasher
+     * @return void
+     */
+    public function setHasher( HasherInterface $hasher )
+    {
+        $this->hasher = $hasher;
+    }
+
+    /**
      * Returns whether the attribute is hashable
      *
      * @param string $attribute name
@@ -97,8 +126,13 @@ trait HashingModelTrait {
      */
     public function isHashed( $attribute )
     {
-        $info = password_get_info( $this->$attribute );
-        return $info['algo'] !== 0;
+        if( ! array_key_exists($attribute, $this->attributes) )
+        {
+            return false;
+        }
+
+        $info = password_get_info( $this->attributes[ $attribute ] );
+        return (boolean) ( $info['algo'] != 0 );
     }
 
     /**
@@ -122,7 +156,8 @@ trait HashingModelTrait {
      */
     public function hash( $value )
     {
-        return Hash::make( $value );
+        return $this->getHasher()
+            ->make( $value );
     }
 
     /**
@@ -134,7 +169,8 @@ trait HashingModelTrait {
      */
     public function checkHash( $value, $hash )
     {
-        return Hash::check( $value, $hash );
+        return $this->getHasher()
+            ->check( $value, $hash );
     }
 
     /**
@@ -146,17 +182,13 @@ trait HashingModelTrait {
      */
     function setHashingAttribute( $attribute, $value )
     {
-        // Set the attribute value like normal
-        $this->$attribute = $value;
-
-        // See if attribute needs hashing
-        $needsHashing = $this->getAttribute( $attribute )
-            && ( $this->isDirty( $attribute ) || ! $this->isHashed( $attribute ) );
+        // Set the value which is presumably plain text
+        $this->attributes[ $attribute ] = $value;
 
         // Do the hashing if it needs it
-        if ( $needsHashing )
+        if ( $this->isDirty( $attribute ) || ! $this->isHashed( $attribute ) )
         {
-            $this->attributes[ $attribute ] = $this->hash( $this->getAttribute( $attribute ) );
+            $this->attributes[ $attribute ] = $this->getHasher()->make( $value );
         }
     }
 
