@@ -90,7 +90,7 @@ class HashingModelTraitTest extends PHPUnit {
      *
      * @return void
      */
-    public function testSettingEncryption()
+    public function testSettingHashing()
     {
         // Disable Hashing
         $this->model->setHashing(false);
@@ -102,7 +102,7 @@ class HashingModelTraitTest extends PHPUnit {
     }
 
     /**
-     * Test that Encryptable attributes can be gotten
+     * Test that Hashable attributes can be gotten
      *
      * @return void
      */
@@ -231,7 +231,7 @@ class HashingModelTraitTest extends PHPUnit {
     }
 
     /**
-     * Test that isHashable returns true when attribute value is hashed
+     * Test that isHashed returns true when attribute value is hashed
      *
      * @return void
      */
@@ -249,7 +249,7 @@ class HashingModelTraitTest extends PHPUnit {
     }
 
     /**
-     * Test that isHashable returns false when attribute value
+     * Test that isHashed returns false when attribute value
      * is not hashed or otherwise doesn't exist
      *
      * @return void
