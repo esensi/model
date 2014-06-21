@@ -28,7 +28,7 @@ use \Illuminate\Database\Eloquent\Model as Eloquent;
  * @see \Esensi\Model\Contracts\RelatingModelInterface
  * @see \Esensi\Model\Contracts\ValidatingModelInterface
  */
-class Model extends Eloquent implements
+abstract class Model extends Eloquent implements
     EncryptingModelInterface,
     HashingModelInterface,
     PurgingModelInterface,
@@ -197,7 +197,7 @@ class Model extends Eloquent implements
      *
      * @param  string $key
      * @param  mixed $value
-     * @return mixed
+     * @return void
      */
     public function __set( $key, $value )
     {
@@ -207,7 +207,8 @@ class Model extends Eloquent implements
             // Encrypt only decrypted values
             if ( $this->isDecrypted( $key ) )
             {
-                return $this->setEncryptingAttribute( $key, $value );
+                $this->attributes[ $key ] = $this->getEncrypter()->encrypt( $value );
+                return;
             }
         }
 

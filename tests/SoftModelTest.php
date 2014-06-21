@@ -23,7 +23,8 @@ class SoftModelTest extends PHPUnit {
     public function setUp()
     {
         // Mock the Model that uses the custom traits
-        $this->model = new SoftModel();
+        $this->model = Mockery::mock('SoftModelStub');
+        $this->model->makePartial();
     }
 
     /**
@@ -69,9 +70,6 @@ class SoftModelTest extends PHPUnit {
      */
     public function testGetDatesReturnsTimestamps()
     {
-        // Mock the Model
-        $this->model = Mockery::mock('\Esensi\Model\SoftModel')->makePartial();
-
         // Check that getDeletedAtColumn is called in getDates
         $this->model->shouldReceive('getDeletedAtColumn')
             ->once()
@@ -98,16 +96,15 @@ class SoftModelTest extends PHPUnit {
      */
     public function testGetDatesMergedDates()
     {
-        $this->model = Mockery::mock('SoftModelDateStub')->makePartial();
         $this->assertContains('foo', $this->model->getDates());
     }
 
 }
 
 /**
- * Soft Model Stub for Date Tests
+ * Soft Model Stub for Model Tests
  */
-class SoftModelDateStub extends SoftModel {
+class SoftModelStub extends SoftModel {
 
     /**
      * The attributes that should be mutated to dates.

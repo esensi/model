@@ -1,5 +1,6 @@
 <?php
 
+use \Esensi\Model\Model;
 use \Mockery;
 use \PHPUnit_Framework_TestCase as PHPUnit;
 
@@ -22,7 +23,8 @@ class ModelTest extends PHPUnit {
     public function setUp()
     {
         // Mock the Model that uses the custom traits
-        $this->model = new \Esensi\Model\Model();
+        $this->model = Mockery::mock('ModelStub');
+        $this->model->makePartial();
     }
 
     /**
@@ -91,7 +93,13 @@ class ModelTest extends PHPUnit {
 
         // Check Model implements the Relating interface
         $this->assertInstanceOf('\Esensi\Model\Contracts\RelatingModelInterface', $this->model);
-
     }
+
+}
+
+/**
+ * Model Stub for Model Tests
+ */
+class ModelStub extends Model {
 
 }

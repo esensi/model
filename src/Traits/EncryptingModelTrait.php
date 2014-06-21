@@ -1,6 +1,7 @@
 <?php namespace Esensi\Model\Traits;
 
 use \Illuminate\Support\Facades\Crypt;
+use \Illuminate\Encryption\Encrypter;
 use \Illuminate\Encryption\DecryptException;
 
 /**
@@ -22,6 +23,13 @@ trait EncryptingModelTrait {
      * @var boolean
      */
     protected $encrypting = true;
+
+    /**
+     * The Encrypter to use for encryption
+     *
+     * @var \Illuminate\Encryption\Encrypter
+     */
+    protected $encrypter;
 
     /**
      * Get the encryptable attributes
@@ -68,6 +76,27 @@ trait EncryptingModelTrait {
     }
 
     /**
+     * Set the Encrypter to use for encryption
+     *
+     * @return \Illuminate\Encryption\Encrypter $encrypter
+     */
+    public function getEncrypter()
+    {
+        return $this->encrypter ?: new Crypt;
+    }
+
+    /**
+     * Set the Encrypter to use for encryption
+     *
+     * @param \Illuminate\Encryption\Encrypter $encrypter
+     * @return void
+     */
+    public function setEncrypter( Encrypter $encrypter )
+    {
+        $this->encrypter = $encrypter;
+    }
+
+    /**
      * Returns whether the attribute is encryptable
      *
      * @param string $attribute name
@@ -87,9 +116,14 @@ trait EncryptingModelTrait {
      */
     public function isEncrypted( $attribute )
     {
+        if( ! array_key_exists($attribute, $this->attributes) )
+        {
+            return false;
+        }
+
         try
         {
-            Crypt::decrypt( $this->$attribute );
+            $this->decrypt( $this->getAttribute( $attribute ) );
         }
         catch (DecryptException $exception)
         {
@@ -131,7 +165,7 @@ trait EncryptingModelTrait {
      */
     public function encrypt( $value )
     {
-        return Crypt::encrypt( $value );
+        return $this->getEncrypter()->encrypt( $value );
     }
 
     /**
@@ -142,7 +176,7 @@ trait EncryptingModelTrait {
      */
     public function decrypt( $value )
     {
-        return Crypt::decrypt( $value );
+        return $this->getEncrypter()->decrypt( $value );
     }
 
     /**

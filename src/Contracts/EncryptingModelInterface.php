@@ -1,5 +1,7 @@
 <?php namespace Esensi\Model\Contracts;
 
+use \Illuminate\Encryption\Encrypter;
+
 /**
  * Encrypting Model Interface
  *
@@ -42,6 +44,21 @@ interface EncryptingModelInterface {
      * @return void
      */
     public function setEncrypting( $value );
+
+    /**
+     * Set the Encrypter to use for encryption
+     *
+     * @return \Illuminate\Encryption\Encrypter $encrypter
+     */
+    public function getEncrypter();
+
+    /**
+     * Set the Encrypter to use for encryption
+     *
+     * @param \Illuminate\Encryption\Encrypter $encrypter
+     * @return void
+     */
+    public function setEncrypter( Encrypter $encrypter );
 
     /**
      * Returns whether the attribute is encryptable
