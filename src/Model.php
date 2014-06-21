@@ -216,4 +216,24 @@ abstract class Model extends Eloquent implements
         return parent::__set( $key, $value );
     }
 
+    /**
+     * Boot all of the bootable traits on the model.
+     * We overwrite the parent method because Laravel does not
+     * yet support booting inherited traits.
+     *
+     * @todo remove this when Laravel supports this recursion
+     * @return void
+     */
+    protected static function bootTraits()
+    {
+        $traits = function_exists('class_uses_recursive') ? class_uses_recursive(get_called_class()) : class_uses(get_called_class());
+        foreach ($traits as $trait)
+        {
+            if (method_exists(get_called_class(), $method = 'boot'.class_basename($trait)))
+            {
+                forward_static_call([get_called_class(), $method]);
+            }
+        }
+    }
+
 }
