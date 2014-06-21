@@ -33,7 +33,6 @@ trait RelatingModelTrait {
             $exception->setModel( $name );
             throw $exception;
         }
-
         return $this->relationships[ $name ];
     }
 
@@ -143,8 +142,10 @@ trait RelatingModelTrait {
                 $relation = $caller['function'];
             }
 
-            $name = snake_case();
+            $name = snake_case($relation);
         }
+
+        list($type, $id) = $this->getMorphs($name, $type, $id);
 
         // If the type value is null it is probably safe to assume we're eager loading
         // the relationship. When that is the case we will pass in a dummy query as
