@@ -1,7 +1,7 @@
 {
     "name": "esensi/model",
     "description": "The base model traits of Esensi",
-    "keywords": ["emersonmedia", "esensi", "laravel", "model", "trait", "eloquent", "validating", "validation", "encrypting", "hashing", "purge", "purging"],
+    "keywords": ["emersonmedia", "esensi", "laravel", "model", "trait", "eloquent", "validating", "validation", "encrypting", "hashing", "purge", "purging", "soft deleting", "trashing"],
     "authors": [
         {
             "name": "Emerson Media, LP.",
@@ -27,12 +27,6 @@
         "phpunit/phpunit": "4.1.*",
         "mockery/mockery": "0.9.*"
     },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/dalabarge/validating.git"
-        }
-    ],
     "autoload": {
         "files": ["src/helpers.php"],
         "psr-4": {

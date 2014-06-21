@@ -14,14 +14,14 @@ use \Illuminate\Hashing\HasherInterface;
 interface HashingModelInterface {
 
     /**
-     * Get the hashable attributes
+     * Get the hashable attributes.
      *
      * @return array
      */
     public function getHashable();
 
     /**
-     * Set the hashable attributes
+     * Set the hashable attributes.
      *
      * @param  array $attributes to hash
      * @return void
@@ -30,7 +30,7 @@ interface HashingModelInterface {
 
     /**
      * Returns whether or not the model will hash
-     * attributes before saving
+     * attributes before saving.
      *
      * @return boolean
      */
@@ -38,7 +38,7 @@ interface HashingModelInterface {
 
     /**
      * Set whether or not the model will hash attributes
-     * before saving
+     * before saving.
      *
      * @param  boolean
      * @return void
@@ -46,14 +46,14 @@ interface HashingModelInterface {
     public function setHashing( $value );
 
     /**
-     * Set the Hasher to use for hashing
+     * Set the Hasher to use for hashing.
      *
      * @return \Illuminate\Hashing\HasherInterface
      */
     public function getHasher();
 
     /**
-     * Set the Hasher to use for hashing
+     * Set the Hasher to use for hashing.
      *
      * @param \Illuminate\Hashing\HasherInterface $hasher
      * @return void
@@ -61,7 +61,7 @@ interface HashingModelInterface {
     public function setHasher( HasherInterface $hasher );
 
     /**
-     * Returns whether the attribute is hashable
+     * Returns whether the attribute is hashable.
      *
      * @param string $attribute name
      * @return boolean
@@ -69,7 +69,7 @@ interface HashingModelInterface {
     public function isHashable( $attribute );
 
     /**
-     * Returns whether the attribute is hashed
+     * Returns whether the attribute is hashed.
      *
      * @param string $attribute name
      * @return boolean
@@ -77,14 +77,14 @@ interface HashingModelInterface {
     public function isHashed( $attribute );
 
     /**
-     * Hash attributes that should be hashed
+     * Hash attributes that should be hashed.
      *
      * @return void
      */
     public function hashAttributes();
 
     /**
-     * Return a hashed string for the value
+     * Return a hashed string for the value.
      *
      * @param string $value
      * @return string
@@ -92,7 +92,7 @@ interface HashingModelInterface {
     public function hash( $value );
 
     /**
-     * Return whether a plain value matches a hashed value
+     * Return whether a plain value matches a hashed value.
      *
      * @param string $value
      * @param string $hash to compare to
@@ -101,7 +101,7 @@ interface HashingModelInterface {
     public function checkHash( $value, $hash );
 
     /**
-     * Set a hashed value for a hashable attribute
+     * Set a hashed value for a hashable attribute.
      *
      * @param string $attribute name
      * @param string $value to hash

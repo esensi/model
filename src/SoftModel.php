@@ -25,19 +25,4 @@ abstract class SoftModel extends Model implements SoftDeletingModelInterface {
      */
     use SoftDeletingModelTrait;
 
-    /**
-     * Get the attributes that should be converted to dates.
-     *
-     * Overwriting this method here allows the developer to
-     * extend the dates using the $dates property without
-     * needing to maintain the "deleted_at" column.
-     *
-     * @return array
-     */
-    public function getDates()
-    {
-        $defaults = array(static::CREATED_AT, static::UPDATED_AT, $this->getDeletedAtColumn());
-
-        return array_merge($this->dates, $defaults);
-    }
 }

@@ -16,9 +16,7 @@ use \PHPUnit_Framework_TestCase as PHPUnit;
 class SoftModelTest extends PHPUnit {
 
     /**
-     * Set Up and Prepare Tests
-     *
-     * @return void
+     * Set Up and Prepare Tests.
      */
     public function setUp()
     {
@@ -28,9 +26,7 @@ class SoftModelTest extends PHPUnit {
     }
 
     /**
-     * Tear Down and Clean Up Tests
-     *
-     * @return void
+     * Tear Down and Clean Up Tests.
      */
     public function tearDown()
     {
@@ -38,9 +34,7 @@ class SoftModelTest extends PHPUnit {
     }
 
     /**
-     * Test that the Model uses the traits and in the right order
-     *
-     * @return void
+     * Test that the Model uses the traits and in the right order.
      */
     public function testModelUsesTraits()
     {
@@ -53,9 +47,7 @@ class SoftModelTest extends PHPUnit {
     }
 
     /**
-     * Test that the Model implements the interfaces
-     *
-     * @return void
+     * Test that the Model implements the interfaces.
      */
     public function testModelImplementsInterfaces()
     {
@@ -64,9 +56,7 @@ class SoftModelTest extends PHPUnit {
     }
 
     /**
-     * Test that the Model returns deleted_at from getDates()
-     *
-     * @return void
+     * Test that the Model returns deleted_at from getDates().
      */
     public function testGetDatesReturnsTimestamps()
     {
@@ -90,9 +80,7 @@ class SoftModelTest extends PHPUnit {
     }
 
     /**
-     * Test that the Model merges $dates attribute when returning getDates()
-     *
-     * @return void
+     * Test that the Model merges $dates attribute when returning getDates().
      */
     public function testGetDatesMergedDates()
     {

@@ -23,9 +23,7 @@ use \Illuminate\Database\Query\Processors\Processor;
 class RelatingModelTraitTest extends PHPUnit {
 
     /**
-     * Set Up and Prepare Tests
-     *
-     * @return void
+     * Set Up and Prepare Tests.
      */
     public function setUp()
     {
@@ -35,9 +33,7 @@ class RelatingModelTraitTest extends PHPUnit {
     }
 
     /**
-     * Tear Down and Clean Up Tests
-     *
-     * @return void
+     * Tear Down and Clean Up Tests.
      */
     public function tearDown()
     {
@@ -45,9 +41,7 @@ class RelatingModelTraitTest extends PHPUnit {
     }
 
     /**
-     * Test that getRelationship returns a relationship config
-     *
-     * @return void
+     * Test that getRelationship returns a relationship config.
      */
     public function testGettingRelationshipThatExists()
     {
@@ -62,10 +56,9 @@ class RelatingModelTraitTest extends PHPUnit {
 
     /**
      * Test that getRelationship throws an exception when
-     * the relationship does not exist
+     * the relationship does not exist.
      *
      * @expectedException \Illuminate\Database\Eloquent\ModelNotFoundException
-     * @return void
      */
     public function testGettingRelationshipThatDoesNotExist()
     {
@@ -78,9 +71,7 @@ class RelatingModelTraitTest extends PHPUnit {
     }
 
     /**
-     * Test that isRelationship returns true when relationship exists
-     *
-     * @return void
+     * Test that isRelationship returns true when relationship exists.
      */
     public function testIsRelationshipReturnsTrue()
     {
@@ -88,9 +79,7 @@ class RelatingModelTraitTest extends PHPUnit {
     }
 
     /**
-     * Test that isRelationship returns false when relationship does not exist
-     *
-     * @return void
+     * Test that isRelationship returns false when relationship does not exist.
      */
     public function testIsRelationshipReturnsFalse()
     {
@@ -98,9 +87,7 @@ class RelatingModelTraitTest extends PHPUnit {
     }
 
     /**
-     * Test that callRelationship returns the relationship
-     *
-     * @return void
+     * Test that callRelationship returns the relationship.
      */
     public function testCallRelationship()
     {
@@ -128,12 +115,12 @@ class ModelRelatingStub extends Model {
     /**
      * Indicates if the model exists.
      *
-     * @var bool
+     * @var boolean
      */
     public $exists = false;
 
     /**
-     * Relationships that the model should set up
+     * Relationships that the model should set up.
      *
      * @var array
      */

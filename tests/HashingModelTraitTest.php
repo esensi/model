@@ -18,9 +18,7 @@ use \PHPUnit_Framework_TestCase as PHPUnit;
 class HashingModelTraitTest extends PHPUnit {
 
     /**
-     * Set Up and Prepare Tests
-     *
-     * @return void
+     * Set Up and Prepare Tests.
      */
     public function setUp()
     {
@@ -30,9 +28,7 @@ class HashingModelTraitTest extends PHPUnit {
     }
 
     /**
-     * Tear Down and Clean Up Tests
-     *
-     * @return void
+     * Tear Down and Clean Up Tests.
      */
     public function tearDown()
     {
@@ -40,9 +36,7 @@ class HashingModelTraitTest extends PHPUnit {
     }
 
     /**
-     * Enables Hashing on mock
-     *
-     * @return void
+     * Enables Hashing on mock.
      */
     protected function enableHashingOnMock()
     {
@@ -53,9 +47,7 @@ class HashingModelTraitTest extends PHPUnit {
     }
 
     /**
-     * Disables Hashing on mock
-     *
-     * @return void
+     * Disables Hashing on mock.
      */
     protected function disableHashingOnMock()
     {
@@ -66,9 +58,7 @@ class HashingModelTraitTest extends PHPUnit {
     }
 
     /**
-     * Sets the Hasher on mock
-     *
-     * @return void
+     * Sets the Hasher on mock.
      */
     public function setHasherOnMock()
     {
@@ -76,9 +66,7 @@ class HashingModelTraitTest extends PHPUnit {
     }
 
     /**
-     * Test that Hashing is enabled by default
-     *
-     * @return void
+     * Test that Hashing is enabled by default.
      */
     public function testHashingEnabledByDefault()
     {
@@ -86,9 +74,7 @@ class HashingModelTraitTest extends PHPUnit {
     }
 
     /**
-     * Test that Hashing can be enabled and disabled
-     *
-     * @return void
+     * Test that Hashing can be enabled and disabled.
      */
     public function testSettingHashing()
     {
@@ -102,9 +88,7 @@ class HashingModelTraitTest extends PHPUnit {
     }
 
     /**
-     * Test that Hashable attributes can be gotten
-     *
-     * @return void
+     * Test that Hashable attributes can be gotten.
      */
     public function testGettingHashableAttributes()
     {
@@ -122,9 +106,7 @@ class HashingModelTraitTest extends PHPUnit {
     }
 
     /**
-     * Test that Hashable attributes can be set
-     *
-     * @return void
+     * Test that Hashable attributes can be set.
      */
     public function testSettingHashableAttributes()
     {
@@ -145,9 +127,7 @@ class HashingModelTraitTest extends PHPUnit {
     }
 
     /**
-     * Test that the Hasher can be gotten
-     *
-     * @return void
+     * Test that the Hasher can be gotten.
      */
     public function testGettingHasher()
     {
@@ -158,9 +138,7 @@ class HashingModelTraitTest extends PHPUnit {
     }
 
     /**
-     * Test that the Hasher can be set
-     *
-     * @return void
+     * Test that the Hasher can be set.
      */
     public function testSettingHasher()
     {
@@ -173,9 +151,7 @@ class HashingModelTraitTest extends PHPUnit {
 
     /**
      * Test that isHashable returns true when hashing is enabled
-     * and the attribute is Hashable
-     *
-     * @return void
+     * and the attribute is Hashable.
      */
     public function testIsHashableReturnsTrue()
     {
@@ -193,9 +169,7 @@ class HashingModelTraitTest extends PHPUnit {
 
     /**
      * Test that non-Hashable attribute is not Hashable even
-     * when Hashing is enabled
-     *
-     * @return void
+     * when Hashing is enabled.
      */
     public function testIsHashableReturnsFalseWhenNotSet()
     {
@@ -213,9 +187,7 @@ class HashingModelTraitTest extends PHPUnit {
 
     /**
      * Test that Hashable attribute is not Hashable when
-     * Hashing is disabled
-     *
-     * @return void
+     * Hashing is disabled.
      */
     public function testIsHashableReturnsFalseWhenDisabled()
     {
@@ -231,9 +203,7 @@ class HashingModelTraitTest extends PHPUnit {
     }
 
     /**
-     * Test that isHashed returns true when attribute value is hashed
-     *
-     * @return void
+     * Test that isHashed returns true when attribute value is hashed.
      */
     public function testIsHashedReturnsTrue()
     {
@@ -250,9 +220,7 @@ class HashingModelTraitTest extends PHPUnit {
 
     /**
      * Test that isHashed returns false when attribute value
-     * is not hashed or otherwise doesn't exist
-     *
-     * @return void
+     * is not hashed or otherwise doesn't exist.
      */
     public function testIsHashedReturnsFalse()
     {
@@ -267,9 +235,7 @@ class HashingModelTraitTest extends PHPUnit {
     }
 
     /**
-     * Test that all hashable attributes are hashed
-     *
-     * @return void
+     * Test that all hashable attributes are hashed.
      */
     public function testHashAttributes()
     {
@@ -289,9 +255,7 @@ class HashingModelTraitTest extends PHPUnit {
     }
 
     /**
-     * Test that hash() hashes the value
-     *
-     * @return void
+     * Test that hash() hashes the value.
      */
     public function testHash()
     {
@@ -301,9 +265,7 @@ class HashingModelTraitTest extends PHPUnit {
     }
 
     /**
-     * Test that checkHash() compares a hash with the plain text
-     *
-     * @return void
+     * Test that checkHash() compares a hash with the plain text.
      */
     public function testCheckHash()
     {
@@ -314,9 +276,7 @@ class HashingModelTraitTest extends PHPUnit {
     }
 
     /**
-     * Test that setHashingAttribute() hashes the attribute value
-     *
-     * @return void
+     * Test that setHashingAttribute() hashes the attribute value.
      */
     public function testSetHashingAttribute()
     {
@@ -351,7 +311,7 @@ class HashingModelTraitTest extends PHPUnit {
 class ModelHashingStub extends Model {
 
     /**
-     * The attributes to hash before saving
+     * The attributes to hash before saving.
      *
      * @var array
      */

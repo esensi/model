@@ -16,9 +16,7 @@ use \PHPUnit_Framework_TestCase as PHPUnit;
 class HashingModelObserverTest extends PHPUnit {
 
     /**
-     * Set Up and Prepare Tests
-     *
-     * @return void
+     * Set Up and Prepare Tests.
      */
     public function setUp()
     {
@@ -30,9 +28,7 @@ class HashingModelObserverTest extends PHPUnit {
     }
 
     /**
-     * Tear Down and Clean Up Tests
-     *
-     * @return void
+     * Tear Down and Clean Up Tests.
      */
     public function tearDown()
     {
@@ -40,9 +36,7 @@ class HashingModelObserverTest extends PHPUnit {
     }
 
     /**
-     * Enables hashing on mock
-     *
-     * @return void
+     * Enables hashing on mock.
      */
     protected function enableHashingOnMock()
     {
@@ -52,9 +46,7 @@ class HashingModelObserverTest extends PHPUnit {
     }
 
     /**
-     * Disables hashing on mock
-     *
-     * @return void
+     * Disables hashing on mock.
      */
     protected function disableHashingOnMock()
     {
@@ -64,9 +56,7 @@ class HashingModelObserverTest extends PHPUnit {
     }
 
     /**
-     * Test that hashAttributes() is called when getHashing() returns true
-     *
-     * @return void
+     * Test that hashAttributes() is called when getHashing() returns true.
      */
     public function testHashingIsPerformedWhenEnabled()
     {
@@ -81,9 +71,7 @@ class HashingModelObserverTest extends PHPUnit {
     }
 
     /**
-     * Test that hashAttributes() is not called when getHashing() returns false
-     *
-     * @return void
+     * Test that hashAttributes() is not called when getHashing() returns false.
      */
     public function testHashingIsNotPerformedWhenDisabled()
     {
@@ -98,9 +86,7 @@ class HashingModelObserverTest extends PHPUnit {
     }
 
     /**
-     * Test that performHashing() is called when creating()
-     *
-     * @return void
+     * Test that performHashing() is called when creating().
      */
     public function testHashingIsPerformedWhenCreating()
     {
@@ -115,9 +101,7 @@ class HashingModelObserverTest extends PHPUnit {
     }
 
     /**
-     * Test that performHashing() is called when updating()
-     *
-     * @return void
+     * Test that performHashing() is called when updating().
      */
     public function testHashingIsPerformedWhenUpdating()
     {

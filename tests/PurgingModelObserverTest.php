@@ -16,9 +16,7 @@ use \PHPUnit_Framework_TestCase as PHPUnit;
 class PurgingModelObserverTest extends PHPUnit {
 
     /**
-     * Set Up and Prepare Tests
-     *
-     * @return void
+     * Set Up and Prepare Tests.
      */
     public function setUp()
     {
@@ -30,9 +28,7 @@ class PurgingModelObserverTest extends PHPUnit {
     }
 
     /**
-     * Tear Down and Clean Up Tests
-     *
-     * @return void
+     * Tear Down and Clean Up Tests.
      */
     public function tearDown()
     {
@@ -40,9 +36,7 @@ class PurgingModelObserverTest extends PHPUnit {
     }
 
     /**
-     * Enables purging on mock
-     *
-     * @return void
+     * Enables purging on mock.
      */
     protected function enablePurgingOnMock()
     {
@@ -52,9 +46,7 @@ class PurgingModelObserverTest extends PHPUnit {
     }
 
     /**
-     * Disables purging on mock
-     *
-     * @return void
+     * Disables purging on mock.
      */
     protected function disablePurgingOnMock()
     {
@@ -64,9 +56,7 @@ class PurgingModelObserverTest extends PHPUnit {
     }
 
     /**
-     * Test that purgeAttributes() is called when getPurging() returns true
-     *
-     * @return void
+     * Test that purgeAttributes() is called when getPurging() returns true.
      */
     public function testPurgingIsPerformedWhenEnabled()
     {
@@ -81,9 +71,7 @@ class PurgingModelObserverTest extends PHPUnit {
     }
 
     /**
-     * Test that purgeAttributes() is not called when getPurging() returns false
-     *
-     * @return void
+     * Test that purgeAttributes() is not called when getPurging() returns false.
      */
     public function testPurgingIsNotPerformedWhenDisabled()
     {
@@ -98,9 +86,7 @@ class PurgingModelObserverTest extends PHPUnit {
     }
 
     /**
-     * Test that performPurging() is called when creating()
-     *
-     * @return void
+     * Test that performPurging() is called when creating().
      */
     public function testPurgingIsPerformedWhenCreating()
     {
@@ -115,9 +101,7 @@ class PurgingModelObserverTest extends PHPUnit {
     }
 
     /**
-     * Test that performPurging() is called when updating()
-     *
-     * @return void
+     * Test that performPurging() is called when updating().
      */
     public function testPurgingIsPerformedWhenUpdating()
     {

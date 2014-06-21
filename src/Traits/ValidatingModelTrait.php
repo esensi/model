@@ -4,7 +4,7 @@ use \Esensi\Model\Observers\ValidatingModelObserver;
 use \Watson\Validating\ValidatingTrait;
 
 /**
- * Trait that implements the ValidatingModelInterface
+ * Trait that implements the Validating Model Interface
  *
  * @package Esensi\Model
  * @author Daniel LaBarge <wishlist@emersonmedia.com>
@@ -17,7 +17,7 @@ use \Watson\Validating\ValidatingTrait;
 trait ValidatingModelTrait {
 
     /**
-     * Use Watson's trait as a base
+     * Use Watson's trait as a base.
      *
      * @see \Watson\Validating\ValidatingTrait
      */
@@ -32,7 +32,7 @@ trait ValidatingModelTrait {
     public static function bootValidatingTrait(){ }
 
     /**
-     * Boot the trait's observers
+     * Boot the trait's observers.
      *
      * @return void
      */

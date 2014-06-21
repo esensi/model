@@ -17,9 +17,7 @@ use \PHPUnit_Framework_TestCase as PHPUnit;
 class PurgingModelTraitTest extends PHPUnit {
 
     /**
-     * Set Up and Prepare Tests
-     *
-     * @return void
+     * Set Up and Prepare Tests.
      */
     public function setUp()
     {
@@ -29,9 +27,7 @@ class PurgingModelTraitTest extends PHPUnit {
     }
 
     /**
-     * Tear Down and Clean Up Tests
-     *
-     * @return void
+     * Tear Down and Clean Up Tests.
      */
     public function tearDown()
     {
@@ -39,9 +35,7 @@ class PurgingModelTraitTest extends PHPUnit {
     }
 
     /**
-     * Enables Purging on mock
-     *
-     * @return void
+     * Enables Purging on mock.
      */
     protected function enablePurgingOnMock()
     {
@@ -52,9 +46,7 @@ class PurgingModelTraitTest extends PHPUnit {
     }
 
     /**
-     * Disables Purging on mock
-     *
-     * @return void
+     * Disables Purging on mock.
      */
     protected function disablePurgingOnMock()
     {
@@ -65,9 +57,7 @@ class PurgingModelTraitTest extends PHPUnit {
     }
 
     /**
-     * Test that Purging is enabled by default
-     *
-     * @return void
+     * Test that Purging is enabled by default.
      */
     public function testPurgingEnabledByDefault()
     {
@@ -75,9 +65,7 @@ class PurgingModelTraitTest extends PHPUnit {
     }
 
     /**
-     * Test that Purging can be enabled and disabled
-     *
-     * @return void
+     * Test that Purging can be enabled and disabled.
      */
     public function testSettingPurging()
     {
@@ -91,9 +79,7 @@ class PurgingModelTraitTest extends PHPUnit {
     }
 
     /**
-     * Test that Purgeable attributes can be gotten
-     *
-     * @return void
+     * Test that Purgeable attributes can be gotten.
      */
     public function testGettingPurgeableAttributes()
     {
@@ -111,9 +97,7 @@ class PurgingModelTraitTest extends PHPUnit {
     }
 
     /**
-     * Test that Purgeable attributes can be set
-     *
-     * @return void
+     * Test that Purgeable attributes can be set.
      */
     public function testSettingPurgeableAttributes()
     {
@@ -135,9 +119,7 @@ class PurgingModelTraitTest extends PHPUnit {
 
     /**
      * Test that isPurgeable returns true when Purging is enabled
-     * and the attribute is Purgeable
-     *
-     * @return void
+     * and the attribute is Purgeable.
      */
     public function testIsPurgeableReturnsTrue()
     {
@@ -155,9 +137,7 @@ class PurgingModelTraitTest extends PHPUnit {
 
     /**
      * Test that non-Purgeable attribute is not Purgeable even
-     * when Purging is enabled
-     *
-     * @return void
+     * when Purging is enabled.
      */
     public function testIsPurgeableReturnsFalseWhenNotSet()
     {
@@ -175,9 +155,7 @@ class PurgingModelTraitTest extends PHPUnit {
 
     /**
      * Test that Purgeable attribute is not Purgeable when
-     * Purging is disabled
-     *
-     * @return void
+     * Purging is disabled.
      */
     public function testIsPurgeableReturnsFalseWhenDisabled()
     {
@@ -193,9 +171,7 @@ class PurgingModelTraitTest extends PHPUnit {
     }
 
     /**
-     * Test that all Purgeable attributes are hashed
-     *
-     * @return void
+     * Test that all Purgeable attributes are hashed.
      */
     public function testPurgeAttributes()
     {

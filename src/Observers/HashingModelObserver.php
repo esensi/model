@@ -3,7 +3,7 @@
 use \Esensi\Model\Model;
 
 /**
- * Model observer for HashingModelTrait
+ * Model observer for Hashing Model Trait
  *
  * @package Esensi\Model
  * @author Daniel LaBarge <wishlist@emersonmedia.com>

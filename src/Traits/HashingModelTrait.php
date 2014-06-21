@@ -5,7 +5,7 @@ use \Illuminate\Hashing\HasherInterface;
 use \Illuminate\Support\Facades\Hash;
 
 /**
- * Trait that implements the HashingModelInterface
+ * Trait that implements the Hashing Model Interface
  *
  * @package Esensi\Model
  * @author Daniel LaBarge <wishlist@emersonmedia.com>
@@ -18,14 +18,14 @@ use \Illuminate\Support\Facades\Hash;
 trait HashingModelTrait {
 
     /**
-     * Whether the model is hashing or not
+     * Whether the model is hashing or not.
      *
      * @var boolean
      */
     protected $hashing = true;
 
     /**
-     * The Hasher to use for hashing
+     * The Hasher to use for hashing.
      *
      * @var \Illuminate\Hashing\HasherInterface
      */
@@ -42,7 +42,7 @@ trait HashingModelTrait {
     }
 
     /**
-     * Get the hashable attributes
+     * Get the hashable attributes.
      *
      * @return array
      */
@@ -52,7 +52,7 @@ trait HashingModelTrait {
     }
 
     /**
-     * Set the hashable attributes
+     * Set the hashable attributes.
      *
      * @param  array $attributes to hash
      * @return void
@@ -64,7 +64,7 @@ trait HashingModelTrait {
 
     /**
      * Returns whether or not the model will hash
-     * attributes before saving
+     * attributes before saving.
      *
      * @return boolean
      */
@@ -75,7 +75,7 @@ trait HashingModelTrait {
 
     /**
      * Set whether or not the model will hash attributes
-     * before saving
+     * before saving.
      *
      * @param  boolean
      * @return void
@@ -86,7 +86,7 @@ trait HashingModelTrait {
     }
 
     /**
-     * Set the Hasher to use for hashing
+     * Set the Hasher to use for hashing.
      *
      * @return \Illuminate\Hashing\HasherInterface
      */
@@ -96,7 +96,7 @@ trait HashingModelTrait {
     }
 
     /**
-     * Set the Hasher to use for hashing
+     * Set the Hasher to use for hashing.
      *
      * @param \Illuminate\Hashing\HasherInterface $hasher
      * @return void
@@ -107,7 +107,7 @@ trait HashingModelTrait {
     }
 
     /**
-     * Returns whether the attribute is hashable
+     * Returns whether the attribute is hashable.
      *
      * @param string $attribute name
      * @return boolean
@@ -119,7 +119,7 @@ trait HashingModelTrait {
     }
 
     /**
-     * Returns whether the attribute is hashed
+     * Returns whether the attribute is hashed.
      *
      * @param string $attribute name
      * @return boolean
@@ -136,7 +136,7 @@ trait HashingModelTrait {
     }
 
     /**
-     * Hash attributes that should be hashed
+     * Hash attributes that should be hashed.
      *
      * @return void
      */
@@ -149,7 +149,7 @@ trait HashingModelTrait {
     }
 
     /**
-     * Return a hashed string for the value
+     * Return a hashed string for the value.
      *
      * @param string $value
      * @return string
@@ -161,7 +161,7 @@ trait HashingModelTrait {
     }
 
     /**
-     * Return whether a plain value matches a hashed value
+     * Return whether a plain value matches a hashed value.
      *
      * @param string $value
      * @param string $hash to compare to
@@ -174,7 +174,7 @@ trait HashingModelTrait {
     }
 
     /**
-     * Set a hashed value for a hashable attribute
+     * Set a hashed value for a hashable attribute.
      *
      * @param string $attribute name
      * @param string $value to hash

@@ -3,7 +3,7 @@
 use \Esensi\Model\Model;
 
 /**
- * Model observer for PurgingModelTrait
+ * Model observer for Purging Model Trait
  *
  * @package Esensi\Model
  * @author Daniel LaBarge <wishlist@emersonmedia.com>

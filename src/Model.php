@@ -47,28 +47,28 @@ abstract class Model extends Eloquent implements
     use ValidatingModelTrait;
 
     /**
-     * Make model encrypt attributes
+     * Make model encrypt attributes.
      *
      * @see \Esensi\Model\Traits\EncryptingModelTrait
      */
     use EncryptingModelTrait;
 
     /**
-     * Make model hash attributes
+     * Make model hash attributes.
      *
      * @see \Esensi\Model\Traits\HashingModelTrait
      */
     use HashingModelTrait;
 
     /**
-     * Make model purge attributes
+     * Make model purge attributes.
      *
      * @see \Esensi\Model\Traits\PurgingModelTrait
      */
     use PurgingModelTrait;
 
     /**
-     * Make model use properties for model relationships
+     * Make model use properties for model relationships.
      *
      * @see \Esensi\Model\Traits\RelatingModelTrait
      */
@@ -96,21 +96,14 @@ abstract class Model extends Eloquent implements
     protected $rulesets = [];
 
     /**
-     * The attributes that can be full-text searched
-     *
-     * @var array
-     */
-    public $searchable = [];
-
-    /**
-     * The attributes to purge before saving
+     * The attributes to purge before saving.
      *
      * @var array
      */
     protected $purgeable = [];
 
     /**
-     * The attributes to hash before saving
+     * The attributes to hash before saving.
      *
      * @var array
      */
@@ -118,14 +111,14 @@ abstract class Model extends Eloquent implements
 
     /**
      * The attributes to encrypt when set and
-     * decrypt when gotten
+     * decrypt when gotten.
      *
      * @var array
      */
     protected $encryptable = [];
 
     /**
-     * Relationships that the model should set up
+     * Relationships that the model should set up.
      *
      * @var array
      */
@@ -140,7 +133,7 @@ abstract class Model extends Eloquent implements
     protected $injectUniqueIdentifier = true;
 
     /**
-     * Dynamically call methods
+     * Dynamically call methods.
      *
      * @param  string $method
      * @param  array  $parameters
@@ -159,7 +152,7 @@ abstract class Model extends Eloquent implements
     }
 
     /**
-     * Dynamically retrieve attributes
+     * Dynamically retrieve attributes.
      *
      * @param  string $key
      * @return mixed
@@ -193,7 +186,7 @@ abstract class Model extends Eloquent implements
     }
 
     /**
-     * Dynamically set attributes
+     * Dynamically set attributes.
      *
      * @param  string $key
      * @param  mixed $value
@@ -218,6 +211,7 @@ abstract class Model extends Eloquent implements
 
     /**
      * Boot all of the bootable traits on the model.
+     *
      * We overwrite the parent method because Laravel does not
      * yet support booting inherited traits.
      *

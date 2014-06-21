@@ -5,7 +5,7 @@ use \Illuminate\Database\Eloquent\Relations\BelongsTo;
 use \Illuminate\Database\Eloquent\Relations\MorphTo;
 
 /**
- * Trait that implements the RelatingModelInterface
+ * Trait that implements the Relating Model Interface
  *
  * @package Esensi\Model
  * @author Daniel LaBarge <wishlist@emersonmedia.com>
@@ -18,7 +18,7 @@ use \Illuminate\Database\Eloquent\Relations\MorphTo;
 trait RelatingModelTrait {
 
     /**
-     * Return the relationship configurations
+     * Return the relationship configurations.
      *
      * @param string $name of related model
      * @return array
@@ -37,7 +37,7 @@ trait RelatingModelTrait {
     }
 
     /**
-     * Return whether the name is a relationship or not
+     * Return whether the name is a relationship or not.
      *
      * @param string $name of related model
      * @return boolean
@@ -49,7 +49,7 @@ trait RelatingModelTrait {
 
     /**
      * Proxy call a relationship method using the
-     * configuration arguments of the relationship
+     * configuration arguments of the relationship.
      *
      * @param string $name of related model
      * @return mixed

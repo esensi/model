@@ -4,7 +4,7 @@ use \Esensi\Model\Observers\PurgingModelObserver;
 use \Illuminate\Support\Str;
 
 /**
- * Trait that implements the PurgingModelInterface
+ * Trait that implements the Purging Model Interface
  *
  * @package Esensi\Model
  * @author Daniel LaBarge <wishlist@emersonmedia.com>
@@ -17,14 +17,14 @@ use \Illuminate\Support\Str;
 trait PurgingModelTrait {
 
     /**
-     * Whether the model is purging or not
+     * Whether the model is purging or not.
      *
      * @var boolean
      */
     protected $purging = true;
 
     /**
-     * Boot the trait's observers
+     * Boot the trait's observers.
      *
      * @return void
      */
@@ -34,7 +34,7 @@ trait PurgingModelTrait {
     }
 
     /**
-     * Get the purgeable attributes
+     * Get the purgeable attributes.
      *
      * @return array
      */
@@ -44,7 +44,7 @@ trait PurgingModelTrait {
     }
 
     /**
-     * Set the purgeable attributes
+     * Set the purgeable attributes.
      *
      * @param  array $attributes to encrypt
      * @return void
@@ -56,7 +56,7 @@ trait PurgingModelTrait {
 
     /**
      * Returns whether or not the model will purge
-     * attributes before saving
+     * attributes before saving.
      *
      * @return boolean
      */
@@ -67,7 +67,7 @@ trait PurgingModelTrait {
 
     /**
      * Set whether or not the model will purge attributes
-     * before saving
+     * before saving.
      *
      * @param  boolean
      * @return void
@@ -78,7 +78,7 @@ trait PurgingModelTrait {
     }
 
     /**
-     * Returns whether the attribute is purgeable
+     * Returns whether the attribute is purgeable.
      *
      * @param string $attribute name
      * @return boolean
@@ -90,7 +90,7 @@ trait PurgingModelTrait {
     }
 
     /**
-     * Unset attributes that should be purged
+     * Unset attributes that should be purged.
      *
      * @return void
      */

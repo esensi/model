@@ -12,14 +12,14 @@
 interface PurgingModelInterface {
 
     /**
-     * Get the purgeable attributes
+     * Get the purgeable attributes.
      *
      * @return array
      */
     public function getPurgeable();
 
     /**
-     * Set the purgeable attributes
+     * Set the purgeable attributes.
      *
      * @param  array $attributes to encrypt
      * @return void
@@ -28,7 +28,7 @@ interface PurgingModelInterface {
 
     /**
      * Returns whether or not the model will purge
-     * attributes before saving
+     * attributes before saving.
      *
      * @return boolean
      */
@@ -36,7 +36,7 @@ interface PurgingModelInterface {
 
     /**
      * Set whether or not the model will purge attributes
-     * before saving
+     * before saving.
      *
      * @param  boolean
      * @return void
@@ -44,7 +44,7 @@ interface PurgingModelInterface {
     public function setPurging( $value );
 
     /**
-     * Returns whether the attribute is purgeable
+     * Returns whether the attribute is purgeable.
      *
      * @param string $attribute name
      * @return boolean
@@ -52,7 +52,7 @@ interface PurgingModelInterface {
     public function isPurgeable( $attribute );
 
     /**
-     * Unset attributes that should be purged
+     * Unset attributes that should be purged.
      *
      * @return void
      */

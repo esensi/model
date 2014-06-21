@@ -4,7 +4,7 @@ use \Illuminate\Database\Eloquent\SoftDeletingScope;
 use \Illuminate\Database\Eloquent\SoftDeletingTrait;
 
 /**
- * Trait that implements the SoftDeletingModelInterface
+ * Trait that implements the Soft Deleting Model Interface
  *
  * @package Esensi\Model
  * @author Daniel LaBarge <wishlist@emersonmedia.com>
@@ -17,7 +17,7 @@ use \Illuminate\Database\Eloquent\SoftDeletingTrait;
 trait SoftDeletingModelTrait {
 
     /**
-     * Use Illuminate's trait as a base
+     * Use Illuminate's trait as a base.
      *
      * @see \Illuminate\Database\Eloquent\SoftDeletingTrait
      */
@@ -32,13 +32,29 @@ trait SoftDeletingModelTrait {
     public static function bootSoftDeletingTrait(){ }
 
     /**
-     * Boot the trait's observers
+     * Boot the trait's observers.
      *
      * @return void
      */
     public static function bootSoftDeletingModelTrait()
     {
         static::addGlobalScope(new SoftDeletingScope);
+    }
+
+    /**
+     * Get the attributes that should be converted to dates.
+     *
+     * Overwriting this method here allows the developer to
+     * extend the dates using the $dates property without
+     * needing to maintain the "deleted_at" column.
+     *
+     * @return array
+     */
+    public function getDates()
+    {
+        $defaults = array(static::CREATED_AT, static::UPDATED_AT, $this->getDeletedAtColumn());
+
+        return array_merge($this->dates, $defaults);
     }
 
 }

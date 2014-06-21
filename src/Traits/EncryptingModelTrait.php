@@ -5,7 +5,7 @@ use \Illuminate\Encryption\Encrypter;
 use \Illuminate\Encryption\DecryptException;
 
 /**
- * Trait that implements the EncryptingModelInterface
+ * Trait that implements the Encrypting Model Interface
  *
  * @package Esensi\Model
  * @author Daniel LaBarge <wishlist@emersonmedia.com>
@@ -18,21 +18,21 @@ use \Illuminate\Encryption\DecryptException;
 trait EncryptingModelTrait {
 
     /**
-     * Whether the model is encrypting or not
+     * Whether the model is encrypting or not.
      *
      * @var boolean
      */
     protected $encrypting = true;
 
     /**
-     * The Encrypter to use for encryption
+     * The Encrypter to use for encryption.
      *
      * @var \Illuminate\Encryption\Encrypter
      */
     protected $encrypter;
 
     /**
-     * Get the encryptable attributes
+     * Get the encryptable attributes.
      *
      * @return array
      */
@@ -42,7 +42,7 @@ trait EncryptingModelTrait {
     }
 
     /**
-     * Set the encryptable attributes
+     * Set the encryptable attributes.
      *
      * @param  array $attributes to encrypt
      * @return void
@@ -54,7 +54,7 @@ trait EncryptingModelTrait {
 
     /**
      * Returns whether or not the model will encrypt
-     * attributes when setting and decrypt when getting
+     * attributes when setting and decrypt when getting.
      *
      * @return boolean
      */
@@ -65,7 +65,7 @@ trait EncryptingModelTrait {
 
     /**
      * Set whether or not the model will encrypt attributes
-     * when setting and decrypt when getting
+     * when setting and decrypt when getting.
      *
      * @param  boolean
      * @return void
@@ -76,7 +76,7 @@ trait EncryptingModelTrait {
     }
 
     /**
-     * Set the Encrypter to use for encryption
+     * Set the Encrypter to use for encryption.
      *
      * @return \Illuminate\Encryption\Encrypter
      */
@@ -86,7 +86,7 @@ trait EncryptingModelTrait {
     }
 
     /**
-     * Set the Encrypter to use for encryption
+     * Set the Encrypter to use for encryption.
      *
      * @param \Illuminate\Encryption\Encrypter $encrypter
      * @return void
@@ -97,7 +97,7 @@ trait EncryptingModelTrait {
     }
 
     /**
-     * Returns whether the attribute is encryptable
+     * Returns whether the attribute is encryptable.
      *
      * @param string $attribute name
      * @return boolean
@@ -109,7 +109,7 @@ trait EncryptingModelTrait {
     }
 
     /**
-     * Returns whether the attribute is encrypted
+     * Returns whether the attribute is encrypted.
      *
      * @param string $attribute name
      * @return boolean
@@ -134,7 +134,7 @@ trait EncryptingModelTrait {
     }
 
     /**
-     * Returns whether the attribute is decrypted
+     * Returns whether the attribute is decrypted.
      *
      * @param string $attribute name
      * @return boolean
@@ -145,7 +145,7 @@ trait EncryptingModelTrait {
     }
 
     /**
-     * Encrypt attributes that should be encrypted
+     * Encrypt attributes that should be encrypted.
      *
      * @return void
      */
@@ -158,7 +158,7 @@ trait EncryptingModelTrait {
     }
 
     /**
-     * Return an encrypted string for the value
+     * Return an encrypted string for the value.
      *
      * @param string $value
      * @return string
@@ -170,7 +170,7 @@ trait EncryptingModelTrait {
     }
 
     /**
-     * Return a decrypted string for the value
+     * Return a decrypted string for the value.
      *
      * @param string $value
      * @return string
@@ -182,7 +182,7 @@ trait EncryptingModelTrait {
     }
 
     /**
-     * Get the decrypted value for an encrypted attribute
+     * Get the decrypted value for an encrypted attribute.
      *
      * @param string $attribute name
      * @return string
@@ -193,7 +193,7 @@ trait EncryptingModelTrait {
     }
 
     /**
-     * Set an encrypted value for an encryptable attribute
+     * Set an encrypted value for an encryptable attribute.
      *
      * @param string $attribute name
      * @param string $value to encrypt

@@ -12,7 +12,7 @@
 interface RelatingModelInterface {
 
     /**
-     * Return the relationship configurations
+     * Return the relationship configurations.
      *
      * @param string $name of related model
      * @return array
@@ -21,7 +21,7 @@ interface RelatingModelInterface {
     public function getRelationship( $name );
 
     /**
-     * Return whether the name is a relationship or not
+     * Return whether the name is a relationship or not.
      *
      * @param string $name of related model
      * @return boolean
@@ -30,7 +30,7 @@ interface RelatingModelInterface {
 
     /**
      * Proxy call a relationship method using the
-     * configuration arguments of the relationship
+     * configuration arguments of the relationship.
      *
      * @param string $name of related model
      * @return mixed

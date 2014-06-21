@@ -4,7 +4,7 @@ use \Esensi\Model\Model;
 use \Watson\Validating\ValidatingObserver;
 
 /**
- * Model observer for ValidatingModelTrait
+ * Model observer for Validating Model Trait
  *
  * @package Esensi\Model
  * @author Daniel LaBarge <wishlist@emersonmedia.com>

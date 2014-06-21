@@ -14,14 +14,14 @@ use \Illuminate\Encryption\Encrypter;
 interface EncryptingModelInterface {
 
     /**
-     * Get the encryptable attributes
+     * Get the encryptable attributes.
      *
      * @return array
      */
     public function getEncryptable();
 
     /**
-     * Set the encryptable attributes
+     * Set the encryptable attributes.
      *
      * @param  array $attributes to encrypt
      * @return void
@@ -30,7 +30,7 @@ interface EncryptingModelInterface {
 
     /**
      * Returns whether or not the model will encrypt
-     * attributes when setting and decrypt when getting
+     * attributes when setting and decrypt when getting.
      *
      * @return boolean
      */
@@ -38,7 +38,7 @@ interface EncryptingModelInterface {
 
     /**
      * Set whether or not the model will encrypt attributes
-     * when setting and decrypt when getting
+     * when setting and decrypt when getting.
      *
      * @param  boolean
      * @return void
@@ -46,14 +46,14 @@ interface EncryptingModelInterface {
     public function setEncrypting( $value );
 
     /**
-     * Set the Encrypter to use for encryption
+     * Set the Encrypter to use for encryption.
      *
      * @return \Illuminate\Encryption\Encrypter $encrypter
      */
     public function getEncrypter();
 
     /**
-     * Set the Encrypter to use for encryption
+     * Set the Encrypter to use for encryption.
      *
      * @param \Illuminate\Encryption\Encrypter $encrypter
      * @return void
@@ -61,7 +61,7 @@ interface EncryptingModelInterface {
     public function setEncrypter( Encrypter $encrypter );
 
     /**
-     * Returns whether the attribute is encryptable
+     * Returns whether the attribute is encryptable.
      *
      * @param string $attribute name
      * @return boolean
@@ -69,7 +69,7 @@ interface EncryptingModelInterface {
     public function isEncryptable( $attribute );
 
     /**
-     * Returns whether the attribute is encrypted
+     * Returns whether the attribute is encrypted.
      *
      * @param string $attribute name
      * @return boolean
@@ -77,7 +77,7 @@ interface EncryptingModelInterface {
     public function isEncrypted( $attribute );
 
     /**
-     * Returns whether the attribute is decrypted
+     * Returns whether the attribute is decrypted.
      *
      * @param string $attribute name
      * @return boolean
@@ -85,14 +85,14 @@ interface EncryptingModelInterface {
     public function isDecrypted( $attribute );
 
     /**
-     * Encrypt attributes that should be encrypted
+     * Encrypt attributes that should be encrypted.
      *
      * @return void
      */
     public function encryptAttributes();
 
     /**
-     * Return an encrypted string for the value
+     * Return an encrypted string for the value.
      *
      * @param string $value
      * @return string
@@ -100,7 +100,7 @@ interface EncryptingModelInterface {
     public function encrypt( $value );
 
     /**
-     * Return a decrypted string for the value
+     * Return a decrypted string for the value.
      *
      * @param string $value
      * @return string
@@ -108,7 +108,7 @@ interface EncryptingModelInterface {
     public function decrypt( $value );
 
     /**
-     * Get the decrypted value for an encrypted attribute
+     * Get the decrypted value for an encrypted attribute.
      *
      * @param string $attribute name
      * @return string
@@ -116,7 +116,7 @@ interface EncryptingModelInterface {
     function getEncryptedAttribute( $attribute );
 
     /**
-     * Set an encrypted value for an encryptable attribute
+     * Set an encrypted value for an encryptable attribute.
      *
      * @param string $attribute name
      * @param string $value to encrypt

@@ -18,9 +18,7 @@ use \PHPUnit_Framework_TestCase as PHPUnit;
 class EncryptingModelTraitTest extends PHPUnit {
 
     /**
-     * Set Up and Prepare Tests
-     *
-     * @return void
+     * Set Up and Prepare Tests.
      */
     public function setUp()
     {
@@ -30,9 +28,7 @@ class EncryptingModelTraitTest extends PHPUnit {
     }
 
     /**
-     * Tear Down and Clean Up Tests
-     *
-     * @return void
+     * Tear Down and Clean Up Tests.
      */
     public function tearDown()
     {
@@ -40,9 +36,7 @@ class EncryptingModelTraitTest extends PHPUnit {
     }
 
     /**
-     * Enables encrypting on mock
-     *
-     * @return void
+     * Enables encrypting on mock.
      */
     protected function enableEncryptingOnMock()
     {
@@ -53,9 +47,7 @@ class EncryptingModelTraitTest extends PHPUnit {
     }
 
     /**
-     * Disables encrypting on mock
-     *
-     * @return void
+     * Disables encrypting on mock.
      */
     protected function disableEncryptingOnMock()
     {
@@ -66,9 +58,7 @@ class EncryptingModelTraitTest extends PHPUnit {
     }
 
     /**
-     * Sets the encrypter on mock
-     *
-     * @return void
+     * Sets the encrypter on mock.
      */
     public function setEncrypterOnMock()
     {
@@ -76,9 +66,7 @@ class EncryptingModelTraitTest extends PHPUnit {
     }
 
     /**
-     * Test that Encrypting is enabled by default
-     *
-     * @return void
+     * Test that Encrypting is enabled by default.
      */
     public function testEncryptingEnabledByDefault()
     {
@@ -86,9 +74,7 @@ class EncryptingModelTraitTest extends PHPUnit {
     }
 
     /**
-     * Test that Encrypting can be enabled and disabled
-     *
-     * @return void
+     * Test that Encrypting can be enabled and disabled.
      */
     public function testSettingEncryption()
     {
@@ -102,9 +88,7 @@ class EncryptingModelTraitTest extends PHPUnit {
     }
 
     /**
-     * Test that Encryptable attributes can be gotten
-     *
-     * @return void
+     * Test that Encryptable attributes can be gotten.
      */
     public function testGettingEncryptableAttributes()
     {
@@ -122,9 +106,7 @@ class EncryptingModelTraitTest extends PHPUnit {
     }
 
     /**
-     * Test that Encryptable attributes can be set
-     *
-     * @return void
+     * Test that Encryptable attributes can be set.
      */
     public function testSettingEncryptableAttributes()
     {
@@ -145,9 +127,7 @@ class EncryptingModelTraitTest extends PHPUnit {
     }
 
     /**
-     * Test that the Encrypter can be gotten
-     *
-     * @return void
+     * Test that the Encrypter can be gotten.
      */
     public function testGettingEncrypter()
     {
@@ -158,9 +138,7 @@ class EncryptingModelTraitTest extends PHPUnit {
     }
 
     /**
-     * Test that the Encrypter can be set
-     *
-     * @return void
+     * Test that the Encrypter can be set.
      */
     public function testSettingEncrypter()
     {
@@ -173,9 +151,7 @@ class EncryptingModelTraitTest extends PHPUnit {
 
     /**
      * Test that isEncryptable returns true when encryption is enabled
-     * and the attribute is Encryptable
-     *
-     * @return void
+     * and the attribute is Encryptable.
      */
     public function testIsEncryptableReturnsTrue()
     {
@@ -193,9 +169,7 @@ class EncryptingModelTraitTest extends PHPUnit {
 
     /**
      * Test that non-Encryptable attribute is not Encryptable even
-     * when encrypting is enabled
-     *
-     * @return void
+     * when encrypting is enabled.
      */
     public function testIsEncryptableReturnsFalseWhenNotSet()
     {
@@ -213,9 +187,7 @@ class EncryptingModelTraitTest extends PHPUnit {
 
     /**
      * Test that Encryptable attribute is not Encryptable when
-     * encrypting is disabled
-     *
-     * @return void
+     * encrypting is disabled.
      */
     public function testIsEncryptableReturnsFalseWhenDisabled()
     {
@@ -231,9 +203,7 @@ class EncryptingModelTraitTest extends PHPUnit {
     }
 
     /**
-     * Test that isEncrypted returns true when attribute value is encrypted
-     *
-     * @return void
+     * Test that isEncrypted returns true when attribute value is encrypted.
      */
     public function testIsEncryptedReturnsTrue()
     {
@@ -256,9 +226,7 @@ class EncryptingModelTraitTest extends PHPUnit {
 
     /**
      * Test that isEncrypted returns false when attribute value
-     * is not encrypted or otherwise doesn't exist
-     *
-     * @return void
+     * is not encrypted or otherwise doesn't exist.
      */
     public function testIsEncryptedReturnsFalse()
     {
@@ -279,9 +247,7 @@ class EncryptingModelTraitTest extends PHPUnit {
     }
 
     /**
-     * Test that isDecrypted returns the inverse of isEncrypted
-     *
-     * @return void
+     * Test that isDecrypted returns the inverse of isEncrypted.
      */
     public function testIsDecryptedReturnsTheInverse()
     {
@@ -290,9 +256,7 @@ class EncryptingModelTraitTest extends PHPUnit {
     }
 
     /**
-     * Test that all encryptable attributes are encrypted
-     *
-     * @return void
+     * Test that all encryptable attributes are encrypted.
      */
     public function testEncryptAttributes()
     {
@@ -313,9 +277,7 @@ class EncryptingModelTraitTest extends PHPUnit {
     }
 
     /**
-     * Test that encrypt() encrypts the value
-     *
-     * @return void
+     * Test that encrypt() encrypts the value.
      */
     public function testEncrypt()
     {
@@ -325,9 +287,7 @@ class EncryptingModelTraitTest extends PHPUnit {
     }
 
     /**
-     * Test that decrypt() decrypts the value
-     *
-     * @return void
+     * Test that decrypt() decrypts the value.
      */
     public function testDecrypt()
     {
@@ -340,9 +300,7 @@ class EncryptingModelTraitTest extends PHPUnit {
     }
 
     /**
-     * Test that getEncryptedAttribute() decrypts the attribute value
-     *
-     * @return void
+     * Test that getEncryptedAttribute() decrypts the attribute value.
      */
     public function testGetDecryptAttribute()
     {
@@ -379,9 +337,7 @@ class EncryptingModelTraitTest extends PHPUnit {
     }
 
     /**
-     * Test that setEncryptingAttribute() encrypts the attribute value
-     *
-     * @return void
+     * Test that setEncryptingAttribute() encrypts the attribute value.
      */
     public function testSetEncryptingAttribute()
     {
@@ -420,14 +376,14 @@ class ModelEncryptingStub extends Model {
 
     /**
      * The attributes to encrypt when set and
-     * decrypt when gotten
+     * decrypt when gotten.
      *
      * @var array
      */
     protected $encryptable = ['foo'];
 
     /**
-     * Create a new model instance
+     * Create a new model instance.
      *
      * @return ModelEncryptingStub
      */
