@@ -1,0 +1,44 @@
+<?php namespace Esensi\Model\Traits;
+
+use \Illuminate\Database\Eloquent\SoftDeletingScope;
+use \Illuminate\Database\Eloquent\SoftDeletingTrait;
+
+/**
+ * Trait that implements the SoftDeletingModelInterface
+ *
+ * @package Esensi\Model
+ * @author Daniel LaBarge <wishlist@emersonmedia.com>
+ * @copyright 2014 Emerson Media LP
+ * @license https://github.com/esensi/model/blob/master/LICENSE.txt MIT License
+ * @link http://www.emersonmedia.com
+ *
+ * @see \Esensi\Model\Contracts\SoftDeletingModelInterface
+ */
+trait SoftDeletingModelTrait {
+
+    /**
+     * Use Illuminate's trait as a base
+     *
+     * @see \Illuminate\Database\Eloquent\SoftDeletingTrait
+     */
+    use SoftDeletingTrait;
+
+    /**
+     * We want to boot our own observer so we stub out this
+     * boot method. This renders this function void.
+     *
+     * @return void
+     */
+    public static function bootSoftDeletingTrait(){ }
+
+    /**
+     * Boot the trait's observers
+     *
+     * @return void
+     */
+    public static function bootSoftDeletingModelTrait()
+    {
+        static::addGlobalScope(new SoftDeletingScope);
+    }
+
+}

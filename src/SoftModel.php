@@ -16,7 +16,7 @@ use \Esensi\Model\Traits\SoftDeletingModelTrait;
  * @see \Esensi\Model\Model
  * @see \Esensi\Model\Contracts\SoftDeletingModelInterface
  */
-abstract class SoftModel extends Model implements SoftDeletingModelInterface {
+class SoftModel extends Model implements SoftDeletingModelInterface {
 
     /**
      * Make model use soft deletes.

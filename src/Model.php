@@ -28,7 +28,7 @@ use \Illuminate\Database\Eloquent\Model as Eloquent;
  * @see \Esensi\Model\Contracts\RelatingModelInterface
  * @see \Esensi\Model\Contracts\ValidatingModelInterface
  */
-abstract class Model extends Eloquent implements
+class Model extends Eloquent implements
     EncryptingModelInterface,
     HashingModelInterface,
     PurgingModelInterface,
