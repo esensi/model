@@ -15,13 +15,13 @@ The `Esensi/Model` package is just one package that makes up [Esensi](https://gi
 
 ### Add the Package to Composer
 
-Add the `esensi/model` package as a dependency to the application's `composer.json` file. From the command line, using [Composer](https://getcomposer.org), this can be done like so:
+Add the `esensi/model` package as a dependency to the application. Using [Composer](https://getcomposer.org), this can be done from the command line:
 
 ```bash
-php composer.phar require esensi/modal 0.3.*
+composer require esensi/modal 0.3.*
 ```
 
-Or manually it can be added to the `require` key of the `composer.json` file:
+Or manually it can be added to the `composer.json` file:
 
 ```json
 {
@@ -31,11 +31,11 @@ Or manually it can be added to the `require` key of the `composer.json` file:
 }
 ```
 
-If manually adding the package, then be sure to run `php composer.phar update` to update the dependencies.
+If manually adding the package, then be sure to run `composer update` to update the dependencies.
 
 ### Extend the Default Model
 
-The simplest way to demonstrate the traits is to extend the the base [`Esensi\Model\Model`](https://github.com/esensi/model/blob/master/src/Model.php). If the application required a simple blog, then the developer could create a `Post` model that automatically handled validation, purging, hashing, encrypting, and even simplified relationship binding by simply extending this ready-to-go model:
+The simplest way to demonstrate the traits is to extend the base [`Esensi\Model\Model`](https://github.com/esensi/model/blob/master/src/Model.php). For example, if the application requires a simple blog, then the developer could create a `Post` model that automatically handles validation, purging, hashing, encrypting, and even simplified relationship bindings by simply extending this ready-to-go model:
 
 ```php
 <?php
@@ -54,11 +54,11 @@ class Post extends Model {
 }
 ```
 
-> **Tip:** Take a look at the generously commented [`Esensi\Model\Model`](https://github.com/esensi/model/blob/master/src/Model.php) source code for details on how to use individual traits without extending the default model.
+> **Pro Tip:** Take a look at the generously commented [`Esensi\Model\Model`](https://github.com/esensi/model/blob/master/src/Model.php) source code for details on how to use individual traits without extending the default model.
 
 ### Use Soft Deletes Instead
 
-If the application requires that the articles be sent to the trash before permanently deleting them, then the developer can use swap out the [`Esensi\Model\Model`](https://github.com/esensi/model/blob/master/src/Model.php) with the soft deleting version [`Esensi\Model\SoftModel`](https://github.com/esensi/model/blob/master/src/SoftModel.php) like so:
+If the application requires that the articles be sent to the trash before permanently deleting them, then the developer can just swap out the [`Esensi\Model\Model`](https://github.com/esensi/model/blob/master/src/Model.php) with the soft deleting version [`Esensi\Model\SoftModel`](https://github.com/esensi/model/blob/master/src/SoftModel.php) like so:
 
 ```php
 <?php
@@ -70,7 +70,7 @@ class Post extends SoftModel {
 }
 ```
 
-> **Tip:** While Laravel includes `SoftDeletingTrait`, Esensi expands upon this by also forcing the trait to comply with a [`SoftDeletingModelInterface`](https://github.com/esensi/model/blob/0.3/src/Contracts/SoftDeletingModelInterface.php) contract. This ensures a higher level of compatibility and code integrity.
+> **Pro Tip:** While Laravel includes `SoftDeletingTrait`, Esensi expands upon this by also forcing the trait to comply with a [`SoftDeletingModelInterface`](https://github.com/esensi/model/blob/0.3/src/Contracts/SoftDeletingModelInterface.php) contract. This ensures a higher level of compatibility and code integrity.
 
 ## Table of Contents
 
