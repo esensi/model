@@ -98,8 +98,8 @@ class Post extends SoftModel {
     - Using Force Delete
 - **[Relating Model Trait](#relating-model-trait)**
     - [Using Simplified Relationships](#using-simplified-relationships)
-- **Unit Tests**
-    - Running the Unit Tests
+- **[Unit Testing](#unit-testing)**
+    - [Running the Unit Tests](#running-the-unit-tests) 
 - **[Contributing](#contributing)**
 - **[Licensing](#licensing)**
 
@@ -345,12 +345,37 @@ Route::get( 'posts/{id}/comments', function( $id )
 });
 ```
 
+## Unit Testing
+
+The [Esensi](http://github.com/esensi) platform includes other great packages just like this [Esensi/Model](http://github.com/esensi/model) package. This package is currently tagged as `0.3.x` because the other platform packages are not ready for public release. While the others may still be under development, this package already includes features that would be mature enough for a `1.x` release including unit testing and extensive testiing in real-world applications.
+
+### Running the Unit Tests
+
+This package uses [PHPUnit](http://phpunit.de) to automate the code testing process. It is included as one of the development dependencies in the `composer.json` file:
+
+```json
+{
+    "require-dev": {
+        "phpunit/phpunit": "4.1.*",
+        "mockery/mockery": "0.9.*"
+    }
+}
+```
+
+The test suite can be ran from the command line using the `phpunit` test runner:
+
+```bash
+phpunit ./tests
+```
+
+> **Pro Tip:** Please help the open-source community out by including good code test coverage with your pull requests. The Esensi development team will review pull requests with unit tests and passing tests as a priority. Significant code changes that do not include unit tests will _not_ be merged.
+
 ## Contributing
 
 > **Want to work with us on great Laravel applications?**
 Email us at [careers@emersonmedia.com](http://emersonmedia.com/contact)
 
-[Emerson Media](http://www.emersonmedia.com) is proud to work with some of the most talented developers in the PHP community. The developer team welcomes requests, suggestions, issues, and of course pull requests. When submitting issues please be as detailed as possible and provide code examples where possible. When submitting pull requests please follow the same code formatting and style guides that the Esensi code base uses. Please help the open-source community out by including good code test coverage with your pull requests. **All pull requests must be submitted to the version branch to which the code changes apply.**
+[Emerson Media](http://www.emersonmedia.com) is proud to work with some of the most talented developers in the PHP community. The developer team welcomes requests, suggestions, issues, and of course pull requests. When submitting issues please be as detailed as possible and provide code examples where possible. When submitting pull requests please follow the same code formatting and style guides that the Esensi code base uses. Please help the open-source community out by including good code test coverage with your pull requests. **All pull requests _must_ be submitted to the version branch to which the code changes apply.**
 
 ## Licensing
 
