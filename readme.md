@@ -75,33 +75,33 @@ class Post extends SoftModel {
 
 ## Table of Contents
 
-- [Validating Model Trait](#validating-model-trait)
+- **[Validating Model Trait](#validating-model-trait)**
     - [Auto-Validating on Save](#auto-validating-on-save)
     - Manually Validating Models
     - Handling Validation Errors
     - Using Force Save
-- Purging Model Trait
+- **Purging Model Trait**
     - Auto-Purging on Save
     - Using the Purgeable Property
-- Hashing Model Trait
+- **Hashing Model Trait**
     - Auto-Hashing on Save
     - Using the Hashable Property
     - Checking Hash Value
-- Encrypting Model Trait
+- **Encrypting Model Trait**
     - Auto-Encrypting on Set
     - Auto-Decrypting on Get
     - Using the Encryptable Property
     - Checking Encryption State
-- Soft Deleting Model Trait
+- **Soft Deleting Model Trait**
     - Using Soft Deletes
     - Adding Custom Dates
     - Using Force Delete
-- [Relating Model Trait](#relating-model-trait)
+- **[Relating Model Trait](#relating-model-trait)**
     - [Using Simplified Relationships](#using-simplified-relationships)
-- Unit Tests
+- **Unit Tests**
     - Running the Unit Tests
-- [Contributing](#contributing)
-- [Licensing](#licensing)
+- **[Contributing](#contributing)**
+- **[Licensing](#licensing)**
 
 ## Validating Model Trait
 
