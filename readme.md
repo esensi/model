@@ -347,7 +347,7 @@ Route::get( 'posts/{id}/comments', function( $id )
 
 ## Unit Testing
 
-The [Esensi](http://github.com/esensi) platform includes other great packages just like this [Esensi/Model](http://github.com/esensi/model) package. This package is currently tagged as `0.3.x` because the other platform packages are not ready for public release. While the others may still be under development, this package already includes features that would be mature enough for a `1.x` release including unit testing and extensive testiing in real-world applications.
+The [Esensi](http://github.com/esensi) platform includes other great packages just like this [Esensi/Model](http://github.com/esensi/model) package. This package is currently tagged as `0.3.x` because the other platform packages are not ready for public release. While the others may still be under development, this package already includes features that would be mature enough for a `1.x` release including unit testing and extensive testing in real-world applications.
 
 ### Running the Unit Tests
 
