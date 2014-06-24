@@ -21,7 +21,7 @@ Add the `esensi/model` package as a dependency to the application's `composer.js
 php composer.phar require esensi/modal 0.3.*
 ```
 
-Or manually it can be add to `require` key of the `composer.json` file:
+Or manually it can be added to the `require` key of the `composer.json` file:
 
 ```json
 {
