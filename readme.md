@@ -114,7 +114,7 @@ This package includes the [`ValidatingModelTrait`](https://github.com/esensi/mod
 - Ability to `forceSave()` a model and bypass validation rules that would other wise prevent a model from saving
 - Automatic injection (or not) of the model's identifier for `unique` validation rules
 
-Like all the traits it is self-contained and can be used individually. Special credit goes to the very talented [Dwight Watson](https://github.com/dwightwatson) and his [Watson/Validating Laravel package](https://github.com/dwightwatson/validating) which is the basis for this trait. Emerson Media collaborated with him as he created the package. Esensi wraps his traits with consistent naming conventions for the other Esensi model traits. Please review his package in detail to see the inner workings.
+Like all the traits, it is self-contained and can be used individually. Special credit goes to the very talented [Dwight Watson](https://github.com/dwightwatson) and his [Watson/Validating Laravel package](https://github.com/dwightwatson/validating) which is the basis for this trait. Emerson Media collaborated with him as he created the package. Esensi wraps his traits with consistent naming conventions for the other Esensi model traits. Please review his package in detail to see the inner workings.
 
 ### Auto-Validating On Save
 
@@ -225,11 +225,11 @@ Calling the `save()` method on the newly created `Post` model would instead use 
 
 This package includes the [`RelatingModelTrait`](https://github.com/esensi/model/blob/master/src/Traits/RelatingModelTrait.php) which implements the [`RelatingModelInterface`](https://github.com/esensi/model/blob/master/src/Contracts/RelatingModelInterface.php) on any `Eloquent` model that uses it. The `RelatingModelTrait` adds methods to `Eloquent` models for automatically resolving related models:
 
-- from simplified configs
-- as magic method calls
-- as magic attribute calls
+- from simplified configs using the `$relationships` property
+- as magic method calls such as `Post::find($id)->comments()->all()`
+- as magic attribute calls such as `Post::find($id)->author`
 
-Like all the traits it is self-contained and can be used individually. Using this trait does require a few changes to the actual model which makes this trait's use a bit unique and is better used on a base model like [Esensi\Model\Model](https://github.com/esensi/model/blob/master/src/Model.php). Special credit goes to [Phillip Brown](https://github.com/phillipbrown) and his [Philipbrown/Magniloquent Laravel package](https://github.com/philipbrown/magniloquent) which contained was the inspiration for this trait.
+Like all the traits, it is self-contained and can be used individually. Using this trait does require a few extra changes to the actual model which makes this trait's use a better fitted for a base model like [Esensi\Model\Model](https://github.com/esensi/model/blob/master/src/Model.php). Special credit goes to [Phillip Brown](https://github.com/phillipbrown) and his [Philipbrown/Magniloquent Laravel package](https://github.com/philipbrown/magniloquent) which inspired this trait.
 
 ### Using Simplified Relationships
 
@@ -248,8 +248,8 @@ class Post extends Eloquent implements RelatingModelInterface {
 
     /**
      * These are the relationships that the model should set up.
-     * Using PHP and Laravel's magic methods, these relationship
-     * keys resolve to the actual models automatically.
+     * Using PHP and Laravel's magic, these relationship keys
+     * resolve to the actual models automatically.
      *
      * @example relationship bindings:
      *
@@ -259,8 +259,8 @@ class Post extends Eloquent implements RelatingModelInterface {
      *     [ 'belongsTo', 'related', 'foreignKey', 'otherKey', 'relation' ]
      *     [ 'belongsToMany', 'related', 'foreignKey', 'otherKey', 'relation' ]
      *     [ 'morphOne', 'related', 'name', 'type', 'id', 'localKey' ]
-     *     [ 'morphTo', 'name', 'type', 'id' ]
      *     [ 'morphMany', 'related', 'name', 'type', 'id', 'localKey' ]
+     *     [ 'morphTo', 'name', 'type', 'id' ]
      *     [ 'morphToMany', 'related', 'name', 'table', 'foreignKey', 'otherKey', 'inverse' ]
      *     [ 'morphByMany', 'related', 'name', 'table', 'foreignKey', 'otherKey' ]
      *
