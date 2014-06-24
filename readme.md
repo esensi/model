@@ -9,11 +9,11 @@ The `Esensi/Model` package is just one package that makes up [Esensi](https://gi
 
 > **Have a project in mind?** _Email us at [sales@emersonmedia.com](http://emersonmedia.com/contact), or call 1.877.439.6665._
 
-### Quick Start
+## Quick Start
 
 > **Notice:** _This code is specifically designed to be compatible with the [Laravel Framework](http://laravel.com) and may not be compatible as a stand-alone dependency or as part of another framework._
 
-#### Add the Package to Composer
+### Add the Package to Composer
 
 Add the `esensi/model` package as a dependency to the application's `composer.json` file. From the command line, using [Composer](https://getcomposer.org), this can be done like so:
 
@@ -33,7 +33,7 @@ Or manually it can be add to `require` key of the `composer.json` file:
 
 If manually adding the package, then be sure to run `php composer.phar update` to update the dependencies.
 
-#### Extend the Default Model
+### Extend the Default Model
 
 The simplest way to demonstrate the traits is to extend the the base [`Esensi\Model\Model`](https://github.com/esensi/model/blob/master/src/Model.php). If the application required a simple blog, then the developer could create a `Post` model that automatically handled validation, purging, hashing, encrypting, and even simplified relationship binding by simply extending this ready-to-go model:
 
@@ -56,7 +56,7 @@ class Post extends Model {
 
 > **Tip:** Take a look at the generously commented [`Esensi\Model\Model`](https://github.com/esensi/model/blob/master/src/Model.php) source code for details on how to use individual traits without extending the default model.
 
-#### Use Soft Deletes Too
+### Use Soft Deletes Instead
 
 If the application requires that the articles be sent to the trash before permanently deleting them, then the developer can use swap out the [`Esensi\Model\Model`](https://github.com/esensi/model/blob/master/src/Model.php) with the soft deleting version [`Esensi\Model\SoftModel`](https://github.com/esensi/model/blob/master/src/SoftModel.php) like so:
 
@@ -72,7 +72,7 @@ class Post extends SoftModel {
 
 > **Tip:** While Laravel includes `SoftDeletingTrait`, Esensi expands upon this by also forcing the trait to comply with a [`SoftDeletingModelInterface`](https://github.com/esensi/model/blob/0.3/src/Contracts/SoftDeletingModelInterface.php) contract. This ensures a higher level of compatibility and code integrity.
 
-### Table of Contents
+## Table of Contents
 
 - [Validating Model Trait](#validating-model-trait)
     - [Auto-Validating on Save](#auto-validating-on-save)
@@ -103,7 +103,7 @@ class Post extends SoftModel {
     - Contributing
     - MIT License
 
-### Validating Model Trait
+## Validating Model Trait
 
 This package includes the [`ValidatingModelTrait`](https://github.com/esensi/model/blob/master/src/Traits/ValidatingModelTrait.php) which implements the [`ValidatingModelInterface`](https://github.com/esensi/model/blob/master/src/Contracts/ValidatingModelInterface.php) on any `Eloquent` model that uses it. The `ValidatingModelTrait` adds methods to `Eloquent` models for:
 
@@ -116,7 +116,7 @@ This package includes the [`ValidatingModelTrait`](https://github.com/esensi/mod
 
 Like all the traits it is self-contained and can be used individually. Special credit goes to the very talented [Dwight Watson](https://github.com/dwightwatson) and his [Watson/Validating Laravel package](https://github.com/dwightwatson/validating) which is the basis for this trait. Emerson Media collaborated with him as he created the package. Esensi wraps his traits with consistent naming conventions for the other Esensi model traits. Please review his package in detail to see the inner workings.
 
-#### Auto-Validating On Save
+### Auto-Validating On Save
 
 While developers can of course use the [`Model`](https://github.com/esensi/model/blob/master/src/Model.php) or [`SoftModel`](https://github.com/esensi/model/blob/master/src/SoftModel.php) classes which already include the [`ValidatingModelTrait`](https://github.com/esensi/model/blob/master/src/Traits/ValidatingModelTrait.php), the following code will demonstrate adding auto-validation to any `Eloquent` based model.
 
