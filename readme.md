@@ -44,7 +44,7 @@ The simplest way to demonstrate the traits is to extend the base [`Esensi\Model\
 use \Esensi\Model\Model;
 
 class Post extends Model {
-  
+
     /**
      * The database table used by the model.
      *
@@ -173,7 +173,7 @@ class Post extends Eloquent implements ValidatingModelInterface {
      * @var array
      */
     protected $rulesets = [
-       
+
         'creating' => [
             'title' => [ 'required', 'max:64' ],
             'slug' => [ 'required', 'alpha_dash', 'max:16', 'unique' ],
@@ -220,6 +220,130 @@ Route::post( 'posts', function()
 ```
 
 Calling the `save()` method on the newly created `Post` model would instead use the "updating" ruleset from `Post::$ruleset` while saving. If that ruleset did not exist then it would default to using the `Post::$rules`.
+
+## Relating Model Trait
+
+This package includes the [`RelatingModelTrait`](https://github.com/esensi/model/blob/master/src/Traits/RelatingModelTrait.php) which implements the [`RelatingModelInterface`](https://github.com/esensi/model/blob/master/src/Contracts/RelatingModelInterface.php) on any `Eloquent` model that uses it. The `RelatingModelTrait` adds methods to `Eloquent` models for automatically resolving related models:
+
+- from simplified configs
+- as magic method calls
+- as magic attribute calls
+
+Like all the traits it is self-contained and can be used individually. Using this trait does require a few changes to the actual model which makes this trait's use a bit unique and is better used on a base model like [Esensi\Model\Model](https://github.com/esensi/model/blob/master/src/Model.php). Special credit goes to [Phillip Brown](https://github.com/phillipbrown) and his [Philipbrown/Magniloquent Laravel package](https://github.com/philipbrown/magniloquent) which contained was the inspiration for this trait.
+
+### Using Simplified Relationships
+
+While developers can of course use the [`Model`](https://github.com/esensi/model/blob/master/src/Model.php) or [`SoftModel`](https://github.com/esensi/model/blob/master/src/SoftModel.php) classes which already include the [`RelatingModelTrait`](https://github.com/esensi/model/blob/master/src/Traits/RelatingModelTrait.php), the following code will demonstrate adding simplified relationship bindings to any `Eloquent` based model.
+
+```php
+<?php
+
+use \Esensi\Model\Contracts\RelatingModelInterface;
+use \Esensi\Model\Traits\RelatingModelTrait;
+use \Illuminate\Database\Eloquent\Model as Eloquent;
+
+class Post extends Eloquent implements RelatingModelInterface {
+
+    use RelatingModelTrait;
+
+    /**
+     * These are the relationships that the model should set up.
+     * Using PHP and Laravel's magic methods, these relationship
+     * keys resolve to the actual models automatically.
+     *
+     * @example relationship bindings:
+     *
+     *     [ 'hasOne', 'related', 'foreignKey', 'localKey' ]
+     *     [ 'hasMany', 'related', 'foreignKey', 'localKey' ]
+     *     [ 'hasManyThrough', 'related', 'through', 'firstKey', 'secondKey' ]
+     *     [ 'belongsTo', 'related', 'foreignKey', 'otherKey', 'relation' ]
+     *     [ 'belongsToMany', 'related', 'foreignKey', 'otherKey', 'relation' ]
+     *     [ 'morphOne', 'related', 'name', 'type', 'id', 'localKey' ]
+     *     [ 'morphTo', 'name', 'type', 'id' ]
+     *     [ 'morphMany', 'related', 'name', 'type', 'id', 'localKey' ]
+     *     [ 'morphToMany', 'related', 'name', 'table', 'foreignKey', 'otherKey', 'inverse' ]
+     *     [ 'morphByMany', 'related', 'name', 'table', 'foreignKey', 'otherKey' ]
+     *
+     * @var array
+     */
+    protected $relationships = [
+        
+        // Bind Comment model as a hasMany relationship.
+        // Use Post::comments() to query the relationship.
+        'comments' => [ 'hasMany', 'Comment' ],
+        
+        // Bind User model as a belongsTo relationship.
+        // Use $post->author to get the User model.
+        'author' => [ 'belongsTo', 'User' ]
+    ];
+
+    /**
+     * Dynamically call relationship models.
+     *
+     * @param  string $method
+     * @param  array  $parameters
+     * @return mixed
+     */
+    public function __call( $method, $parameters )
+    {
+        // Dynamically call the relationship
+        if ( $this->isRelationship( $method ) )
+        {
+            return $this->callRelationship( $method );
+        }
+
+        // Default Eloquent dynamic caller
+        return parent::__call($method, $parameters);
+    }
+
+    /**
+     * Dynamically get relationship models.
+     *
+     * @param  string $key
+     * @return mixed
+     */
+    public function __get( $key )
+    {
+        // Dynamically get the relationship
+        if ( $this->isRelationship( $key ) )
+        {
+            // Use the relationship already loaded
+            if ( array_key_exists( $key, $this->getRelations() ) )
+            {
+                return $this->getRelation( $key );
+            }
+
+            return $this->getRelationshipFromMethod($key, camel_case($key));
+        }
+
+        // Default Eloquent dynamic getter
+        return parent::__get( $key );
+    }
+
+}
+```
+
+The developer can now use the `Post` model's relationships from a controller or repository and the trait will automatically resolve the relationship bindings. For demonstrative purposes the following code shows this pattern from a simple route closure:
+
+```php
+Route::get( 'posts/{id}/comments', function( $id )
+{
+    // Retrieve the post by ID
+    $post = Post::find( $id );
+
+    // Query the post for all the related comments.
+    // The trait will resolve the "comments" from
+    // the Post::$relationships bindings.
+    $comments = $post->comments()->all();
+
+    // It is also possible to shorten this using the
+    // magic attributes instead. It is equivalent to
+    // the above call.
+    $comments = $post->comments;
+
+    // ... pass the $comments collection to the view
+});
+```
 
 ## Contributing
 
