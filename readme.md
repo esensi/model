@@ -14,29 +14,9 @@ _Email us at [sales@emersonmedia.com](http://emersonmedia.com/contact), or call 
 
 > **Notice:** _This code is specifically designed to be compatible with the [Laravel Framework](http://laravel.com) and may not be compatible as a stand-alone dependency or as part of another framework._
 
-### Add the Package to Composer
-
-Add the `esensi/model` package as a dependency to the application. Using [Composer](https://getcomposer.org), this can be done from the command line:
-
-```bash
-composer require esensi/modal 0.3.*
-```
-
-Or manually it can be added to the `composer.json` file:
-
-```json
-{
-    "require": {
-        "esensi/model": "0.3.*"
-    }
-}
-```
-
-If manually adding the package, then be sure to run `composer update` to update the dependencies.
-
 ### Extend the Default Model
 
-The simplest way to demonstrate the traits is to extend the base [`Esensi\Model\Model`](https://github.com/esensi/model/blob/master/src/Model.php). For example, if the application requires a simple blog, then the developer could create a `Post` model that automatically handles validation, purging, hashing, encrypting, and even simplified relationship bindings by simply extending this ready-to-go model:
+The simplest way to demonstrate the traits is to extend the base [`Esensi\Model\Model`](https://github.com/esensi/model/blob/master/src/Model.php). For example, if the application requires a simple blog, then the developer could create a `Post` model that **automatically handles validation, purging, hashing, encrypting, and even simplified relationship bindings** by simply extending this ready-to-go model:
 
 ```php
 <?php
@@ -55,7 +35,7 @@ class Post extends Model {
 }
 ```
 
-> **Pro Tip:** Take a look at the generously commented [`Esensi\Model\Model`](https://github.com/esensi/model/blob/master/src/Model.php) source code for details on how to use individual traits without extending the default model.
+> **Pro Tip:** Take a look at the generously commented [`Esensi\Model\Model`](https://github.com/esensi/model/blob/master/src/Model.php) source code for details on how to use individual traits with and without extending the default model.
 
 ### Use Soft Deletes Instead
 
@@ -75,6 +55,7 @@ class Post extends SoftModel {
 
 ## Table of Contents
 
+- **[Installation](#installation)**
 - **[Validating Model Trait](#validating-model-trait)**
     - [Auto-Validating on Save](#auto-validating-on-save)
     - Manually Validating Models
@@ -102,6 +83,26 @@ class Post extends SoftModel {
     - [Running the Unit Tests](#running-the-unit-tests) 
 - **[Contributing](#contributing)**
 - **[Licensing](#licensing)**
+
+## Installation
+
+Add the `esensi/model` package as a dependency to the application. Using [Composer](https://getcomposer.org), this can be done from the command line:
+
+```bash
+composer require esensi/modal 0.3.*
+```
+
+Or manually it can be added to the `composer.json` file:
+
+```json
+{
+    "require": {
+        "esensi/model": "0.3.*"
+    }
+}
+```
+
+If manually adding the package, then be sure to run `composer update` to update the dependencies.
 
 ## Validating Model Trait
 
