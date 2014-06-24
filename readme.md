@@ -96,8 +96,8 @@ class Post extends SoftModel {
     - Using Soft Deletes
     - Adding Custom Dates
     - Using Force Delete
-- Relating Model Trait
-    - Using Simplified Relationships
+- [Relating Model Trait](#relating-model-trait)
+    - [Using Simplified Relationships](#using-simplified-relationships)
 - Unit Tests
     - Running the Unit Tests
 - [Contributing](#contributing)
