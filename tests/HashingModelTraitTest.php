@@ -127,6 +127,145 @@ class HashingModelTraitTest extends PHPUnit {
     }
 
     /**
+     * Test that a single Hashable attribute can be added.
+     */
+    public function testAddingSingleHashableAttribute()
+    {
+        // Add a single attribute
+        $this->model->addHashable('bar');
+
+        // Get the attributes
+        $attributes = $this->model->getHashable();
+
+        // Check that its an array
+        $this->assertTrue(is_array($attributes));
+
+        // Check that it returned the set value
+        $this->assertContains('foo', $attributes);
+        $this->assertContains('bar', $attributes);
+
+        // Check that the count matches
+        $this->assertCount(2, $attributes);
+    }
+
+    /**
+     * Test that multiple Hashable attribute can be added simultaneously.
+     */
+    public function testAddingMultipleHashableAttributes()
+    {
+        // Add multiple attributes
+        $this->model->addHashable('bar', 'baz');
+
+        // Get the attributes
+        $attributes = $this->model->getHashable();
+
+        // Check that its an array
+        $this->assertTrue(is_array($attributes));
+
+        // Check that it returned the set values
+        $this->assertContains('foo', $attributes);
+        $this->assertContains('bar', $attributes);
+        $this->assertContains('baz', $attributes);
+
+        // Check that the count matches
+        $this->assertCount(3, $attributes);
+    }
+
+    /**
+     * Test that a single Hashable attribute can be removed.
+     */
+    public function testRemovingSingleHashableAttribute()
+    {
+        // Set the attributes
+        $this->model->setHashable(['foo', 'bar']);
+
+        // Remove a single attribute
+        $this->model->removeHashable('bar');
+
+        // Get the attributes
+        $attributes = $this->model->getHashable();
+
+        // Check that its an array
+        $this->assertTrue(is_array($attributes));
+
+        // Check that it did not return the unset value
+        $this->assertContains('foo', $attributes);
+        $this->assertNotContains('bar', $attributes);
+
+        // Check that the count matches
+        $this->assertCount(1, $attributes);
+    }
+
+    /**
+     * Test that multiple Hashable attribute can be removed simultaneously.
+     */
+    public function testRemovingMultipleHashableAttributes()
+    {
+        // Set the attributes
+        $this->model->setHashable(['foo', 'bar', 'baz']);
+
+        // Remove multiple attributes
+        $this->model->removeHashable('bar', 'baz');
+
+        // Get the attributes
+        $attributes = $this->model->getHashable();
+
+        // Check that its an array
+        $this->assertTrue(is_array($attributes));
+
+        // Check that it did not returned the unset values
+        $this->assertContains('foo', $attributes);
+        $this->assertNotContains('bar', $attributes);
+        $this->assertNotContains('baz', $attributes);
+
+        // Check that the count matches
+        $this->assertCount(1, $attributes);
+    }
+
+    /**
+     * Test that removing all Hashable attributes returns an empty array.
+     */
+    public function testRemovingAllHashableAttributes()
+    {
+        // Remove all attributes
+        $this->model->removeHashable('foo');
+
+        // Get the attributes
+        $attributes = $this->model->getHashable();
+
+        // Check that its an array
+        $this->assertTrue(is_array($attributes));
+
+        // Check that it did not returned the unset values
+        $this->assertNotContains('foo', $attributes);
+
+        // Check that the count matches
+        $this->assertEmpty($attributes);
+    }
+
+    /**
+     * Test that Hashable attributes can be merged.
+     */
+    public function testMergingHashableAttributes()
+    {
+        // Merge the attributes
+        $this->model->mergeHashable(['bar']);
+
+        // Get the attributes
+        $attributes = $this->model->getHashable();
+
+        // Check that its an array
+        $this->assertTrue(is_array($attributes));
+
+        // Check that it returned the merged values
+        $this->assertContains('foo', $attributes);
+        $this->assertContains('bar', $attributes);
+
+        // Check that the count matches
+        $this->assertCount(2, $attributes);
+    }
+
+    /**
      * Test that the Hasher can be gotten.
      */
     public function testGettingHasher()
@@ -301,6 +440,72 @@ class HashingModelTraitTest extends PHPUnit {
 
         // Check that the attribute is hashed
         $this->assertTrue($this->model->isHashed('foo'));
+    }
+
+    /**
+     * Test that saveWithHashing calls hashAttributes even when disabled.
+     */
+    public function testSaveWithHashing()
+    {
+        // Disable hashing
+        $this->model->setHashing(false);
+
+        // Test that it is indeed enabled
+        $this->model->shouldReceive('setHashing')
+            ->once()
+            ->with(true);
+
+        // Mock save
+        $this->model->shouldReceive('save')
+            ->once()
+            ->andReturn(true);
+
+        // Test that it re-disabled
+        $this->model->shouldReceive('setHashing')
+            ->once()
+            ->with(false);
+
+        // Do it
+        $response = $this->model->saveWithHashing();
+
+        // Check that it returned true
+        $this->assertTrue($response);
+
+        // Check that hashing is still disabled
+        $this->assertFalse($this->model->getHashing());
+    }
+
+    /**
+     * Test that saveWithoutHashing does not call hashAttributes even when enabled.
+     */
+    public function testSaveWithOutHashing()
+    {
+        // Enable hashing
+        $this->model->setHashing(true);
+
+        // Test that it is indeed disabled
+        $this->model->shouldReceive('setHashing')
+            ->once()
+            ->with(false);
+
+        // Mock save
+        $this->model->shouldReceive('save')
+            ->once()
+            ->andReturn(true);
+
+        // Test that it re-enabled
+        $this->model->shouldReceive('setHashing')
+            ->once()
+            ->with(true);
+
+        // Do it
+        $response = $this->model->saveWithOutHashing();
+
+        // Check that it returned true
+        $this->assertTrue($response);
+
+        // Check that hashing is still enabled
+        $this->assertTrue($this->model->getHashing());
     }
 
 }

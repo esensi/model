@@ -63,6 +63,41 @@ trait HashingModelTrait {
     }
 
     /**
+     * Add an attribute to the hashable array.
+     *
+     * @example addHashable( string $attribute, ... )
+     * @param  string $attribute to hash
+     * @return void
+     */
+    public function addHashable( $attribute )
+    {
+        $this->mergeHashable( func_get_args() );
+    }
+
+    /**
+     * Remove an attribute from the hashable array.
+     *
+     * @example addHashable( string $attribute, ... )
+     * @param  string $attribute to hash
+     * @return void
+     */
+    public function removeHashable( $attribute )
+    {
+        $this->hashable = array_diff( $this->hashable, func_get_args() );
+    }
+
+    /**
+     * Merge an array of attributes with the hashable array.
+     *
+     * @param  array $attributes to hash
+     * @return void
+     */
+    public function mergeHashable( array $attributes )
+    {
+        $this->hashable = array_merge( $this->hashable, $attributes );
+    }
+
+    /**
      * Returns whether or not the model will hash
      * attributes before saving.
      *
@@ -190,6 +225,49 @@ trait HashingModelTrait {
         {
             $this->attributes[ $attribute ] = $this->getHasher()->make( $value );
         }
+    }
+
+    /**
+     * Save with hashing even if hashing is disabled.
+     *
+     * @return boolean
+     */
+    public function saveWithHashing()
+    {
+        // Turn hashing on
+        return $this->setHashingAndSave( true );
+    }
+
+    /**
+     * Save without hashing even if hashing is enabled.
+     *
+     * @return boolean
+     */
+    public function saveWithoutHashing()
+    {
+        // Turn hashing off
+        return $this->setHashingAndSave( false );
+    }
+
+    /**
+     * Set hashing state and then save and then reset it.
+     *
+     * @param  boolean $hash
+     * @return boolean
+     */
+    protected function setHashingAndSave( $hash )
+    {
+        // Set hashing state
+        $hashing = $this->getHashing();
+        $this->setHashing( $hash );
+
+        // Save the model
+        $result = $this->save();
+
+        // Reset hashing back to it's previous state
+        $this->setHashing( $hashing );
+
+        return $result;
     }
 
 }

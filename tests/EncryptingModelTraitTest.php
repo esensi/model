@@ -127,6 +127,145 @@ class EncryptingModelTraitTest extends PHPUnit {
     }
 
     /**
+     * Test that a single Encryptable attribute can be added.
+     */
+    public function testAddingSingleEncryptableAttribute()
+    {
+        // Add a single attribute
+        $this->model->addEncryptable('bar');
+
+        // Get the attributes
+        $attributes = $this->model->getEncryptable();
+
+        // Check that its an array
+        $this->assertTrue(is_array($attributes));
+
+        // Check that it returned the set value
+        $this->assertContains('foo', $attributes);
+        $this->assertContains('bar', $attributes);
+
+        // Check that the count matches
+        $this->assertCount(2, $attributes);
+    }
+
+    /**
+     * Test that multiple Encryptable attribute can be added simultaneously.
+     */
+    public function testAddingMultipleEncryptableAttributes()
+    {
+        // Add multiple attributes
+        $this->model->addEncryptable('bar', 'baz');
+
+        // Get the attributes
+        $attributes = $this->model->getEncryptable();
+
+        // Check that its an array
+        $this->assertTrue(is_array($attributes));
+
+        // Check that it returned the set values
+        $this->assertContains('foo', $attributes);
+        $this->assertContains('bar', $attributes);
+        $this->assertContains('baz', $attributes);
+
+        // Check that the count matches
+        $this->assertCount(3, $attributes);
+    }
+
+    /**
+     * Test that a single Encryptable attribute can be removed.
+     */
+    public function testRemovingSingleEncryptableAttribute()
+    {
+        // Set the attributes
+        $this->model->setEncryptable(['foo', 'bar']);
+
+        // Remove a single attribute
+        $this->model->removeEncryptable('bar');
+
+        // Get the attributes
+        $attributes = $this->model->getEncryptable();
+
+        // Check that its an array
+        $this->assertTrue(is_array($attributes));
+
+        // Check that it did not return the unset value
+        $this->assertContains('foo', $attributes);
+        $this->assertNotContains('bar', $attributes);
+
+        // Check that the count matches
+        $this->assertCount(1, $attributes);
+    }
+
+    /**
+     * Test that multiple Encryptable attribute can be removed simultaneously.
+     */
+    public function testRemovingMultipleEncryptableAttributes()
+    {
+        // Set the attributes
+        $this->model->setEncryptable(['foo', 'bar', 'baz']);
+
+        // Remove multiple attributes
+        $this->model->removeEncryptable('bar', 'baz');
+
+        // Get the attributes
+        $attributes = $this->model->getEncryptable();
+
+        // Check that its an array
+        $this->assertTrue(is_array($attributes));
+
+        // Check that it did not returned the unset values
+        $this->assertContains('foo', $attributes);
+        $this->assertNotContains('bar', $attributes);
+        $this->assertNotContains('baz', $attributes);
+
+        // Check that the count matches
+        $this->assertCount(1, $attributes);
+    }
+
+    /**
+     * Test that removing all Encryptable attributes returns an empty array.
+     */
+    public function testRemovingAllEncryptableAttributes()
+    {
+        // Remove all attributes
+        $this->model->removeEncryptable('foo');
+
+        // Get the attributes
+        $attributes = $this->model->getEncryptable();
+
+        // Check that its an array
+        $this->assertTrue(is_array($attributes));
+
+        // Check that it did not returned the unset values
+        $this->assertNotContains('foo', $attributes);
+
+        // Check that the count matches
+        $this->assertEmpty($attributes);
+    }
+
+    /**
+     * Test that Encryptable attributes can be merged.
+     */
+    public function testMergingEncryptableAttributes()
+    {
+        // Merge the attributes
+        $this->model->mergeEncryptable(['bar']);
+
+        // Get the attributes
+        $attributes = $this->model->getEncryptable();
+
+        // Check that its an array
+        $this->assertTrue(is_array($attributes));
+
+        // Check that it returned the merged values
+        $this->assertContains('foo', $attributes);
+        $this->assertContains('bar', $attributes);
+
+        // Check that the count matches
+        $this->assertCount(2, $attributes);
+    }
+
+    /**
      * Test that the Encrypter can be gotten.
      */
     public function testGettingEncrypter()

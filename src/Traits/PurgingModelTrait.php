@@ -46,12 +46,47 @@ trait PurgingModelTrait {
     /**
      * Set the purgeable attributes.
      *
-     * @param  array $attributes to encrypt
+     * @param  array $attributes to purge
      * @return void
      */
     public function setPurgeable( array $attributes )
     {
         $this->purgeable = $attributes;
+    }
+
+    /**
+     * Add an attribute to the purgeable array.
+     *
+     * @example addPurgeable( string $attribute, ... )
+     * @param  string $attribute to purge
+     * @return void
+     */
+    public function addPurgeable( $attribute )
+    {
+        $this->mergePurgeable( func_get_args() );
+    }
+
+    /**
+     * Remove an attribute from the purgeable array.
+     *
+     * @example removePurgeable( string $attribute, ... )
+     * @param  string $attribute to purge
+     * @return void
+     */
+    public function removePurgeable( $attribute )
+    {
+        $this->purgeable = array_diff( $this->purgeable, func_get_args() );
+    }
+
+    /**
+     * Merge an array of attributes with the purgeable array.
+     *
+     * @param  array $attributes to purge
+     * @return void
+     */
+    public function mergePurgeable( array $attributes )
+    {
+        $this->purgeable = array_merge( $this->purgeable, $attributes );
     }
 
     /**
@@ -109,13 +144,13 @@ trait PurgingModelTrait {
                     return false;
                 }
 
-                // Remove attributes containing _confirmation suffix
+                // Remove attributes ending with _confirmation
                 if ( Str::endsWith( $key, '_confirmation' ) )
                 {
                     return false;
                 }
 
-                // Remove attributes containing _ prefix
+                // Remove attributes starting with _ prefix
                 if ( Str::startsWith( $key, '_' ) )
                 {
                     return false;
@@ -128,4 +163,46 @@ trait PurgingModelTrait {
         $this->attributes = array_intersect_key( $this->getAttributes(), array_flip( $attributes ) );
     }
 
+    /**
+     * Save with purging even if purging is disabled.
+     *
+     * @return boolean
+     */
+    public function saveWithPurging()
+    {
+        // Turn purging on
+        return $this->setPurgingAndSave( true );
+    }
+
+    /**
+     * Save without purging even if purging is enabled.
+     *
+     * @return boolean
+     */
+    public function saveWithoutPurging()
+    {
+        // Turn purging off
+        return $this->setPurgingAndSave( false );
+    }
+
+    /**
+     * Set purging state and then save and then reset it.
+     *
+     * @param  boolean $purge
+     * @return boolean
+     */
+    protected function setPurgingAndSave( $purge )
+    {
+        // Set purging state
+        $purging = $this->getPurging();
+        $this->setPurging( $purge );
+
+        // Save the model
+        $result = $this->save();
+
+        // Reset purging back to it's previous state
+        $this->setPurging( $purging );
+
+        return $result;
+    }
 }

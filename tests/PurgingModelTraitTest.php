@@ -111,10 +111,150 @@ class PurgingModelTraitTest extends PHPUnit {
         $this->assertTrue(is_array($attributes));
 
         // Check that it returned the set value
+        $this->assertNotContains('foo', $attributes);
         $this->assertContains('bar', $attributes);
 
         // Check that the count matches
         $this->assertCount(1, $attributes);
+    }
+
+    /**
+     * Test that a single Purgeable attribute can be added.
+     */
+    public function testAddingSinglePurgeableAttribute()
+    {
+        // Add a single attribute
+        $this->model->addPurgeable('bar');
+
+        // Get the attributes
+        $attributes = $this->model->getPurgeable();
+
+        // Check that its an array
+        $this->assertTrue(is_array($attributes));
+
+        // Check that it returned the set value
+        $this->assertContains('foo', $attributes);
+        $this->assertContains('bar', $attributes);
+
+        // Check that the count matches
+        $this->assertCount(2, $attributes);
+    }
+
+    /**
+     * Test that multiple Purgeable attribute can be added simultaneously.
+     */
+    public function testAddingMultiplePurgeableAttributes()
+    {
+        // Add multiple attributes
+        $this->model->addPurgeable('bar', 'baz');
+
+        // Get the attributes
+        $attributes = $this->model->getPurgeable();
+
+        // Check that its an array
+        $this->assertTrue(is_array($attributes));
+
+        // Check that it returned the set values
+        $this->assertContains('foo', $attributes);
+        $this->assertContains('bar', $attributes);
+        $this->assertContains('baz', $attributes);
+
+        // Check that the count matches
+        $this->assertCount(3, $attributes);
+    }
+
+    /**
+     * Test that a single Purgeable attribute can be removed.
+     */
+    public function testRemovingSinglePurgeableAttribute()
+    {
+        // Set the attributes
+        $this->model->setPurgeable(['foo', 'bar']);
+
+        // Remove a single attribute
+        $this->model->removePurgeable('bar');
+
+        // Get the attributes
+        $attributes = $this->model->getPurgeable();
+
+        // Check that its an array
+        $this->assertTrue(is_array($attributes));
+
+        // Check that it did not return the unset value
+        $this->assertContains('foo', $attributes);
+        $this->assertNotContains('bar', $attributes);
+
+        // Check that the count matches
+        $this->assertCount(1, $attributes);
+    }
+
+    /**
+     * Test that multiple Purgeable attribute can be removed simultaneously.
+     */
+    public function testRemovingMultiplePurgeableAttributes()
+    {
+        // Set the attributes
+        $this->model->setPurgeable(['foo', 'bar', 'baz']);
+
+        // Remove multiple attributes
+        $this->model->removePurgeable('bar', 'baz');
+
+        // Get the attributes
+        $attributes = $this->model->getPurgeable();
+
+        // Check that its an array
+        $this->assertTrue(is_array($attributes));
+
+        // Check that it did not returned the unset values
+        $this->assertContains('foo', $attributes);
+        $this->assertNotContains('bar', $attributes);
+        $this->assertNotContains('baz', $attributes);
+
+        // Check that the count matches
+        $this->assertCount(1, $attributes);
+    }
+
+    /**
+     * Test that removing all Purgeable attributes returns an empty array.
+     */
+    public function testRemovingAllPurgeableAttributes()
+    {
+        // Remove all attributes
+        $this->model->removePurgeable('foo');
+
+        // Get the attributes
+        $attributes = $this->model->getPurgeable();
+
+        // Check that its an array
+        $this->assertTrue(is_array($attributes));
+
+        // Check that it did not returned the unset values
+        $this->assertNotContains('foo', $attributes);
+
+        // Check that the count matches
+        $this->assertEmpty($attributes);
+    }
+
+    /**
+     * Test that Purgeable attributes can be merged.
+     */
+    public function testMergingPurgeableAttributes()
+    {
+        // Merge the attributes
+        $this->model->mergePurgeable(['bar']);
+
+        // Get the attributes
+        $attributes = $this->model->getPurgeable();
+
+        // Check that its an array
+        $this->assertTrue(is_array($attributes));
+
+        // Check that it returned the merged values
+        $this->assertContains('foo', $attributes);
+        $this->assertContains('bar', $attributes);
+
+        // Check that the count matches
+        $this->assertCount(2, $attributes);
     }
 
     /**
@@ -186,6 +326,72 @@ class PurgingModelTraitTest extends PHPUnit {
 
         // Check the purgeable attributes were purged
         $this->assertSame($attributes, $this->model->getAttributes());
+    }
+
+    /**
+     * Test that saveWithPurging calls purgeAttributes even when disabled.
+     */
+    public function testSaveWithPurging()
+    {
+        // Disable purging
+        $this->model->setPurging(false);
+
+        // Test that it is indeed enabled
+        $this->model->shouldReceive('setPurging')
+            ->once()
+            ->with(true);
+
+        // Mock save
+        $this->model->shouldReceive('save')
+            ->once()
+            ->andReturn(true);
+
+        // Test that it re-disabled
+        $this->model->shouldReceive('setPurging')
+            ->once()
+            ->with(false);
+
+        // Do it
+        $response = $this->model->saveWithPurging();
+
+        // Check that it returned true
+        $this->assertTrue($response);
+
+        // Check that purging is still disabled
+        $this->assertFalse($this->model->getPurging());
+    }
+
+    /**
+     * Test that saveWithoutPurging does not call purgeAttributes even when enabled.
+     */
+    public function testSaveWithOutPurging()
+    {
+        // Enable purging
+        $this->model->setPurging(true);
+
+        // Test that it is indeed disabled
+        $this->model->shouldReceive('setPurging')
+            ->once()
+            ->with(false);
+
+        // Mock save
+        $this->model->shouldReceive('save')
+            ->once()
+            ->andReturn(true);
+
+        // Test that it re-enabled
+        $this->model->shouldReceive('setPurging')
+            ->once()
+            ->with(true);
+
+        // Do it
+        $response = $this->model->saveWithOutPurging();
+
+        // Check that it returned true
+        $this->assertTrue($response);
+
+        // Check that purging is still enabled
+        $this->assertTrue($this->model->getPurging());
     }
 
 }

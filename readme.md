@@ -61,9 +61,9 @@ class Post extends SoftModel {
     - Manually Validating Models
     - Handling Validation Errors
     - Using Force Save
-- **Purging Model Trait**
-    - Auto-Purging on Save
-    - Using the Purgeable Property
+- **[Purging Model Trait](#purging-model-trait)**
+    - [Auto-Purging on Save](#auto-purging-on-save)
+    - [Manually Purging Models](#manually-purging-models)
 - **Hashing Model Trait**
     - Auto-Hashing on Save
     - Using the Hashable Property
@@ -221,6 +221,116 @@ Route::post( 'posts', function()
 ```
 
 Calling the `save()` method on the newly created `Post` model would instead use the "updating" ruleset from `Post::$ruleset` while saving. If that ruleset did not exist then it would default to using the `Post::$rules`.
+
+## Purging Model Trait
+
+This package includes the [`PurgingModelTrait`](https://github.com/esensi/model/blob/master/src/Traits/PurgingModelTrait.php) which implements the [`PurgingModelInterface`](https://github.com/esensi/model/blob/master/src/Contracts/PurgingModelInterface.php) on any `Eloquent` model that uses it. The `PurgingModelTrait` adds methods to `Eloquent` models for automatically purging attributes from the model just before write operations to the database. The trait automatically purges:
+
+- attributes in the `$purgeable` property
+- attributes prefixed with an underscore (i.e.: `_private`)
+- attributes ending in `_confirmation` (i.e.: `password_confirmation`)
+
+Like all the traits, it is self-contained and can be used individually.
+
+> **Pro Tip:** This trait uses the `PurgingModelObserver` to listen for the `eloquent.creating` and `eloquent.updating` events before automatically purging the purgeable attributes. The order in which the traits are used in the `Model` determines the event priority: if using the `ValidatingModelTrait` be sure to use it first so that the purging event listner is fired _after_ the validating event listener has fired.
+
+### Auto-Purging on Save
+
+While developers can of course use the [`Model`](https://github.com/esensi/model/blob/master/src/Model.php) or [`SoftModel`](https://github.com/esensi/model/blob/master/src/SoftModel.php) classes which already include the [`PurgingModelTrait`](https://github.com/esensi/model/blob/master/src/Traits/PurgingModelTrait.php), the following code will demonstrate using automatic purging on any `Eloquent` based model.
+
+```php
+<?php
+
+use \Esensi\Model\Contracts\PurgingModelInterface;
+use \Esensi\Model\Traits\PurgingModelTrait;
+use \Illuminate\Database\Eloquent\Model as Eloquent;
+
+class Post extends Eloquent implements PurgingModelInterface {
+
+    use PurgingModelTrait;
+
+    /**
+     * These are the attributes to purge before saving.
+     *
+     * Remember, anything prefixed with "_" or ending
+     * in "_confirmation" will automatically be purged
+     * and does not need to be listed here.
+     *
+     * @var array
+     */
+    protected $purgeable = [
+        'analytics_id',
+        '_private_attribute',
+        'password_confirmation',
+    ];
+
+}
+```
+
+> **Pro Tip:** From an efficiency stand point, it is theoretically better to assign all purgeable attributes in the `$purgeable` property including underscore prefixed and `_confirmation` suffixed attributes since the `$purgeable` property is checked first and does not require string parsing and comparisons.
+
+The developer can now pass form input to the `Post` model from a controller or repository and the trait will automatically purge the non-attributes before saving. This gets around those pesky "Unknown column" MySQL errors. For demonstrative purposes the following code shows this in practice from a simple route closure:
+
+```php
+Route::post( 'posts', function( $id )
+{
+    // Hydrate the model from the Input
+    $input = Input::all();
+    $post = new Post($input);
+
+    // At this point $post->analytics_id might exist.
+    // If we tried to save it, MySQL would throw an error.
+
+    // Save the Post
+    $post->save();
+
+    // At this point $post->analytics_id is for sure purged.
+    // It was filtered becaused it existed in Post::$purgeable.
+});
+```
+
+### Manually Purging Models
+
+It is also possible to manually purge attributes. The `PurgingModelTrait` includes several helper functions to make manual manipulation of the purgeable attribute easier.
+
+```php
+// Hydrate the model from the Input
+$post = Post::find($id);
+$post->fill( Input::all() );
+
+// Manually purge attributes prior to save()
+$post->purgeAttributes();
+
+// Manually get the attributes
+$post->getAttributes(); // ['foo']
+
+// Manually set the purgeable attributes
+$post->setPurgeable( ['foo', 'bar'] ); // ['foo', 'bar']
+
+// Manually add an attribute to the purgeable attributes
+$post->addPurgeable( 'baz' ); // ['foo', 'bar', 'baz']
+$post->mergePurgeable( ['zip'] ); // ['foo', 'bar', 'baz', 'zip']
+$post->removePurgeable( 'foo' ); // ['bar', 'baz', 'zip']
+
+// Check if an attribute is in the Post::$purgeable property
+if ( $post->isPurgeable( 'foo' ) )
+{
+    // ... foo is not purgeable so this would not get called
+}
+
+// Do not run purging for this save only.
+// This is useful when purging is enabled
+// but needs to be temporarily bypassed.
+$post->saveWithoutPurging();
+
+// Disable purging
+$post->setPurging(false); // a value of true would enable it
+
+// Run purging for this save only.
+// This is useful when purging is disabled
+// but needs to be temporarily ran while saving.
+$post->saveWithPurging();
+```
 
 ## Relating Model Trait
 

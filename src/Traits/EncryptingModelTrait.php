@@ -131,6 +131,41 @@ trait EncryptingModelTrait {
     }
 
     /**
+     * Add an attribute to the encryptable array.
+     *
+     * @example addEncryptable( string $attribute, ... )
+     * @param  string $attribute to purge
+     * @return void
+     */
+    public function addEncryptable( $attribute )
+    {
+        $this->mergeEncryptable( func_get_args() );
+    }
+
+    /**
+     * Remove an attribute from the encryptable array.
+     *
+     * @example addEncryptable( string $attribute, ... )
+     * @param  string $attribute to purge
+     * @return void
+     */
+    public function removeEncryptable( $attribute )
+    {
+        $this->encryptable = array_diff( $this->encryptable, func_get_args() );
+    }
+
+    /**
+     * Merge an array of attributes with the encryptable array.
+     *
+     * @param  array $attributes to purge
+     * @return void
+     */
+    public function mergeEncryptable( array $attributes )
+    {
+        $this->encryptable = array_merge( $this->encryptable, $attributes );
+    }
+
+    /**
      * Returns whether or not the model will encrypt
      * attributes when setting and decrypt when getting.
      *

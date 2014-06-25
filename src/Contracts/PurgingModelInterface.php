@@ -21,10 +21,36 @@ interface PurgingModelInterface {
     /**
      * Set the purgeable attributes.
      *
-     * @param  array $attributes to encrypt
+     * @param  array $attributes to purge
      * @return void
      */
     public function setPurgeable( array $attributes );
+
+    /**
+     * Add an attribute to the purgeable array.
+     *
+     * @example addPurgeable( string $attribute, ... )
+     * @param  string $attribute to purge
+     * @return void
+     */
+    public function addPurgeable( $attribute );
+
+    /**
+     * Remove an attribute from the purgeable array.
+     *
+     * @example removePurgeable( string $attribute, ... )
+     * @param  string $attribute to purge
+     * @return void
+     */
+    public function removePurgeable( $attribute );
+
+    /**
+     * Merge an array of attributes with the purgeable array.
+     *
+     * @param  array $attributes to purge
+     * @return void
+     */
+    public function mergePurgeable( array $attributes );
 
     /**
      * Returns whether or not the model will purge
@@ -57,5 +83,27 @@ interface PurgingModelInterface {
      * @return void
      */
     public function purgeAttributes();
+
+    /**
+     * Save with purging even if purging is disabled.
+     *
+     * @return boolean
+     */
+    public function saveWithPurging();
+
+    /**
+     * Save without purging even if purging is enabled.
+     *
+     * @return boolean
+     */
+    public function saveWithoutPurging();
+
+    /**
+     * Set purging state and then save and then reset it.
+     *
+     * @param  boolean $purge
+     * @return boolean
+     */
+    function setPurgingAndSave( $purge );
 
 }

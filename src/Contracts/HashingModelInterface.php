@@ -29,6 +29,32 @@ interface HashingModelInterface {
     public function setHashable( array $attributes );
 
     /**
+     * Add an attribute to the hashable array.
+     *
+     * @example addHashable( string $attribute, ... )
+     * @param  string $attribute to purge
+     * @return void
+     */
+    public function addHashable( $attribute );
+
+    /**
+     * Remove an attribute from the hashable array.
+     *
+     * @example addHashable( string $attribute, ... )
+     * @param  string $attribute to purge
+     * @return void
+     */
+    public function removeHashable( $attribute );
+
+    /**
+     * Merge an array of attributes with the hashable array.
+     *
+     * @param  array $attributes to purge
+     * @return void
+     */
+    public function mergeHashable( array $attributes );
+
+    /**
      * Returns whether or not the model will hash
      * attributes before saving.
      *
@@ -108,5 +134,27 @@ interface HashingModelInterface {
      * @return void
      */
     function setHashingAttribute( $attribute, $value );
+
+    /**
+     * Save with hashing even if hashing is disabled.
+     *
+     * @return boolean
+     */
+    public function saveWithHashing();
+
+    /**
+     * Save without hashing even if hashing is enabled.
+     *
+     * @return boolean
+     */
+    public function saveWithoutHashing();
+
+    /**
+     * Set hashing state and then save and then reset it.
+     *
+     * @param  boolean $hash
+     * @return boolean
+     */
+    function setHashingAndSave( $hash );
 
 }

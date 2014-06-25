@@ -46,6 +46,32 @@ interface EncryptingModelInterface {
     public function setEncryptable( array $attributes );
 
     /**
+     * Add an attribute to the encryptable array.
+     *
+     * @example addEncryptable( string $attribute, ... )
+     * @param  string $attribute to encrypt
+     * @return void
+     */
+    public function addEncryptable( $attribute );
+
+    /**
+     * Remove an attribute from the encryptable array.
+     *
+     * @example addEncryptable( string $attribute, ... )
+     * @param  string $attribute to encrypt
+     * @return void
+     */
+    public function removeEncryptable( $attribute );
+
+    /**
+     * Merge an array of attributes with the encryptable array.
+     *
+     * @param  array $attributes to encrypt
+     * @return void
+     */
+    public function mergeEncryptable( array $attributes );
+
+    /**
      * Returns whether or not the model will encrypt
      * attributes when setting and decrypt when getting.
      *
