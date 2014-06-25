@@ -63,15 +63,15 @@ class Post extends SoftModel {
     - Using Force Save
 - **[Purging Model Trait](#purging-model-trait)**
     - [Auto-Purging on Save](#auto-purging-on-save)
-    - [Manually Purging Models](#manually-purging-models)
+    - [Manually Purging Model Attributes](#manually-purging-model-attributes)
 - **Hashing Model Trait**
     - Auto-Hashing on Save
-    - Using the Hashable Property
+    - Manually Purging Model Attributes
     - Checking Hash Value
 - **Encrypting Model Trait**
     - Auto-Encrypting on Set
     - Auto-Decrypting on Get
-    - Using the Encryptable Property
+    - Manually Encrypting Model Attributes
     - Checking Encryption State
 - **Soft Deleting Model Trait**
     - Using Soft Deletes
@@ -289,7 +289,7 @@ Route::post( 'posts', function( $id )
 });
 ```
 
-### Manually Purging Models
+### Manually Purging Model Attributes
 
 It is also possible to manually purge attributes. The `PurgingModelTrait` includes several helper functions to make manual manipulation of the purgeable attribute easier.
 
