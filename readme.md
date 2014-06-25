@@ -354,7 +354,7 @@ It is also possible to manually hash attributes. The `HashingModelTrait` include
 ```php
 // Hydrate the model from the Input
 $post = Post::find($id);
-$post->fill( Input::only('password') );
+$post->password = Input::get('password');
 
 // Manually hash attributes prior to save()
 $post->hashAttributes();
@@ -425,7 +425,7 @@ It is also possible to manually encrypt attributes. The `EncryptingModelTrait` i
 ```php
 // Hydrate the model from the Input
 $post = Post::find($id);
-$post->fill( Input::only('password') );
+$post->secret = Input::get('secret'); // automatically encrypted
 
 // Manually encrypt attributes prior to save()
 $post->encryptAttributes();
