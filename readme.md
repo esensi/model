@@ -338,6 +338,8 @@ This package includes the [`HashingModelTrait`](https://github.com/esensi/model/
 - automatically hash attributes in the `$hashable` property
 - manually hash a value using the `hash()` method
 - compare a plain text value with a hash using the `checkHash()` method
+- check if a value is hashed using the `isHashed()` method
+- swap out the `HasherInterface` used using the `setHasher()` method
 
 Like all the traits, it is self-contained and can be used individually.
 
@@ -400,6 +402,65 @@ $post->setHashing(false); // a value of true would enable it
 // This is useful when hashing is disabled
 // but needs to be temporarily ran while saving.
 $post->saveWithHashing();
+```
+
+## Encrypting Model Trait
+
+This package includes the [`EncryptingModelTrait`](https://github.com/esensi/model/blob/master/src/Traits/EncryptingModelTrait.php) which implements the [`EncryptingModelInterface`](https://github.com/esensi/model/blob/master/src/Contracts/EncryptingModelInterface.php) on any `Eloquent` model that uses it. The `EncryptingModelTrait` adds methods to `Eloquent` models for automatically encrypting attributes on the model whenever they are set and for automatically decrypting attributes on the model whenever they are got. The trait includes the ability to:
+
+- automatically encrypt attributes in the `$encryptable` property when setting them
+- automatically decrypt attributes in the `$encryptable` property when getting them
+- manually encrypt/decrypt a value using the `encrypt()` and `decrypt()` methods
+- check if a value is encrypted using the `isEncrypted()` method
+- swap out the encrypter class used using the `setEncrypter()` method
+
+Like all the traits, it is self-contained and can be used individually. Be aware, however, that using this trait does overload the magic `__get()` and `__set()` methods of the model (see [Esensi\Model\Model](https://github.com/esensi/model/blob/master/src/Model.php) source code for how to deal with overloading conflicts).
+
+### Manually Encrypting Model Attributes
+
+It is also possible to manually encrypt attributes. The `EncryptingModelTrait` includes several helper functions to make manual manipulation of the `$encryptable` property easier.
+
+```php
+// Hydrate the model from the Input
+$post = Post::find($id);
+$post->fill( Input::only('password') );
+
+// Manually encrypt attributes prior to save()
+$post->encryptAttributes();
+
+// Manually encrypt and decrypte a value
+$encrypted = $post->encrypt( 'plain text' );
+$decrypted = $post->decrypt( $encrypted ); // plain text
+
+// Manually get the attributes
+$post->getEncryptable(); // ['foo']
+
+// Manually set the encryptable attributes
+$post->setEncryptable( ['foo', 'bar'] ); // ['foo', 'bar']
+
+// Manually add an attribute to the encryptable attributes
+$post->addEncryptable( 'baz' ); // ['foo', 'bar', 'baz']
+$post->mergeEncryptable( ['zip'] ); // ['foo', 'bar', 'baz', 'zip']
+$post->removeEncryptable( 'foo' ); // ['bar', 'baz', 'zip']
+
+// Check if an attribute is in the Post::$encryptable property
+if ( $post->isEncryptable( 'foo' ) )
+{
+    // ... foo is not encryptable so this would not get executed
+}
+
+// Check if an attribute is already encrypted.
+// You could also check $post->isDecrypted( 'foo' ).
+if ( $post->isEncrypted( 'foo' ) )
+{
+    // ... if foo were encrypted this would get executed
+}
+
+// Swap out the encrypter class used
+$post->setEncrypter( new MyEncrypter() );
+
+// Disable encrypting
+$post->setEncrypting(false); // a value of true would enable it
 ```
 
 ## Relating Model Trait
