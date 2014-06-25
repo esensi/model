@@ -5,7 +5,7 @@ An [Esensi](https://github.com/esensi) package, coded by [Emerson Media](http://
 > **Want to work with us on great Laravel applications?**
 Email us at [careers@emersonmedia.com](http://emersonmedia.com/contact)
 
-The `Esensi/Model` package is just one package that makes up [Esensi](https://github.com/esensi), a platform built on [Laravel](http://laravel.com). This package uses [PHP traits](http://php.net/traits) to extend Laravel's default Eloquent models and traits. Using traits allows for a high-degree of code reusability and extensibility. While this package provides some reasonable base models, developers are free to mix and match traits in any combination needed, being confident that the code complies to a reliable interface and is properly unit tested. For more details on the inner workings of the traits please consult the generously documented source code.
+The `Esensi/Model` package is just one package that makes up [Esensi](https://github.com/esensi), a platform built on [Laravel](http://laravel.com). This package uses [PHP traits](http://culttt.com/2014/06/25/php-traits) to extend Laravel's default Eloquent models and traits. Using traits allows for a high-degree of code reusability and extensibility. While this package provides some reasonable base models, developers are free to mix and match traits in any combination needed, being confident that the code complies to a reliable interface and is properly unit tested. For more details on the inner workings of the traits please consult the generously documented source code.
 
 > **Have a project in mind?**
 _Email us at [sales@emersonmedia.com](http://emersonmedia.com/contact), or call 1.877.439.6665._
