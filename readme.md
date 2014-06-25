@@ -80,7 +80,7 @@ class Post extends SoftModel {
 - **[Relating Model Trait](#relating-model-trait)**
     - [Using Simplified Relationships](#using-simplified-relationships)
 - **[Unit Testing](#unit-testing)**
-    - [Running the Unit Tests](#running-the-unit-tests) 
+    - [Running the Unit Tests](#running-the-unit-tests)
 - **[Contributing](#contributing)**
 - **[Licensing](#licensing)**
 
@@ -230,7 +230,7 @@ This package includes the [`RelatingModelTrait`](https://github.com/esensi/model
 - as magic method calls such as `Post::find($id)->comments()->all()`
 - as magic attribute calls such as `Post::find($id)->author`
 
-Like all the traits, it is self-contained and can be used individually. Using this trait does require a few extra changes to the actual model which makes this trait's use a better fitted for a base model like [Esensi\Model\Model](https://github.com/esensi/model/blob/master/src/Model.php). Special credit goes to [Phillip Brown](https://github.com/phillipbrown) and his [Philipbrown/Magniloquent Laravel package](https://github.com/philipbrown/magniloquent) which inspired this trait.
+Like all the traits, it is self-contained and can be used individually. Be aware, however, that using this trait does overload the magic `__call()` and `__get()` methods of the model (see [Esensi\Model\Model](https://github.com/esensi/model/blob/master/src/Model.php) source code for how to deal with overloading conflicts). Special credit goes to [Phillip Brown](https://github.com/phillipbrown) and his [Philipbrown/Magniloquent Laravel package](https://github.com/philipbrown/magniloquent) which inspired this trait.
 
 ### Using Simplified Relationships
 
@@ -268,58 +268,15 @@ class Post extends Eloquent implements RelatingModelInterface {
      * @var array
      */
     protected $relationships = [
-        
+
         // Bind Comment model as a hasMany relationship.
         // Use Post::comments() to query the relationship.
         'comments' => [ 'hasMany', 'Comment' ],
-        
+
         // Bind User model as a belongsTo relationship.
         // Use $post->author to get the User model.
         'author' => [ 'belongsTo', 'User' ]
     ];
-
-    /**
-     * Dynamically call relationship models.
-     *
-     * @param  string $method
-     * @param  array  $parameters
-     * @return mixed
-     */
-    public function __call( $method, $parameters )
-    {
-        // Dynamically call the relationship
-        if ( $this->isRelationship( $method ) )
-        {
-            return $this->callRelationship( $method );
-        }
-
-        // Default Eloquent dynamic caller
-        return parent::__call($method, $parameters);
-    }
-
-    /**
-     * Dynamically get relationship models.
-     *
-     * @param  string $key
-     * @return mixed
-     */
-    public function __get( $key )
-    {
-        // Dynamically get the relationship
-        if ( $this->isRelationship( $key ) )
-        {
-            // Use the relationship already loaded
-            if ( array_key_exists( $key, $this->getRelations() ) )
-            {
-                return $this->getRelation( $key );
-            }
-
-            return $this->getRelationshipFromMethod($key, camel_case($key));
-        }
-
-        // Default Eloquent dynamic getter
-        return parent::__get( $key );
-    }
 
 }
 ```
