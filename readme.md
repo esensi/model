@@ -58,7 +58,7 @@ class Post extends SoftModel {
 - **[Installation](#installation)**
 - **[Validating Model Trait](#validating-model-trait)**
     - [Auto-Validating on Save](#auto-validating-on-save)
-    - Manually Validating Models
+    - Manually Validating Model Attributes
     - Handling Validation Errors
     - Using Force Save
 - **[Purging Model Trait](#purging-model-trait)**
