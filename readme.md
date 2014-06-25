@@ -55,6 +55,8 @@ class Post extends SoftModel {
 
 ## Table of Contents
 
+> **Help Write Better Documentation:** The documentation is still a work in progress. You can help others learn to reuse code by contributing better documentation as a pull request.
+
 - **[Installation](#installation)**
 - **[Validating Model Trait](#validating-model-trait)**
     - [Auto-Validating on Save](#auto-validating-on-save)
@@ -70,7 +72,7 @@ class Post extends SoftModel {
 - **[Encrypting Model Trait](#encrypting-model-trait)**
     - Auto-Encrypting on Set
     - Auto-Decrypting on Get
-    - Manually Encrypting Model Attributes
+    - [Manually Encrypting Model Attributes](#manually-encrypting-model-attributes)
     - Checking Encryption State
 - **[Soft Deleting Model Trait](#soft-deleting-model-trait)**
     - Using Soft Deletes
