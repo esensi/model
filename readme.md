@@ -112,7 +112,7 @@ This package includes the [`ValidatingModelTrait`](https://github.com/esensi/mod
 - Integration with Laravel's `Validation` facade to validate model attributes according to sets of rules
 - Integration with Laravel's `MessageBag` so that models can return errors when validation fails
 - Option to throw `ValidationException` when validation fails
-- Ability to `forceSave()` a model and bypass validation rules that would other wise prevent a model from saving
+- Ability to `forceSave()` and bypass validation rules that would other wise prevent a model from saving
 - Automatic injection (or not) of the model's identifier for `unique` validation rules
 
 Like all the traits, it is self-contained and can be used individually. Special credit goes to the very talented [Dwight Watson](https://github.com/dwightwatson) and his [Watson/Validating Laravel package](https://github.com/dwightwatson/validating) which is the basis for this trait. Emerson Media collaborated with him as he created the package. Esensi wraps his traits with consistent naming conventions for the other Esensi model traits. Please review his package in detail to see the inner workings.
