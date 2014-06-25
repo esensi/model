@@ -64,16 +64,15 @@ class Post extends SoftModel {
 - **[Purging Model Trait](#purging-model-trait)**
     - [Auto-Purging on Save](#auto-purging-on-save)
     - [Manually Purging Model Attributes](#manually-purging-model-attributes)
-- **Hashing Model Trait**
+- **[Hashing Model Trait](#hashing-model-trait)**
     - Auto-Hashing on Save
-    - Manually Purging Model Attributes
-    - Checking Hash Value
-- **Encrypting Model Trait**
+    - [Manually Hashing Model Attributes](#manually-hashing-model-attributes)
+- **[Encrypting Model Trait](#encrypting-model-trait)**
     - Auto-Encrypting on Set
     - Auto-Decrypting on Get
     - Manually Encrypting Model Attributes
     - Checking Encryption State
-- **Soft Deleting Model Trait**
+- **[Soft Deleting Model Trait](#soft-deleting-model-trait)**
     - Using Soft Deletes
     - Adding Custom Dates
     - Using Force Delete
@@ -291,7 +290,7 @@ Route::post( 'posts', function( $id )
 
 ### Manually Purging Model Attributes
 
-It is also possible to manually purge attributes. The `PurgingModelTrait` includes several helper functions to make manual manipulation of the purgeable attribute easier.
+It is also possible to manually purge attributes. The `PurgingModelTrait` includes several helper functions to make manual manipulation of the `$purgeable` property easier.
 
 ```php
 // Hydrate the model from the Input
@@ -302,7 +301,7 @@ $post->fill( Input::all() );
 $post->purgeAttributes();
 
 // Manually get the attributes
-$post->getAttributes(); // ['foo']
+$post->getHashable(); // ['foo']
 
 // Manually set the purgeable attributes
 $post->setPurgeable( ['foo', 'bar'] ); // ['foo', 'bar']
@@ -315,7 +314,7 @@ $post->removePurgeable( 'foo' ); // ['bar', 'baz', 'zip']
 // Check if an attribute is in the Post::$purgeable property
 if ( $post->isPurgeable( 'foo' ) )
 {
-    // ... foo is not purgeable so this would not get called
+    // ... foo is not purgeable so this would not get executed
 }
 
 // Do not run purging for this save only.
@@ -330,6 +329,77 @@ $post->setPurging(false); // a value of true would enable it
 // This is useful when purging is disabled
 // but needs to be temporarily ran while saving.
 $post->saveWithPurging();
+```
+
+## Hashing Model Trait
+
+This package includes the [`HashingModelTrait`](https://github.com/esensi/model/blob/master/src/Traits/HashingModelTrait.php) which implements the [`HashingModelInterface`](https://github.com/esensi/model/blob/master/src/Contracts/HashingModelInterface.php) on any `Eloquent` model that uses it. The `HashingModelTrait` adds methods to `Eloquent` models for automatically hashing attributes on the model just before write operations to the database. The trait includes the ability to:
+
+- automatically hash attributes in the `$hashable` property
+- manually hash a value using the `hash()` method
+- compare a plain text value with a hash using the `checkHash()` method
+
+Like all the traits, it is self-contained and can be used individually.
+
+> **Pro Tip:** This trait uses the `HashingModelObserver` to listen for the `eloquent.creating` and `eloquent.updating` events before automatically hashing the hashable attributes. The order in which the traits are used in the `Model` determines the event priority: if using the `ValidatingModelTrait` be sure to use it first so that the hashing event listner is fired _after_ the validating event listener has fired.
+
+### Manually Hashing Model Attributes
+
+It is also possible to manually hash attributes. The `HashingModelTrait` includes several helper functions to make manual manipulation of the `$hashable` property easier.
+
+```php
+// Hydrate the model from the Input
+$post = Post::find($id);
+$post->fill( Input::only('password') );
+
+// Manually hash attributes prior to save()
+$post->hashAttributes();
+
+// Manually get the attributes
+$post->getHashable(); // ['foo']
+
+// Manually set the hashable attributes
+$post->setHashable( ['foo', 'bar'] ); // ['foo', 'bar']
+
+// Manually add an attribute to the hashable attributes
+$post->addHashable( 'baz' ); // ['foo', 'bar', 'baz']
+$post->mergeHashable( ['zip'] ); // ['foo', 'bar', 'baz', 'zip']
+$post->removeHashable( 'foo' ); // ['bar', 'baz', 'zip']
+
+// Check if an attribute is in the Post::$hashable property
+if ( $post->isHashable( 'foo' ) )
+{
+    // ... foo is not hashable so this would not get executed
+}
+
+// Check if an attribute is already hashed
+if ( $post->isHashed( 'foo' ) )
+{
+    // ... if foo were hashed this would get executed
+}
+
+// Check if the password when hashed matches the stored password.
+// This is just a unified shorthand to Crypt::checkHash().
+if ( $post->checkHash( 'password123', $post->password ) )
+{
+    // ... if the password matches you could authenticate the user
+}
+
+// Swap out the HasherInterface used
+$post->setHasher( new MyHasher() );
+
+// Do not run hashing for this save only.
+// This is useful when hashing is enabled
+// but needs to be temporarily bypassed.
+$post->saveWithoutHashing();
+
+// Disable hashing
+$post->setHashing(false); // a value of true would enable it
+
+// Run hashing for this save only.
+// This is useful when hashing is disabled
+// but needs to be temporarily ran while saving.
+$post->saveWithHashing();
 ```
 
 ## Relating Model Trait
