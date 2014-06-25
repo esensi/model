@@ -469,9 +469,9 @@ $post->setEncrypting(false); // a value of true would enable it
 
 This package includes the [`SoftDeletingModelTrait`](https://github.com/esensi/model/blob/master/src/Traits/SoftDeletingModelTrait.php) which implements the [`SoftDeletingModelInterface`](https://github.com/esensi/model/blob/master/src/Contracts/SoftDeletingModelInterface.php) on any `Eloquent` model that uses it. The `SoftDeletingModelTrait` wraps the default `Eloquent` model's `SoftDeletingTrait` for a unified naming convention and stronger interface hinting. The trait also includes the ability to set additional dates in the `$dates` property without having to remember to add `deleted_at`.
 
-Like all the traits, it is self-contained and can be used individually. As a convenience, the [`Esensi\Model\SoftModel`](https://github.com/esensi/model/blob/master/src/Model/SoftModel.php) extends the [`Esensi\Model\Model`](https://github.com/esensi/model/blob/master/src/Model/Model.php) and implements the trait already. Developer can just extend the `SoftModel` and not have to refer to the [soft deletes trait documentation](http://laravel.com/docs/eloquent#soft-deleting) again.
+Like all the traits, it is self-contained and can be used individually. As a convenience, the [`Esensi\Model\SoftModel`](https://github.com/esensi/model/blob/master/src/Model/SoftModel.php) extends the [`Esensi\Model\Model`](https://github.com/esensi/model/blob/master/src/Model/Model.php) and implements the trait already. The developer can just extend the `SoftModel` and not have to refer to the [Laravel soft deleting documentation](http://laravel.com/docs/eloquent#soft-deleting) again.
 
-> **Pro Tip:** Just because a model uses the `SoftDeletingModelTrait` does not mean that the database has the `deleted_at` column in its table. Be sure to add `$table->softDeletes();` to a [database migration](http://laravel.com/docs/schema#adding-columns).
+> **Pro Tip:** Just because a model uses the `SoftDeletingModelTrait` does not mean that the database has the `deleted_at` column in its table. Be sure to add `$table->softDeletes();` to a [table migration](http://laravel.com/docs/schema#adding-columns).
 
 ## Relating Model Trait
 
