@@ -14,6 +14,23 @@ use \Illuminate\Encryption\Encrypter;
 interface EncryptingModelInterface {
 
     /**
+     * Get an encrypted attribute dynamically.
+     *
+     * @param  string $attribute
+     * @return mixed
+     */
+    function getDynamicEncrypted( $attribute );
+
+    /**
+     * Set an encryptable attribute dynamically.
+     *
+     * @param  string $attribute
+     * @param  mixed $value
+     * @return boolean
+     */
+    function setDynamicEncryptable( $attribute, $value );
+
+    /**
      * Get the encryptable attributes.
      *
      * @return array

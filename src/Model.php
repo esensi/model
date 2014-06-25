@@ -133,25 +133,6 @@ abstract class Model extends Eloquent implements
     protected $injectUniqueIdentifier = true;
 
     /**
-     * Dynamically call methods.
-     *
-     * @param  string $method
-     * @param  array  $parameters
-     * @return mixed
-     */
-    public function __call( $method, $parameters )
-    {
-        // Dynamically call the relationship
-        if ( $this->isRelationship( $method ) )
-        {
-            return $this->callRelationship( $method );
-        }
-
-        // Default Eloquent dynamic caller
-        return parent::__call($method, $parameters);
-    }
-
-    /**
      * Dynamically retrieve attributes.
      *
      * @param  string $key
@@ -159,54 +140,20 @@ abstract class Model extends Eloquent implements
      */
     public function __get( $key )
     {
-        // Dynamically get the relationship
-        if ( $this->isRelationship( $key ) )
+        // Resolve relationship dynamically
+        if( $relationship = $this->getDynamicRelationship( $key ) )
         {
-            // Use the relationship already loaded
-            if ( array_key_exists( $key, $this->getRelations() ) )
-            {
-                return $this->getRelation( $key );
-            }
-
-            return $this->getRelationshipFromMethod($key, camel_case($key));
+            return $relationship;
         }
 
-        // Dynamically get the encrypted attributes
-        if ( $this->isEncryptable( $key ) )
+        // Dynamically retrieve the encryptable attribute
+        if( $attribute = $this->getDynamicEncrypted( $key ) )
         {
-            // Decrypt only encrypted values
-            if( $this->isEncrypted( $key ) )
-            {
-                return $this->getEncryptedAttribute( $key );
-            }
+            return $attribute;
         }
 
         // Default Eloquent dynamic getter
         return parent::__get( $key );
-    }
-
-    /**
-     * Dynamically set attributes.
-     *
-     * @param  string $key
-     * @param  mixed $value
-     * @return void
-     */
-    public function __set( $key, $value )
-    {
-        // Dynamically set the encrypted attributes
-        if ( $this->isEncryptable( $key ) )
-        {
-            // Encrypt only decrypted values
-            if ( $this->isDecrypted( $key ) )
-            {
-                $this->attributes[ $key ] = $this->getEncrypter()->encrypt( $value );
-                return;
-            }
-        }
-
-        // Default Eloquent dynamic setter
-        return parent::__set( $key, $value );
     }
 
     /**

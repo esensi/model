@@ -18,6 +18,80 @@ use \Illuminate\Database\Eloquent\Relations\MorphTo;
 trait RelatingModelTrait {
 
     /**
+     * Dynamically call methods.
+     *
+     * @param  string $method
+     * @param  array  $parameters
+     * @return mixed
+     */
+    public function __call( $method, $parameters )
+    {
+        // Resolve relationship dynamically
+        if( $relationship = $this->callDynamicRelationship( $method ) )
+        {
+            return $relationship;
+        }
+
+        // Default Eloquent dynamic caller
+        return parent::__call($method, $parameters);
+    }
+
+    /**
+     * Dynamically retrieve attributes.
+     *
+     * @param  string $key
+     * @return mixed
+     */
+    public function __get( $key )
+    {
+        // Resolve relationship dynamically
+        if( $relationship = $this->getDynamicRelationship( $key ) )
+        {
+            return $relationship;
+        }
+
+        // Default Eloquent dynamic getter
+        return parent::__get( $key );
+    }
+
+    /**
+     * Call a dynamically resolved relationship.
+     *
+     * @param  string $name
+     * @return mixed
+     */
+    protected function callDynamicRelationship( $name )
+    {
+        // Dynamically call the relationship
+        if ( $this->isRelationship( $name ) )
+        {
+            return $this->callRelationship( $name );
+        }
+    }
+
+    /**
+     * Get a dynamically resolved relationship.
+     *
+     * @param  string $name
+     * @return mixed
+     */
+    protected function getDynamicRelationship( $name )
+    {
+        // Dynamically get the relationship
+        if ( $this->isRelationship( $name ) )
+        {
+            // Use the relationship already loaded
+            if ( array_key_exists( $name, $this->getRelations() ) )
+            {
+                return $this->getRelation( $name );
+            }
+
+            // Load the relationship
+            return $this->getRelationshipFromMethod($name, camel_case($name));
+        }
+    }
+
+    /**
      * Return the relationship configurations.
      *
      * @param string $name of related model

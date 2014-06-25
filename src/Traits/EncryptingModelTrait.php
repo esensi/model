@@ -32,6 +32,84 @@ trait EncryptingModelTrait {
     protected $encrypter;
 
     /**
+     * Dynamically retrieve attributes.
+     *
+     * @param  string $key
+     * @return mixed
+     */
+    public function __get( $key )
+    {
+        // Dynamically retrieve the encrypted attribute
+        if( $attribute = $this->getDynamicEncrypted( $key ) )
+        {
+            return $attribute;
+        }
+
+        // Default Eloquent dynamic getter
+        return parent::__get( $key );
+    }
+
+    /**
+     * Dynamically set attributes.
+     *
+     * @param  string $key
+     * @param  mixed $value
+     * @return void
+     */
+    public function __set( $key, $value )
+    {
+        // Dynamically set the encryptable attribute
+        if( $this->setDynamicEncryptable( $key, $value ) )
+        {
+            return;
+        }
+
+        // Default Eloquent dynamic setter
+        return parent::__set( $key, $value );
+    }
+
+    /**
+     * Get an encrypted attribute dynamically.
+     *
+     * @param  string $attribute
+     * @return mixed
+     */
+    protected function getDynamicEncrypted( $attribute )
+    {
+        // Dynamically get the encrypted attributes
+        if ( $this->isEncryptable( $attribute ) )
+        {
+            // Decrypt only encrypted values
+            if( $this->isEncrypted( $attribute ) )
+            {
+                return $this->getEncryptedAttribute( $attribute );
+            }
+        }
+    }
+
+    /**
+     * Set an encryptable attribute dynamically.
+     *
+     * @param  string $attribute
+     * @param  mixed $value
+     * @return boolean
+     */
+    protected function setDynamicEncryptable( $attribute, $value )
+    {
+        // Dynamically set the encryptable attribute
+        if ( $this->isEncryptable( $attribute ) )
+        {
+            // Encrypt only decrypted values
+            if ( $this->isDecrypted( $attribute ) )
+            {
+                $this->attributes[ $attribute ] = $this->getEncrypter()->encrypt( $value );
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * Get the encryptable attributes.
      *
      * @return array

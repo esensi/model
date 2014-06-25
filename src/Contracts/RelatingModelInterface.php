@@ -12,6 +12,22 @@
 interface RelatingModelInterface {
 
     /**
+     * Call a dynamically resolved relationship.
+     *
+     * @param  string $name
+     * @return mixed
+     */
+    function callDynamicRelationship( $name );
+
+    /**
+     * Get a dynamically resolved relationship.
+     *
+     * @param  string $name
+     * @return mixed
+     */
+    function getDynamicRelationship( $name );
+
+    /**
      * Return the relationship configurations.
      *
      * @param string $name of related model
