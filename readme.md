@@ -95,7 +95,7 @@ class Post extends SoftModel {
 Add the `esensi/model` package as a dependency to the application. Using [Composer](https://getcomposer.org), this can be done from the command line:
 
 ```bash
-composer require esensi/modal 0.3.*
+composer require esensi/model 0.3.*
 ```
 
 Or manually it can be added to the `composer.json` file:
