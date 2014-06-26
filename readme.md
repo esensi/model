@@ -8,11 +8,11 @@ Email us at [careers@emersonmedia.com](http://emersonmedia.com/contact)
 The `Esensi/Model` package is just one package that makes up [Esensi](https://github.com/esensi), a platform built on [Laravel](http://laravel.com). This package uses [PHP traits](http://culttt.com/2014/06/25/php-traits) to extend Laravel's default Eloquent models and traits. Using traits allows for a high-degree of code reusability and extensibility. While this package provides some reasonable base models, developers are free to mix and match traits in any combination needed, being confident that the code complies to a reliable interface and is properly unit tested. For more details on the inner workings of the traits please consult the generously documented source code.
 
 > **Have a project in mind?**
-_Email us at [sales@emersonmedia.com](http://emersonmedia.com/contact), or call 1.877.439.6665._
+Email us at [sales@emersonmedia.com](http://emersonmedia.com/contact), or call 1.877.439.6665.
 
 ## Quick Start
 
-> **Notice:** _This code is specifically designed to be compatible with the [Laravel Framework](http://laravel.com) and may not be compatible as a stand-alone dependency or as part of another framework._
+> **Notice:** This code is specifically designed to be compatible with the [Laravel Framework](http://laravel.com) and may not be compatible as a stand-alone dependency or as part of another framework.
 
 ### Extend the Default Model
 
@@ -581,15 +581,9 @@ phpunit ./tests
 
 ## Contributing
 
-> **Want to work with us on great Laravel applications?**
-Email us at [careers@emersonmedia.com](http://emersonmedia.com/contact)
-
 [Emerson Media](http://www.emersonmedia.com) is proud to work with some of the most talented developers in the PHP community. The developer team welcomes requests, suggestions, issues, and of course pull requests. When submitting issues please be as detailed as possible and provide code examples where possible. When submitting pull requests please follow the same code formatting and style guides that the Esensi code base uses. Please help the open-source community out by including good code test coverage with your pull requests. **All pull requests _must_ be submitted to the version branch to which the code changes apply.**
 
 ## Licensing
-
-> **Have a project in mind?**
-_Email us at [sales@emersonmedia.com](http://emersonmedia.com/contact), or call 1.877.439.6665._
 
 Copyright (c) 2014 [Emerson Media, LP](http://www.emersonmedia.com)
 
