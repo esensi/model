@@ -1,5 +1,10 @@
 ## Esensi Model Traits Package
 
+[![Build Status](https://travis-ci.org/esensi/model.svg)](https://travis-ci.org/esensi/model)
+[![Total Downloads](https://poser.pugx.org/esensi/model/downloads.svg)](https://packagist.org/packages/esensi/model)
+[![Latest Stable Version](https://poser.pugx.org/esensi/model/v/stable.svg)](https://packagist.org/packages/esensi/model)
+[![License](https://poser.pugx.org/esensi/model/license.svg)](https://packagist.org/packages/esensi/model)
+
 An [Esensi](https://github.com/esensi) package, coded by [Emerson Media](http://www.emersonmedia.com).
 
 > **Want to work with us on great Laravel applications?**

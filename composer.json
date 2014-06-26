@@ -21,7 +21,7 @@
         "illuminate/hashing": "4.2.*",
         "illuminate/support": "4.2.*",
         "illuminate/validation": "4.2.*",
-        "watson/validating": "dev-develop"
+        "watson/validating": "0.8.1"
     },
     "require-dev": {
         "phpunit/phpunit": "4.1.*",
@@ -33,5 +33,5 @@
             "Esensi\\Model\\": "src/"
         }
     },
-    "minimum-stability": "dev"
+    "minimum-stability": "stable"
 }

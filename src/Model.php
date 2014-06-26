@@ -133,6 +133,14 @@ abstract class Model extends Eloquent implements
     protected $injectUniqueIdentifier = true;
 
     /**
+     * Whether the model should throw ValidatingException when
+     * the model fails validation.
+     *
+     * @var boolean
+     */
+    protected $throwValidationExceptions = false;
+
+    /**
      * Dynamically retrieve attributes.
      *
      * @param  string $key
