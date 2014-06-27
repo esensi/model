@@ -72,7 +72,7 @@ class Post extends SoftModel {
     - [Auto-Purging on Save](#auto-purging-on-save)
     - [Manually Purging Model Attributes](#manually-purging-model-attributes)
 - **[Hashing Model Trait](#hashing-model-trait)**
-    - Auto-Hashing on Save
+    - [Auto-Hashing on Save](#auto-hashing-on-save)
     - [Manually Hashing Model Attributes](#manually-hashing-model-attributes)
 - **[Encrypting Model Trait](#encrypting-model-trait)**
     - Auto-Encrypting on Set
@@ -352,13 +352,60 @@ Like all the traits, it is self-contained and can be used individually.
 
 > **Pro Tip:** This trait uses the `HashingModelObserver` to listen for the `eloquent.creating` and `eloquent.updating` events before automatically hashing the hashable attributes. The order in which the traits are used in the `Model` determines the event priority: if using the `ValidatingModelTrait` be sure to use it first so that the hashing event listner is fired _after_ the validating event listener has fired.
 
+### Auto-Hashing on Save
+
+While developers can of course use the [`Model`](https://github.com/esensi/model/blob/master/src/Model.php) or [`SoftModel`](https://github.com/esensi/model/blob/master/src/SoftModel.php) classes which already include the [`HashingModelTrait`](https://github.com/esensi/model/blob/master/src/Traits/HashingModelTrait.php), the following code will demonstrate using automatic hashing on any `Eloquent` based model. For this example, the implementation of automatic hashing will be applied to a `User` model which requires the password to be hashed on save:
+
+```php
+<?php
+
+use \Esensi\Model\Contracts\HashingModelInterface;
+use \Esensi\Model\Traits\HashingModelTrait;
+use \Illuminate\Database\Eloquent\Model as Eloquent;
+
+class User extends Eloquent implements HashingModelInterface {
+
+    use HashingModelTrait;
+
+    /**
+     * These are the attributes to hash before saving.
+     *
+     * @var array
+     */
+    protected $hashable = [ 'password' ];
+
+}
+```
+
+> **Pro Tip:** The `HashingModelTrait` is a great combination for the `PurgingModelTrait`. Often hashable attributes need to be confirmed and using the `PurgingModelTrait`, the model can be automatically purged of the annoying `_confirmation` attributes before writing to the database. While the `use` order of these two traits is not important relative to each other, it is important to include them in the after `ValidatingModelTrait` if that trait is used as well.
+
+The developer can now pass form input to the `User` model from a controller or repository and the trait will automatically hash the `password` before saving. For demonstrative purposes the following code shows this in practice from a simple route closure:
+
+```php
+Route::post( 'account', function( $id )
+{
+    // Hydrate the model from the Input
+    $user = Auth::user();
+    $user->password = Input::get('password');
+
+    // At this point $user->password is still plain text.
+    // This allows for the value to be checked by validation.
+
+    // Save the User
+    $user->save();
+
+    // At this point $user->password is for sure hashed.
+    // It was hashed becaused it existed in User::$hashable.
+});
+```
+
 ### Manually Hashing Model Attributes
 
 It is also possible to manually hash attributes. The `HashingModelTrait` includes several helper functions to make manual manipulation of the `$hashable` property easier.
 
 ```php
 // Hydrate the model from the Input
-$post = Post::find($id);
+$post = User::find($id);
 $post->password = Input::get('password');
 
 // Manually hash attributes prior to save()
@@ -375,7 +422,7 @@ $post->addHashable( 'baz' ); // ['foo', 'bar', 'baz']
 $post->mergeHashable( ['zip'] ); // ['foo', 'bar', 'baz', 'zip']
 $post->removeHashable( 'foo' ); // ['bar', 'baz', 'zip']
 
-// Check if an attribute is in the Post::$hashable property
+// Check if an attribute is in the User::$hashable property
 if ( $post->isHashable( 'foo' ) )
 {
     // ... foo is not hashable so this would not get executed
@@ -429,7 +476,7 @@ It is also possible to manually encrypt attributes. The `EncryptingModelTrait` i
 
 ```php
 // Hydrate the model from the Input
-$post = Post::find($id);
+$post = Model::find($id);
 $post->secret = Input::get('secret'); // automatically encrypted
 
 // Manually encrypt attributes prior to save()
@@ -450,7 +497,7 @@ $post->addEncryptable( 'baz' ); // ['foo', 'bar', 'baz']
 $post->mergeEncryptable( ['zip'] ); // ['foo', 'bar', 'baz', 'zip']
 $post->removeEncryptable( 'foo' ); // ['bar', 'baz', 'zip']
 
-// Check if an attribute is in the Post::$encryptable property
+// Check if an attribute is in the Model::$encryptable property
 if ( $post->isEncryptable( 'foo' ) )
 {
     // ... foo is not encryptable so this would not get executed
@@ -514,7 +561,7 @@ class Post extends Eloquent implements RelatingModelInterface {
      *     [ 'hasMany', 'related', 'foreignKey', 'localKey' ]
      *     [ 'hasManyThrough', 'related', 'through', 'firstKey', 'secondKey' ]
      *     [ 'belongsTo', 'related', 'foreignKey', 'otherKey', 'relation' ]
-     *     [ 'belongsToMany', 'related', 'foreignKey', 'otherKey', 'relation' ]
+     *     [ 'belongsToMany', 'related', 'table', 'foreignKey', 'otherKey', 'relation' ]
      *     [ 'morphOne', 'related', 'name', 'type', 'id', 'localKey' ]
      *     [ 'morphMany', 'related', 'name', 'type', 'id', 'localKey' ]
      *     [ 'morphTo', 'name', 'type', 'id' ]

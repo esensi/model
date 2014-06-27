@@ -21,7 +21,7 @@
         "illuminate/hashing": "4.2.*",
         "illuminate/support": "4.2.*",
         "illuminate/validation": "4.2.*",
-        "watson/validating": "0.8.1"
+        "watson/validating": "0.8.*"
     },
     "require-dev": {
         "phpunit/phpunit": "4.1.*",
