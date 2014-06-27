@@ -377,7 +377,7 @@ class User extends Eloquent implements HashingModelInterface {
 }
 ```
 
-> **Pro Tip:** The `HashingModelTrait` is a great combination for the `PurgingModelTrait`. Often hashable attributes need to be confirmed and using the `PurgingModelTrait`, the model can be automatically purged of the annoying `_confirmation` attributes before writing to the database. While the `use` order of these two traits is not important relative to each other, it is important to include them in the after `ValidatingModelTrait` if that trait is used as well.
+> **Pro Tip:** The `HashingModelTrait` is a great combination for the `PurgingModelTrait`. Often hashable attributes need to be confirmed and using the `PurgingModelTrait`, the model can be automatically purged of the annoying `_confirmation` attributes before writing to the database. While the `use` order of these two traits is not important relative to each other, it is important to `use` them after `ValidatingModelTrait` if that trait is used as well. Otherwise, the model will purge or hash the attributes before validating.
 
 The developer can now pass form input to the `User` model from a controller or repository and the trait will automatically hash the `password` before saving. For demonstrative purposes the following code shows this in practice from a simple route closure:
 
