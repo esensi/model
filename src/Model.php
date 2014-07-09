@@ -1,11 +1,13 @@
 <?php namespace Esensi\Model;
 
 use \Esensi\Model\Contracts\EncryptingModelInterface;
+use \Esensi\Model\Contracts\JugglingModelInterface;
 use \Esensi\Model\Contracts\HashingModelInterface;
 use \Esensi\Model\Contracts\PurgingModelInterface;
 use \Esensi\Model\Contracts\RelatingModelInterface;
 use \Esensi\Model\Contracts\ValidatingModelInterface;
 use \Esensi\Model\Traits\EncryptingModelTrait;
+use \Esensi\Model\Traits\JugglingModelTrait;
 use \Esensi\Model\Traits\HashingModelTrait;
 use \Esensi\Model\Traits\PurgingModelTrait;
 use \Esensi\Model\Traits\RelatingModelTrait;
@@ -17,12 +19,14 @@ use \Illuminate\Database\Eloquent\Model as Eloquent;
  *
  * @package Esensi\Model
  * @author Daniel LaBarge <wishlist@emersonmedia.com>
+ * @author Diego Caprioli <diego@emersonmedia.com>
  * @copyright 2014 Emerson Media LP
  * @license https://github.com/esensi/model/blob/master/LICENSE.txt MIT License
  * @link http://www.emersonmedia.com
  *
  * @see \Illuminate\Database\Eloquent\Model
  * @see \Esensi\Model\Contracts\EncryptingModelInterface
+ * @see \Esensi\Model\Contracts\JugglingModelInterface
  * @see \Esensi\Model\Contracts\HashingModelInterface
  * @see \Esensi\Model\Contracts\PurgingModelInterface
  * @see \Esensi\Model\Contracts\RelatingModelInterface
@@ -30,6 +34,7 @@ use \Illuminate\Database\Eloquent\Model as Eloquent;
  */
 abstract class Model extends Eloquent implements
     EncryptingModelInterface,
+    JugglingModelInterface,
     HashingModelInterface,
     PurgingModelInterface,
     RelatingModelInterface,
@@ -52,6 +57,13 @@ abstract class Model extends Eloquent implements
      * @see \Esensi\Model\Traits\EncryptingModelTrait
      */
     use EncryptingModelTrait;
+
+    /**
+     * Make the model juggle attributes when setting and getting
+     *
+     * @see \Esensi\Model\Contracts\JugglingModelInterface
+     */
+    use JugglingModelTrait;
 
     /**
      * Make model hash attributes.
@@ -148,6 +160,8 @@ abstract class Model extends Eloquent implements
      */
     public function __get( $key )
     {
+
+
         // Resolve relationship dynamically
         if( $relationship = $this->getDynamicRelationship( $key ) )
         {
