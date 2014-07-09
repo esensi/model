@@ -77,7 +77,7 @@ trait JugglingModelTrait {
     {
         if ($this->juggling)
         {
-            return $this->getJuggleAttribute($key, $value);
+            return $this->juggle($key, $value); // no change to $attributes is made
         }
 
         return $value;
@@ -93,42 +93,20 @@ trait JugglingModelTrait {
      */
     public function setDynamicJugglable( $key, $value )
     {
+        // if juggling is enabled
         if ($this->juggling)
         {
-            $this->setJuggleAttribute($key, $value); //changes $attributes[$key]
-        }
-    }
-
-    /**
-     * Gets the attribute type juggled value.
-     *
-     * @param  string  $key
-     * @return mixed
-     */
-    public function getJuggleAttribute( $key, $value )
-    {
-        return $this->juggle($key, $value); //no change to $attributes is made
-    }
-
-    /**
-     * Sets the attribute value with the corresponding type juggled value.
-     *
-     * @param   string $key
-     * @param   string $value
-     * @return  void
-     */
-    public function setJuggleAttribute( $key, $value )
-    {
-
-        // if the attribute exists in our jugglables array
-        // we need to juggle it
-        if ( $this->isJugglable($key) )
-        {
-            if ($value)
+            // and the key is configured to be juggled
+            if ( $this->isJugglable($key) )
             {
-                $this->juggleAttribute($key, $value);
-            }
+                // and has value
+                if ($value)
+                {
+                    // we need to juggle it
+                    $this->juggleAttribute($key, $value);
+                }
 
+            }
         }
     }
 

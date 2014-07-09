@@ -13,11 +13,31 @@ interface JugglingModelInterface {
 
 
     /**
+     * If juggling is active, it returns the juggleAttribute.
+     * If not it just returns the value as if was passed
+     *
+     * @param  string $key
+     * @param  mixed $value
+     * @return mixed
+     */
+    public function getDynamicJugglable( $key, $value );
+
+    /**
+     * If juggling is active, it sets the attribute in the model
+     * by type juggling the value first.
+     *
+     * @param  string $key
+     * @param  mixed $value
+     * @return void
+     */
+    public function setDynamicJugglable( $key, $value );
+
+    /**
      * Get the juggable attributes
      *
      * @return array
      */
-    function getJugglable();
+    public function getJugglable();
 
     /**
      * Set the jugglable attributes.
@@ -25,7 +45,7 @@ interface JugglingModelInterface {
      * @param  array $attributes to juggle
      * @return void
      */
-    function setJugglable( array $attributes );
+    public function setJugglable( array $attributes );
 
     /**
      * Add an attribute to the jugglable array.
@@ -34,7 +54,7 @@ interface JugglingModelInterface {
      * @param  string $attribute to juggle
      * @return void
      */
-    function addJugglable( $attribute );
+    public function addJugglable( $attribute );
 
     /**
      * Remove an attribute from the jugglable array.
@@ -43,7 +63,7 @@ interface JugglingModelInterface {
      * @param  string $attribute to juggle
      * @return void
      */
-    function removeJugglable( $attribute );
+    public function removeJugglable( $attribute );
 
     /**
      * Merge an array of attributes with the jugglable array.
@@ -51,14 +71,14 @@ interface JugglingModelInterface {
      * @param  array $attributes to juggle
      * @return void
      */
-    function mergeJugglable( array $attributes );
+    public function mergeJugglable( array $attributes );
 
     /**
      * Returns whether or not the model will juggle attributes.
      *
      * @return boolean
      */
-    function getJuggling();
+    public function getJuggling();
 
     /**
      * Set whether or not the model will juggle attributes.
@@ -66,15 +86,15 @@ interface JugglingModelInterface {
      * @param  boolean
      * @return void
      */
-    function setJuggling( $value );
+    public function setJuggling( $value );
 
     /**
-     * Returns whether the attribute is jugglable.
+     * Returns whether the attribute is type jugglable.
      *
      * @param string $attribute name
      * @return boolean
      */
-    function isJugglable( $attribute );
+    public function isJugglable( $attribute );
 
     /**
      * Casts a value to the coresponding attribute type and sets
@@ -84,39 +104,91 @@ interface JugglingModelInterface {
      * @param  string $value
      * @return  void
      */
-    function juggleAttribute( $key, $value );
+    protected function juggleAttribute( $key, $value );
 
     /**
      * Juggles all attributes that are configured to be juggled.
      *
      * @return void
      */
-    function juggleAttributes();
+    protected function juggleAttributes();
 
     /**
-     * Cast the value to a the attribute's type as specified iun the juggable array
+     * Cast the value to the attribute's type as specified in the juggable array.
      *
      * @param  string $key
      * @param  mixed  $value
      * @return mixed
      */
-    function juggle( $key, $value );
+    protected function juggle( $type, $value );
 
     /**
-     * Gets the attribute juggled value.
+     * Returns the value as a Carbon instance
      *
-     * @param  string  $key
-     * @return mixed
+     * @param  mixed $value
+     * @return \Carbon\Carbon
+     * @see \Illuminate\Database\Eloquent\Model::asDateTime()
      */
-    function getJuggledAttribute( $key, $value );
+    protected function juggleDate($value);
 
     /**
-     * Sets the attribute value with the corresponding juggled value
+     * Returns a string formated as ISO standar for 0000-00-00 00:00:00
      *
-     * @param   string $key
-     * @param   string $value
-     * @return  void
+     * @param  mixed $value
+     * @return string
      */
-    function setJuggledAttribute( $key, $value );
+    protected function juggleDatetime($value);
+
+    /**
+     * Returns the date as a Unix timestamp
+     *
+     * @param  mixed $value
+     * @return int   Unix timestamp
+     */
+    protected function juggleTimestamp($value)
+
+    /**
+     * Returns the value as boolena
+     *
+     * @param  mixed $value
+     * @return boolean
+     */
+    protected function juggleBoolean($value);
+
+    /**
+     * Returns the value as integer
+     *
+     * @param  mixed $value
+     * @return integer
+     */
+    protected function juggleInteger($value);
+
+    /**
+     * Returns the value as float
+     *
+     * @param  mixed $value
+     * @return float
+     */
+    protected function juggleFloat($value);
+
+    /**
+     * Returns the value as string
+     *
+     * @param  mixed $value
+     * @return string
+     */
+    protected function juggleString($value);
+
+    /**
+     * Returns the value as array
+     *
+     * @param  mixed $value
+     * @return array
+     */
+    protected function juggleArray($value);
+
+
+
+
 
 }
