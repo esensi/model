@@ -6,29 +6,12 @@ use \Illuminate\Encryption\Encrypter;
  * Encrypting Model Interface
  *
  * @package Esensi\Model
- * @author Daniel LaBarge <wishlist@emersonmedia.com>
+ * @author Daniel LaBarge <dalabarge@emersonmedia.com>
  * @copyright 2014 Emerson Media LP
  * @license https://github.com/esensi/model/blob/master/LICENSE.txt MIT License
  * @link http://www.emersonmedia.com
  */
 interface EncryptingModelInterface {
-
-    /**
-     * Get an encrypted attribute dynamically.
-     *
-     * @param  string $attribute
-     * @return mixed
-     */
-    function getDynamicEncrypted( $attribute );
-
-    /**
-     * Set an encryptable attribute dynamically.
-     *
-     * @param  string $attribute
-     * @param  mixed $value
-     * @return boolean
-     */
-    function setDynamicEncryptable( $attribute, $value );
 
     /**
      * Get the encryptable attributes.
@@ -149,22 +132,5 @@ interface EncryptingModelInterface {
      * @return string
      */
     public function decrypt( $value );
-
-    /**
-     * Get the decrypted value for an encrypted attribute.
-     *
-     * @param string $attribute name
-     * @return string
-     */
-    function getEncryptedAttribute( $attribute );
-
-    /**
-     * Set an encrypted value for an encryptable attribute.
-     *
-     * @param string $attribute name
-     * @param string $value to encrypt
-     * @return void
-     */
-    function setEncryptingAttribute( $attribute, $value);
 
 }

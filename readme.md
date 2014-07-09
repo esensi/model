@@ -139,14 +139,6 @@ class Post extends Eloquent implements ValidatingModelInterface {
     use ValidatingModelTrait;
 
     /**
-     * This tells whether or not the model should inject its identifier
-     * into the unique validation rules before attempting validation.
-     *
-     * @var boolean
-     */
-    protected $injectUniqueIdentifier = true;
-
-    /**
      * These are the default rules that the model will validate against.
      * Developers will probably want to specify generic validation rules
      * that would apply in any save operation vs. form or route
@@ -635,7 +627,7 @@ phpunit ./tests
 
 [Emerson Media](http://www.emersonmedia.com) is proud to work with some of the most talented developers in the PHP community. The developer team welcomes requests, suggestions, issues, and of course pull requests. When submitting issues please be as detailed as possible and provide code examples where possible. When submitting pull requests please follow the same code formatting and style guides that the Esensi code base uses. Please help the open-source community out by including good code test coverage with your pull requests. **All pull requests _must_ be submitted to the version branch to which the code changes apply.**
 
-> **Note:** The development team does its best to address all issues on Wednesdays. Pull requests are reviewed in priority followed by urgent bug fixes. Each week the package dependencies are re-evaluated and updates are made for new tag releases.
+> **Note:** The Esensi team does its best to address all issues on Wednesdays. Pull requests are reviewed in priority followed by urgent bug fixes. Each week the package dependencies are re-evaluated and updates are made for new tag releases.
 
 ## Licensing
 
