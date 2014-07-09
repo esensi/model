@@ -11,28 +11,114 @@
  */
 interface JugglingModelInterface {
 
+
     /**
-     * Overriden attributesToArray() Eloquent Model method, to juggle
-     * first any juggable property, and then call the parent method.
+     * Get the juggable attributes
      *
      * @return array
      */
-    function attributesToArray();
+    function getJugglable();
 
     /**
-     * Cast an attribute to a new type.
+     * Set the jugglable attributes.
      *
-     * @param  string $type
+     * @param  array $attributes to purge
+     * @return void
+     */
+    function setJugglable( array $attributes );
+
+    /**
+     * Add an attribute to the jugglable array.
+     *
+     * @example addJugglable( string $attribute, ... )
+     * @param  string $attribute to purge
+     * @return void
+     */
+    function addJugglable( $attribute );
+
+    /**
+     * Remove an attribute from the jugglable array.
+     *
+     * @example removeJugglable( string $attribute, ... )
+     * @param  string $attribute to purge
+     * @return void
+     */
+    function removeJugglable( $attribute );
+
+    /**
+     * Merge an array of attributes with the jugglable array.
+     *
+     * @param  array $attributes to purge
+     * @return void
+     */
+    function mergeJugglable( array $attributes );
+
+    /**
+     * Returns whether or not the model will juggle attributes.
+     *
+     * @return boolean
+     */
+    function getJuggling();
+
+    /**
+     * Set whether or not the model will juggle attributes.
+     *
+     * @param  boolean
+     * @return void
+     */
+    function setJuggling( $value );
+
+    /**
+     * Returns whether the attribute is purgeable.
+     *
+     * @param string $attribute name
+     * @return boolean
+     */
+    function isJugglable( $attribute );
+
+    /**
+     * Casts a value to the coresponding attribute type and sets
+     * it on the attributes array of this model
+     *
+     * @param  string $key
+     * @param  string $value
+     * @return  void
+     */
+    function juggleAttribute( $key, $value );
+
+    /**
+     * Juggles all attributes that are configured to be juggled.
+     *
+     * @return void
+     */
+    function juggleAttributes();
+
+    /**
+     * Cast the value to a the attribute's type as specified iun the juggable array
+     *
+     * @param  string $key
      * @param  mixed  $value
      * @return mixed
      */
-    function juggleAttribute($type, $value);
+    function juggle( $key, $value );
 
     /**
-     * Get the attributes that should be cast upon retrieval.
+     * Gets the attribute juggled value.
      *
-     * @return array
+     * @param  string  $key
+     * @return mixed
      */
-    function getJugglables();
+    function getJuggledAttribute( $key, $value );
+
+    /**
+     * Sets the attribute value with the corresponding juggled value
+     *
+     * @param   string $key
+     * @param   string $value
+     * @return  void
+     */
+    function setJuggledAttribute( $key, $value );
+
+
 
 }

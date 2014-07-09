@@ -129,6 +129,7 @@ abstract class Model extends Eloquent implements
      */
     protected $encryptable = [];
 
+
     /**
      * Relationships that the model should set up.
      *
@@ -161,7 +162,6 @@ abstract class Model extends Eloquent implements
     public function __get( $key )
     {
 
-
         // Resolve relationship dynamically
         if( $relationship = $this->getDynamicRelationship( $key ) )
         {
@@ -175,8 +175,46 @@ abstract class Model extends Eloquent implements
         }
 
         // Default Eloquent dynamic getter
-        return parent::__get( $key );
+        $value = parent::__get( $key );
+
+        // Dynamically juggle the attribute
+        if ($this->juggling)
+        {
+            $value = $this->getJuggledAttribute($key, $value);
+        }
+
+        return $value;
     }
+
+
+    /**
+     * Dynamically set attributes.
+     *
+     * @param  string $key
+     * @param  mixed $value
+     * @return void
+     */
+    public function __set( $key, $value )
+    {
+
+        // Dynamically set the encryptable attribute
+        if( $this->setDynamicEncryptable( $key, $value ) )
+        {
+            return;
+        }
+
+        //if juggling, set juggled and continue with parent logic
+        if ($this->juggling)
+        {
+            $this->setJuggledAttribute($key, $value); //changes $attributes[$key]
+        }
+
+        // Default Eloquent dynamic setter
+        return parent::__set( $key, $value );
+
+    }
+
+
 
     /**
      * Boot all of the bootable traits on the model.

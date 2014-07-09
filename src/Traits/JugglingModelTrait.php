@@ -27,8 +27,7 @@ trait JugglingModelTrait {
      *
      * @var boolean
      */
-    protected $juggling = true;
-
+    protected $juggling = false;
 
 
     /**
@@ -39,21 +38,14 @@ trait JugglingModelTrait {
      */
     public function __get($key)
     {
-
-        // if the attribute exists in our jugglables array
-        // we need to juggle it
-        if ( array_key_exists($key, $jugglable = $this->getJugglables()) !== false )
+        $value = parent::__get($key);
+        if ($this->juggling)
         {
-            // get the current attribute value
-            $value = $this->getAttributeFromArray($key);
-
-            // return the juggled value corresponding to the specified type for it
-            return $this->juggleAttribute($jugglable[$key], $value);
+            return $this->getJuggledAttribute($key, $value);
         }
-
-        return parent::__get($key);
-
+        return $value;
     }
+
 
     /**
      * Dynamically set attributes on the model.
@@ -64,90 +56,20 @@ trait JugglingModelTrait {
      */
     public function __set($key, $value)
     {
-
-        // if the attribute exists in our jugglables array
-        // we need to juggle it
-        if ( array_key_exists($key, $jugglable = $this->getJugglables()) !== false )
+        if ($this->juggling)
         {
-
-            if ($value)
-            {
-                // if the value is a date though, we'll convert it from a DateTime
-                // instance into a form proper for storage on the database tables using
-                // the connection grammar's date format.
-                if ($jugglable[$key] === 'date')
-                {
-                    $value = $this->fromDateTime($value);
-                }
-                else
-                {
-                    $value = $this->juggleAttribute($jugglable[$key], $value);
-                }
-            }
-
-            // set the value and return;
-            $this->attributes[$key] = $value;
-            return;
-
+            $this->setJuggledAttribute($key, $value); //changes $attributes[$key]
         }
-
-        parent::__set($key, $value);
-
+        parent::__set($key, $this->atributes[$key]);
     }
 
 
     /**
-     * Overriden attributesToArray() Eloquent Model method, to juggle
-     * first any juggable property, and then call the parent method.
+     * Get the juggable attributes
      *
      * @return array
      */
-    public function attributesToArray()
-    {
-        // Iterate the juggable fields, and if the field is present
-        // cast the attribute and replace within the array.
-        foreach ($this->getJugglables() as $key => $type)
-        {
-            if ( ! isset($this->attributes[$key]))
-            {
-                continue;
-            }
-            $this->attributes[$key] = $this->juggleAttribute($type, $this->attributes[$key]);
-        }
-
-        return parent::attributesToArray();
-
-    }
-
-
-    /**
-     * Cast an attribute to a new type.
-     *
-     * @param  string $type
-     * @param  mixed  $value
-     * @return mixed
-     */
-    protected function juggleAttribute($type, $value)
-    {
-        $type = strtolower($type);
-
-        if ($type === 'date')
-        {
-            if ($value) return $this->asDateTime($value);
-        }
-
-        if ($value !== null) settype($value, $type);
-
-        return $value;
-    }
-
-
-    /**
-     * Get the attributes that should be cast upon retrieval.
-     *
-     * @return array
-     */
-    public function getJugglables()
+    public function getJugglable()
     {
         // This block allows for backwards compatibility with $dates by
         // merging values present in the original date array with our
@@ -162,6 +84,269 @@ trait JugglingModelTrait {
 
         return array_merge($this->jugglable, $originals, $defaults);
     }
+
+
+    /**
+     * Set the jugglable attributes.
+     *
+     * @param  array $attributes to purge
+     * @return void
+     */
+    public function setJugglable( array $attributes )
+    {
+        $this->jugglable = $attributes;
+    }
+
+    /**
+     * Add an attribute to the jugglable array.
+     *
+     * @example addJugglable( string $attribute, ... )
+     * @param  string $attribute to purge
+     * @return void
+     */
+    public function addJugglable( $attribute )
+    {
+        $this->mergeJugglable( func_get_args() );
+    }
+
+    /**
+     * Remove an attribute from the jugglable array.
+     *
+     * @example removeJugglable( string $attribute, ... )
+     * @param  string $attribute to purge
+     * @return void
+     */
+    public function removeJugglable( $attribute )
+    {
+        $this->jugglable = array_diff( $this->jugglable, func_get_args() );
+    }
+
+    /**
+     * Merge an array of attributes with the jugglable array.
+     *
+     * @param  array $attributes to purge
+     * @return void
+     */
+    public function mergeJugglable( array $attributes )
+    {
+        $this->jugglable = array_merge( $this->jugglable, $attributes );
+    }
+
+    /**
+     * Returns whether or not the model will juggle attributes.
+     *
+     * @return boolean
+     */
+    public function getJuggling()
+    {
+        return $this->juggling;
+    }
+
+    /**
+     * Set whether or not the model will juggle attributes.
+     *
+     * @param  boolean
+     * @return void
+     */
+    public function setJuggling( $value )
+    {
+        $this->juggling = (bool) $value;
+    }
+
+    /**
+     * Returns whether the attribute is purgeable.
+     *
+     * @param string $attribute name
+     * @return boolean
+     */
+    public function isJugglable( $attribute )
+    {
+        return $this->getJugglable()
+            && in_array( $attribute, $this->getJugglable() );
+    }
+
+
+
+    /**
+     * Casts a value to the coresponding attribute type and sets
+     * it on the attributes array of this model
+     *
+     * @param  string $key
+     * @param  string $value
+     * @return  void
+     */
+    protected function juggleAttribute( $key, $value )
+    {
+        $this->attributes[$key] = $this->juggle($key, $value);
+    }
+
+
+    /**
+     * Juggles all attributes that are configured to be juggled.
+     *
+     * @return void
+     */
+    protected function juggleAttributes()
+    {
+        // Iterate the juggable fields, and if the field is present
+        // cast the attribute and replace within the array.
+        $jugglable = $this->getJugglable();
+        foreach ($jugglable as $key => $type)
+        {
+            if ( !isset($this->attributes[$key]) )
+            {
+                continue;
+            }
+            $this->juggleAttribute($key, $this->attributes[$key]);
+        }
+    }
+
+
+    /**
+     * Cast the value to a the attribute's type as specified iun the juggable array
+     *
+     * @param  string $key
+     * @param  mixed  $value
+     * @return mixed
+     */
+    protected function juggle( $key, $value )
+    {
+
+        // if the attribute exists in our jugglables array
+        // we need to juggle it
+        if ( array_key_exists($key, $jugglable = $this->getJugglable()) !== false )
+        {
+
+            $type = $jugglable[$key];
+            $type = strtolower($type);
+
+            switch ($type) {
+
+                case 'date':
+                    $value = $this->juggleDate($value);
+                    break;
+
+                case 'string':
+                case 'bool':
+                case 'double':
+                case 'int':
+                    $value = $this->juggleToType($type, $value);
+                    break;
+
+                default:
+                    $method = "juggle". studly_case($type);
+                    $value = $this->{$method}($key, $value);
+                    break;
+
+            }
+
+        }
+
+        return $value;
+
+    }
+
+
+
+    protected function juggleDate($value)
+    {
+        if ($value)
+        {
+            $value = $this->asDateTime($value);
+            settype($value, 'date');
+        }
+        return $value;
+    }
+
+
+
+    protected function juggleToType($type, $value)
+    {
+        if ($value !== null)
+        {
+            settype($value, $type);
+        }
+        return $value;
+    }
+
+
+
+
+    /**
+     * Gets the attribute juggled value.
+     *
+     * @param  string  $key
+     * @return mixed
+     */
+    public function getJuggledAttribute( $key, $value )
+    {
+        return $this->juggle($key, $value); //no change to $attributes is made
+    }
+
+
+
+    /**
+     * Sets the attribute value with the corresponding juggled value
+     *
+     * @param   string $key
+     * @param   string $value
+     * @return  void
+     */
+    public function setJuggledAttribute( $key, $value )
+    {
+
+        // if the attribute exists in our jugglables array
+        // we need to juggle it
+        if ( array_key_exists($key, $jugglable = $this->getJugglable()) !== false )
+        {
+
+            if ($value)
+            {
+                // if the value is a date though, we'll convert it from a DateTime
+                // instance into a form proper for storage on the database tables using
+                // the connection grammar's date format.
+                if ($jugglable[$key] === 'date')
+                {
+                    $value = $this->fromDateTime($value);
+                }
+                else
+                {
+                    $value = $this->juggle($key, $value);
+                }
+            }
+
+            // set the value and return;
+            $this->attributes[$key] = $value;
+            return;
+
+        }
+
+    }
+
+
+    /**
+     * Overriden attributesToArray() Eloquent Model method, to juggle
+     * first any juggable property, and then call the parent method.
+     *
+     * @return array
+     */
+    public function attributesToArray()
+    {
+
+        if ($this->juggling)
+        {
+            $this->juggleAttributes();
+        }
+
+        return parent::attributesToArray();
+
+    }
+
+
+
+
+
+
 
 
 
