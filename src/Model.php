@@ -122,6 +122,13 @@ abstract class Model extends Eloquent implements
     protected $hashable = [];
 
     /**
+    * Attributes to cast to a different type.
+    *
+    * @var array
+    */
+    protected $jugglable = [];
+
+    /**
      * The attributes to encrypt when set and
      * decrypt when gotten.
      *
@@ -178,14 +185,9 @@ abstract class Model extends Eloquent implements
         $value = parent::__get( $key );
 
         // Dynamically juggle the attribute
-        if ($this->juggling)
-        {
-            $value = $this->getJuggledAttribute($key, $value);
-        }
+        return $this->getDynamicJugglable($key, $value);
 
-        return $value;
     }
-
 
     /**
      * Dynamically set attributes.
@@ -203,18 +205,14 @@ abstract class Model extends Eloquent implements
             return;
         }
 
-        //if juggling, set juggled and continue with parent logic
-        if ($this->juggling)
-        {
-            $this->setJuggledAttribute($key, $value); //changes $attributes[$key]
-        }
-
         // Default Eloquent dynamic setter
-        return parent::__set( $key, $value );
+        parent::__set( $key, $value );
 
+        //at this point, the $attributes[$key] is set with the correct value
+
+        //Dynamicly juggle set the attribute
+        $this->setDynamicJugglable($key, $attributes[$key]);
     }
-
-
 
     /**
      * Boot all of the bootable traits on the model.

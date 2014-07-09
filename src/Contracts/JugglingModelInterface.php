@@ -22,7 +22,7 @@ interface JugglingModelInterface {
     /**
      * Set the jugglable attributes.
      *
-     * @param  array $attributes to purge
+     * @param  array $attributes to juggle
      * @return void
      */
     function setJugglable( array $attributes );
@@ -31,7 +31,7 @@ interface JugglingModelInterface {
      * Add an attribute to the jugglable array.
      *
      * @example addJugglable( string $attribute, ... )
-     * @param  string $attribute to purge
+     * @param  string $attribute to juggle
      * @return void
      */
     function addJugglable( $attribute );
@@ -40,7 +40,7 @@ interface JugglingModelInterface {
      * Remove an attribute from the jugglable array.
      *
      * @example removeJugglable( string $attribute, ... )
-     * @param  string $attribute to purge
+     * @param  string $attribute to juggle
      * @return void
      */
     function removeJugglable( $attribute );
@@ -48,7 +48,7 @@ interface JugglingModelInterface {
     /**
      * Merge an array of attributes with the jugglable array.
      *
-     * @param  array $attributes to purge
+     * @param  array $attributes to juggle
      * @return void
      */
     function mergeJugglable( array $attributes );
@@ -69,7 +69,7 @@ interface JugglingModelInterface {
     function setJuggling( $value );
 
     /**
-     * Returns whether the attribute is purgeable.
+     * Returns whether the attribute is jugglable.
      *
      * @param string $attribute name
      * @return boolean
@@ -78,7 +78,7 @@ interface JugglingModelInterface {
 
     /**
      * Casts a value to the coresponding attribute type and sets
-     * it on the attributes array of this model
+     * it on the attributes array of this model.
      *
      * @param  string $key
      * @param  string $value
@@ -118,7 +118,5 @@ interface JugglingModelInterface {
      * @return  void
      */
     function setJuggledAttribute( $key, $value );
-
-
 
 }
