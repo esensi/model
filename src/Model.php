@@ -185,7 +185,7 @@ abstract class Model extends Eloquent implements
         $value = parent::__get( $key );
 
         // Dynamically juggle the attribute
-        return $this->getDynamicJugglable($key, $value);
+        return $this->getDynamicJuggle($key, $value);
 
     }
 
@@ -211,7 +211,7 @@ abstract class Model extends Eloquent implements
         //at this point, the $attributes[$key] is set with the correct value
 
         //Dynamicly juggle set the attribute
-        $this->setDynamicJugglable($key, $attributes[$key]);
+        $this->setDynamicJuggle($key, $this->attributes[$key]);
     }
 
     /**

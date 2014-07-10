@@ -20,7 +20,7 @@ interface JugglingModelInterface {
      * @param  mixed $value
      * @return mixed
      */
-    public function getDynamicJugglable( $key, $value );
+    public function getDynamicJuggle( $key, $value );
 
     /**
      * If juggling is active, it sets the attribute in the model
@@ -30,7 +30,7 @@ interface JugglingModelInterface {
      * @param  mixed $value
      * @return void
      */
-    public function setDynamicJugglable( $key, $value );
+    public function setDynamicJuggle( $key, $value );
 
     /**
      * Get the juggable attributes
@@ -104,14 +104,14 @@ interface JugglingModelInterface {
      * @param  string $value
      * @return  void
      */
-    protected function juggleAttribute( $key, $value );
+    function juggleAttribute( $key, $value );
 
     /**
      * Juggles all attributes that are configured to be juggled.
      *
      * @return void
      */
-    protected function juggleAttributes();
+    function juggleAttributes();
 
     /**
      * Cast the value to the attribute's type as specified in the juggable array.
@@ -120,7 +120,7 @@ interface JugglingModelInterface {
      * @param  mixed  $value
      * @return mixed
      */
-    protected function juggle( $type, $value );
+    function juggle( $type, $value );
 
     /**
      * Returns the value as a Carbon instance
@@ -129,7 +129,7 @@ interface JugglingModelInterface {
      * @return \Carbon\Carbon
      * @see \Illuminate\Database\Eloquent\Model::asDateTime()
      */
-    protected function juggleDate($value);
+    function juggleDate( $value );
 
     /**
      * Returns a string formated as ISO standar for 0000-00-00 00:00:00
@@ -137,58 +137,54 @@ interface JugglingModelInterface {
      * @param  mixed $value
      * @return string
      */
-    protected function juggleDatetime($value);
+    function juggleDatetime( $value );
 
     /**
-     * Returns the date as a Unix timestamp
+     * Returns the date as a Unix timestamp.
      *
      * @param  mixed $value
      * @return int   Unix timestamp
      */
-    protected function juggleTimestamp($value)
+    function juggleTimestamp( $value );
 
     /**
-     * Returns the value as boolena
+     * Returns the value as boolean.
      *
      * @param  mixed $value
      * @return boolean
      */
-    protected function juggleBoolean($value);
+    function juggleBoolean( $value );
 
     /**
-     * Returns the value as integer
+     * Returns the value as integer.
      *
      * @param  mixed $value
      * @return integer
      */
-    protected function juggleInteger($value);
+    function juggleInteger( $value );
 
     /**
-     * Returns the value as float
+     * Returns the value as float.
      *
      * @param  mixed $value
      * @return float
      */
-    protected function juggleFloat($value);
+    function juggleFloat( $value );
 
     /**
-     * Returns the value as string
+     * Returns the value as string.
      *
      * @param  mixed $value
      * @return string
      */
-    protected function juggleString($value);
+    function juggleString( $value );
 
     /**
-     * Returns the value as array
+     * Returns the value as array.
      *
      * @param  mixed $value
      * @return array
      */
-    protected function juggleArray($value);
-
-
-
-
+    function juggleArray( $value );
 
 }

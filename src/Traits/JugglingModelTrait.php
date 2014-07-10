@@ -1,5 +1,8 @@
 <?php namespace Esensi\Model\Traits;
 
+use Carbon\Carbon;
+use \InvalidArgumentException;
+
 
 /**
  * Trait that implements the Juggling Model Interface
@@ -31,7 +34,7 @@ trait JugglingModelTrait {
     {
         $value = parent::__get($key);
 
-        return $this->getDynamicJugglable($key, $value);
+        return $this->getDynamicJuggle($key, $value);
     }
 
     /**
@@ -45,7 +48,7 @@ trait JugglingModelTrait {
     {
         parent::__set($key, $value);
 
-        $this->setDynamicJugglable($key, $value);
+        $this->setDynamicJuggle($key, $this->attribute[$key]);
     }
 
     /**
@@ -73,9 +76,9 @@ trait JugglingModelTrait {
      * @param  mixed $value
      * @return mixed
      */
-    public function getDynamicJugglable( $key, $value )
+    public function getDynamicJuggle( $key, $value )
     {
-        if ($this->juggling)
+        if ($this->getJuggling())
         {
             return $this->juggle($key, $value); // no change to $attributes is made
         }
@@ -91,23 +94,15 @@ trait JugglingModelTrait {
      * @param  mixed $value
      * @return void
      */
-    public function setDynamicJugglable( $key, $value )
+    public function setDynamicJuggle( $key, $value )
     {
-        // if juggling is enabled
-        if ($this->juggling)
+        // if juggling is enabled, and the key is configured to be juggled, and has value
+        if ( $value && $this->isJugglable($key) )
         {
-            // and the key is configured to be juggled
-            if ( $this->isJugglable($key) )
-            {
-                // and has value
-                if ($value)
-                {
-                    // we need to juggle it
-                    $this->juggleAttribute($key, $value);
-                }
-
-            }
+            // we need to juggle it
+            $this->juggleAttribute($key, $value);
         }
+
     }
 
     /**
@@ -117,7 +112,7 @@ trait JugglingModelTrait {
      */
     public function getJugglable()
     {
-        return $this->jugglable;
+        return $this->jugglable ? $this->jugglable : [];
     }
 
     /**
@@ -134,25 +129,30 @@ trait JugglingModelTrait {
     /**
      * Add an attribute to the jugglable array.
      *
-     * @example addJugglable( string $attribute, ... )
-     * @param  string $attribute to juggle
+     * @example addJugglable( string $key, string $type )
+     * @param  string $key attribute name to juggle
+     * @param  string $type
      * @return void
      */
-    public function addJugglable( $attribute )
+    public function addJugglable( $key, $type = 'string' )
     {
         $this->mergeJugglable( func_get_args() );
     }
 
     /**
-     * Remove an attribute from the jugglable array.
+     * Remove an attribute or several attributes from the jugglable array.
      *
      * @example removeJugglable( string $attribute, ... )
-     * @param  string $attribute to juggle
+     * @param  mixed $attributes to remove from juggable () string or array
      * @return void
      */
-    public function removeJugglable( $attribute )
+    public function removeJugglable( $attributes )
     {
-        $this->jugglable = array_diff( $this->jugglable, func_get_args() );
+        if ( ! is_string($attributes) )
+        {
+            $attributes = split(',', $attributes);
+        }
+        $this->jugglable = array_diff_key($this->jugglable, $attributes);
     }
 
     /**
@@ -173,7 +173,7 @@ trait JugglingModelTrait {
      */
     public function getJuggling()
     {
-        return $this->juggling;
+        return $this->juggling && $this->getJugglable();
     }
 
     /**
@@ -195,7 +195,7 @@ trait JugglingModelTrait {
      */
     public function isJugglable( $attribute )
     {
-        return $this->getJugglable()
+        return $this->getJuggling()
             && array_key_exists( $attribute, $this->getJugglable() );
     }
 
@@ -254,6 +254,7 @@ trait JugglingModelTrait {
      * @param  string $key
      * @param  mixed  $value
      * @return mixed
+     * @throws \InvalidArgumentException If the method juggleTYPE doesn't exist.
      */
     protected function juggle( $type, $value )
     {
@@ -277,8 +278,12 @@ trait JugglingModelTrait {
                     $normalizedType = 'float';
                     break;
 
-                case 'date':
                 case 'datetime':
+                case 'date_time':
+                    $normalizedType = 'date_time';
+                    break;
+
+                case 'date':
                 case 'timestamp':
                 case 'string':
                 case 'float':
@@ -290,9 +295,9 @@ trait JugglingModelTrait {
             }
 
             $method = "juggle". studly_case($normalizedType);
-            if ( !method_exists($this, $method) )
+            if ( ! method_exists($this, $method) )
             {
-                throw new InvalidArgumentException("The method $method is not defined.");
+                throw new InvalidArgumentException("The type $normalizedType is not a valid type or method $method does not exist ");
             }
             $value = $this->{$method}($key, $value);
 
@@ -303,7 +308,7 @@ trait JugglingModelTrait {
     }
 
     /**
-     * Returns the value as a Carbon instance
+     * Returns the value as a Carbon instance.
      *
      * @param  mixed $value
      * @return \Carbon\Carbon
@@ -311,6 +316,10 @@ trait JugglingModelTrait {
      */
     protected function juggleDate($value)
     {
+        if ($value instanceof Carbon)
+        {
+            return $value;
+        }
         return $this->asDateTime($value);
     }
 
@@ -320,14 +329,14 @@ trait JugglingModelTrait {
      * @param  mixed $value
      * @return string
      */
-    protected function juggleDatetime($value)
+    protected function juggleDateTime($value)
     {
         $carbon = $this->juggleDate($value);
         return $carbon->toDateTimeString();
     }
 
     /**
-     * Returns the date as a Unix timestamp
+     * Returns the date as a Unix timestamp.
      *
      * @param  mixed $value
      * @return int   Unix timestamp
@@ -339,77 +348,71 @@ trait JugglingModelTrait {
     }
 
     /**
-     * Returns the value as boolena
+     * Returns the value as boolean.
      *
      * @param  mixed $value
      * @return boolean
      */
     protected function juggleBoolean($value)
     {
-        return $this->juggleType('booelan', $value);
+        return $this->juggleType($value, 'boolean');
     }
 
     /**
-     * Returns the value as integer
+     * Returns the value as integer.
      *
      * @param  mixed $value
      * @return integer
      */
     protected function juggleInteger($value)
     {
-        return $this->juggleType('integer', $value);
+        return $this->juggleType($value, 'integer');
     }
 
     /**
-     * Returns the value as float
+     * Returns the value as float.
      *
      * @param  mixed $value
      * @return float
      */
     protected function juggleFloat($value)
     {
-        return $this->juggleType('float', $value);
+        return $this->juggleType($value, 'float');
     }
 
     /**
-     * Returns the value as string
+     * Returns the value as string.
      *
      * @param  mixed $value
      * @return string
      */
     protected function juggleString($value)
     {
-        return $this->juggleType('string', $value);
+        return $this->juggleType($value, 'string');
     }
 
     /**
-     * Returns the value as array
+     * Returns the value as array.
      *
      * @param  mixed $value
      * @return array
      */
     protected function juggleArray($value)
     {
-        return $this->juggleType('array', $value);
+        return $this->juggleType($value, 'array');
     }
 
     /**
-     * Sets the type of the value and returns it.
+     * Casts the value to the type.     *
+     * The possibles values of $type are (according to settype docs): boolean,
+     * integer, float, string, array, object, null.
+     * @link( settype, http://php.net/manual/en/function.settype.php)
      *
-     * The possibles values of $type are (according to settype docs):
-     * "boolean" (or, since PHP 4.2.0, "bool")
-     * "integer" (or, since PHP 4.2.0, "int")
-     * "float" (only possible since PHP 4.2.0, for older versions use the deprecated variant "double")
-     * "string"
-     * "array"
-     * "object"
-     * "null" (since PHP 4.2.0)
-     *
-     * @param  string $type
      * @param  mixed $value
+     * @param  string $type (optional)
      * @return mixed
      */
-    protected function juggleType($type, $value)
+    protected function juggleType($value, $type = "null")
     {
         return settype($value, $type); // the is_null($value) check is one in juggle()
     }
