@@ -11,7 +11,6 @@
  */
 interface JugglingModelInterface {
 
-
     /**
      * If juggling is active, it returns the juggleAttribute.
      * If not it just returns the value as if was passed
@@ -123,7 +122,7 @@ interface JugglingModelInterface {
     function juggle( $type, $value );
 
     /**
-     * Returns the value as a Carbon instance
+     * Returns the value as a Carbon instance.
      *
      * @param  mixed $value
      * @return \Carbon\Carbon
@@ -132,18 +131,18 @@ interface JugglingModelInterface {
     function juggleDate( $value );
 
     /**
-     * Returns a string formated as ISO standar for 0000-00-00 00:00:00
+     * Returns a string formated as ISO standard for 0000-00-00 00:00:00.
      *
      * @param  mixed $value
      * @return string
      */
-    function juggleDatetime( $value );
+    function juggleDateTime( $value );
 
     /**
      * Returns the date as a Unix timestamp.
      *
      * @param  mixed $value
-     * @return int   Unix timestamp
+     * @return integer
      */
     function juggleTimestamp( $value );
 

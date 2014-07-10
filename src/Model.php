@@ -1,14 +1,14 @@
 <?php namespace Esensi\Model;
 
 use \Esensi\Model\Contracts\EncryptingModelInterface;
-use \Esensi\Model\Contracts\JugglingModelInterface;
 use \Esensi\Model\Contracts\HashingModelInterface;
+use \Esensi\Model\Contracts\JugglingModelInterface;
 use \Esensi\Model\Contracts\PurgingModelInterface;
 use \Esensi\Model\Contracts\RelatingModelInterface;
 use \Esensi\Model\Contracts\ValidatingModelInterface;
 use \Esensi\Model\Traits\EncryptingModelTrait;
-use \Esensi\Model\Traits\JugglingModelTrait;
 use \Esensi\Model\Traits\HashingModelTrait;
+use \Esensi\Model\Traits\JugglingModelTrait;
 use \Esensi\Model\Traits\PurgingModelTrait;
 use \Esensi\Model\Traits\RelatingModelTrait;
 use \Esensi\Model\Traits\ValidatingModelTrait;
@@ -26,8 +26,8 @@ use \Illuminate\Database\Eloquent\Model as Eloquent;
  *
  * @see \Illuminate\Database\Eloquent\Model
  * @see \Esensi\Model\Contracts\EncryptingModelInterface
- * @see \Esensi\Model\Contracts\JugglingModelInterface
  * @see \Esensi\Model\Contracts\HashingModelInterface
+ * @see \Esensi\Model\Contracts\JugglingModelInterface
  * @see \Esensi\Model\Contracts\PurgingModelInterface
  * @see \Esensi\Model\Contracts\RelatingModelInterface
  * @see \Esensi\Model\Contracts\ValidatingModelInterface

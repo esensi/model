@@ -1,6 +1,6 @@
 <?php namespace Esensi\Model\Traits;
 
-use Carbon\Carbon;
+use \Carbon\Carbon;
 use \InvalidArgumentException;
 
 
@@ -52,11 +52,11 @@ trait JugglingModelTrait {
     }
 
     /**
-     * Overriden attributesToArray() Eloquent Model method,
+     * Override attributesToArray() Eloquent Model method,
      * to type juggle first, and then call the parent method.
      *
      * @return array
-     * @see Illuminate\Database\Eloquent\Model::attributestoArray()
+     * @see \Illuminate\Database\Eloquent\Model::attributestoArray()
      */
     public function attributesToArray()
     {
@@ -70,7 +70,7 @@ trait JugglingModelTrait {
 
     /**
      * If juggling is active, it returns the juggleAttribute.
-     * If not it just returns the value as if was passed
+     * If not it just returns the value as if was passed.
      *
      * @param  string $key
      * @param  mixed $value
@@ -106,7 +106,7 @@ trait JugglingModelTrait {
     }
 
     /**
-     * Get the juggable attributes
+     * Get the juggable attributes.
      *
      * @return array
      */
@@ -136,21 +136,21 @@ trait JugglingModelTrait {
      */
     public function addJugglable( $key, $type = 'string' )
     {
-        $this->mergeJugglable( func_get_args() );
+        $this->mergeJugglable( [ $key => $type ] );
     }
 
     /**
      * Remove an attribute or several attributes from the jugglable array.
      *
      * @example removeJugglable( string $attribute, ... )
-     * @param  mixed $attributes to remove from juggable () string or array
+     * @param  mixed $attributes
      * @return void
      */
     public function removeJugglable( $attributes )
     {
-        if ( ! is_string($attributes) )
+        if ( ! is_array($attributes) )
         {
-            $attributes = split(',', $attributes);
+            $attributes = func_get_args();
         }
         $this->jugglable = array_diff_key($this->jugglable, $attributes);
     }
@@ -282,7 +282,7 @@ trait JugglingModelTrait {
             $method = "juggle". studly_case($normalizedType);
             if ( ! method_exists($this, $method) )
             {
-                throw new InvalidArgumentException("The type $normalizedType is not a valid type or method $method does not exist ");
+                throw new InvalidArgumentException("The type “$normalizedType“ is not a valid type or method $method does not exist on “. get_class($this) . “ class.");
             }
             $value = $this->{$method}($key, $value);
 
@@ -309,7 +309,7 @@ trait JugglingModelTrait {
     }
 
     /**
-     * Returns a string formated as ISO standar for 0000-00-00 00:00:00
+     * Returns a string formated as ISO standar for 0000-00-00 00:00:00.
      *
      * @param  mixed $value
      * @return string
@@ -324,7 +324,7 @@ trait JugglingModelTrait {
      * Returns the date as a Unix timestamp.
      *
      * @param  mixed $value
-     * @return int   Unix timestamp
+     * @return integer
      */
     protected function juggleTimestamp($value)
     {
@@ -388,10 +388,9 @@ trait JugglingModelTrait {
     }
 
     /**
-     * Casts the value to the type.     *
-     * The possibles values of $type are (according to settype docs): boolean,
-     * integer, float, string, array, object, null.
-     * @link( settype, http://php.net/manual/en/function.settype.php)
+     * Casts the value to the type. Possibles types are:
+     *     boolean, integer, float, string, array, object, null
+     * @link http://php.net/manual/en/function.settype.php
      *
      * @param  mixed $value
      * @param  string $type (optional)
@@ -399,9 +398,7 @@ trait JugglingModelTrait {
      */
     protected function juggleType($value, $type = "null")
     {
-        return settype($value, $type); // the is_null($value) check is one in juggle()
+        return settype($value, $type);
     }
-
-
 
 }
