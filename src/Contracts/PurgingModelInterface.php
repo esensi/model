@@ -4,7 +4,7 @@
  * Purging Model Interface
  *
  * @package Esensi\Model
- * @author Daniel LaBarge <wishlist@emersonmedia.com>
+ * @author Daniel LaBarge <dalabarge@emersonmedia.com>
  * @copyright 2014 Emerson Media LP
  * @license https://github.com/esensi/model/blob/master/LICENSE.txt MIT License
  * @link http://www.emersonmedia.com
@@ -97,13 +97,5 @@ interface PurgingModelInterface {
      * @return boolean
      */
     public function saveWithoutPurging();
-
-    /**
-     * Set purging state and then save and then reset it.
-     *
-     * @param  boolean $purge
-     * @return boolean
-     */
-    function setPurgingAndSave( $purge );
 
 }

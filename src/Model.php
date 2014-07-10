@@ -108,11 +108,12 @@ abstract class Model extends Eloquent implements
     protected $rulesets = [];
 
     /**
-     * The attributes to purge before saving.
+     * The attributes to encrypt when set and
+     * decrypt when gotten.
      *
      * @var array
      */
-    protected $purgeable = [];
+    protected $encryptable = [];
 
     /**
      * The attributes to hash before saving.
@@ -129,12 +130,11 @@ abstract class Model extends Eloquent implements
     protected $jugglable = [];
 
     /**
-     * The attributes to encrypt when set and
-     * decrypt when gotten.
+     * The attributes to purge before saving.
      *
      * @var array
      */
-    protected $encryptable = [];
+    protected $purgeable = [];
 
 
     /**
@@ -144,21 +144,6 @@ abstract class Model extends Eloquent implements
      */
     protected $relationships = [];
 
-    /**
-     * Whether the model should inject it's identifier to the unique
-     * validation rules before attempting validation.
-     *
-     * @var boolean
-     */
-    protected $injectUniqueIdentifier = true;
-
-    /**
-     * Whether the model should throw ValidatingException when
-     * the model fails validation.
-     *
-     * @var boolean
-     */
-    protected $throwValidationExceptions = false;
 
     /**
      * Dynamically retrieve attributes.
@@ -212,27 +197,6 @@ abstract class Model extends Eloquent implements
 
         //Dynamicly juggle set the attribute
         $this->setDynamicJuggle($key, $this->attributes[$key]);
-    }
-
-    /**
-     * Boot all of the bootable traits on the model.
-     *
-     * We overwrite the parent method because Laravel does not
-     * yet support booting inherited traits.
-     *
-     * @todo remove this when Laravel supports this recursion
-     * @return void
-     */
-    protected static function bootTraits()
-    {
-        $traits = function_exists('class_uses_recursive') ? class_uses_recursive(get_called_class()) : class_uses(get_called_class());
-        foreach ($traits as $trait)
-        {
-            if (method_exists(get_called_class(), $method = 'boot'.class_basename($trait)))
-            {
-                forward_static_call([get_called_class(), $method]);
-            }
-        }
     }
 
 }

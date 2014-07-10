@@ -6,7 +6,7 @@ use \Illuminate\Hashing\HasherInterface;
  * Hashing Model Interface
  *
  * @package Esensi\Model
- * @author Daniel LaBarge <wishlist@emersonmedia.com>
+ * @author Daniel LaBarge <dalabarge@emersonmedia.com>
  * @copyright 2014 Emerson Media LP
  * @license https://github.com/esensi/model/blob/master/LICENSE.txt MIT License
  * @link http://www.emersonmedia.com
@@ -127,15 +127,6 @@ interface HashingModelInterface {
     public function checkHash( $value, $hash );
 
     /**
-     * Set a hashed value for a hashable attribute.
-     *
-     * @param string $attribute name
-     * @param string $value to hash
-     * @return void
-     */
-    function setHashingAttribute( $attribute, $value );
-
-    /**
      * Save with hashing even if hashing is disabled.
      *
      * @return boolean
@@ -148,13 +139,5 @@ interface HashingModelInterface {
      * @return boolean
      */
     public function saveWithoutHashing();
-
-    /**
-     * Set hashing state and then save and then reset it.
-     *
-     * @param  boolean $hash
-     * @return boolean
-     */
-    function setHashingAndSave( $hash );
 
 }

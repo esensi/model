@@ -7,7 +7,7 @@ use \Illuminate\Database\Eloquent\SoftDeletingTrait;
  * Trait that implements the Soft Deleting Model Interface
  *
  * @package Esensi\Model
- * @author Daniel LaBarge <wishlist@emersonmedia.com>
+ * @author Daniel LaBarge <dalabarge@emersonmedia.com>
  * @copyright 2014 Emerson Media LP
  * @license https://github.com/esensi/model/blob/master/LICENSE.txt MIT License
  * @link http://www.emersonmedia.com
