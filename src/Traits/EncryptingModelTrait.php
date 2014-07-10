@@ -300,7 +300,7 @@ trait EncryptingModelTrait {
      * @param string $attribute name
      * @return string
      */
-    function getEncryptedAttribute( $attribute )
+    protected function getEncryptedAttribute( $attribute )
     {
         return $this->decrypt( $this->getAttribute($attribute) );
     }
@@ -312,7 +312,7 @@ trait EncryptingModelTrait {
      * @param string $value to encrypt
      * @return void
      */
-    function setEncryptingAttribute( $attribute, $value )
+    protected function setEncryptingAttribute( $attribute, $value )
     {
         $this->attributes[ $attribute ] = $this->encrypt( $value );
     }

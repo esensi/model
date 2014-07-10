@@ -2,11 +2,13 @@
 
 use \Esensi\Model\Contracts\EncryptingModelInterface;
 use \Esensi\Model\Contracts\HashingModelInterface;
+use \Esensi\Model\Contracts\JugglingModelInterface;
 use \Esensi\Model\Contracts\PurgingModelInterface;
 use \Esensi\Model\Contracts\RelatingModelInterface;
 use \Esensi\Model\Contracts\ValidatingModelInterface;
 use \Esensi\Model\Traits\EncryptingModelTrait;
 use \Esensi\Model\Traits\HashingModelTrait;
+use \Esensi\Model\Traits\JugglingModelTrait;
 use \Esensi\Model\Traits\PurgingModelTrait;
 use \Esensi\Model\Traits\RelatingModelTrait;
 use \Esensi\Model\Traits\ValidatingModelTrait;
@@ -16,6 +18,7 @@ use \Illuminate\Database\Eloquent\Model as Eloquent;
  * Base Model
  *
  * @package Esensi\Model
+ * @author Diego Caprioli <diego@emersonmedia.com>
  * @author Daniel LaBarge <dalabarge@emersonmedia.com>
  * @copyright 2014 Emerson Media LP
  * @license https://github.com/esensi/model/blob/master/LICENSE.txt MIT License
@@ -24,6 +27,7 @@ use \Illuminate\Database\Eloquent\Model as Eloquent;
  * @see \Illuminate\Database\Eloquent\Model
  * @see \Esensi\Model\Contracts\EncryptingModelInterface
  * @see \Esensi\Model\Contracts\HashingModelInterface
+ * @see \Esensi\Model\Contracts\JugglingModelInterface
  * @see \Esensi\Model\Contracts\PurgingModelInterface
  * @see \Esensi\Model\Contracts\RelatingModelInterface
  * @see \Esensi\Model\Contracts\ValidatingModelInterface
@@ -31,6 +35,7 @@ use \Illuminate\Database\Eloquent\Model as Eloquent;
 abstract class Model extends Eloquent implements
     EncryptingModelInterface,
     HashingModelInterface,
+    JugglingModelInterface,
     PurgingModelInterface,
     RelatingModelInterface,
     ValidatingModelInterface {
@@ -59,6 +64,13 @@ abstract class Model extends Eloquent implements
      * @see \Esensi\Model\Traits\HashingModelTrait
      */
     use HashingModelTrait;
+
+    /**
+     * Make the model juggle attributes when setting and getting
+     *
+     * @see \Esensi\Model\Contracts\JugglingModelInterface
+     */
+    use JugglingModelTrait;
 
     /**
      * Make model purge attributes.
@@ -111,6 +123,13 @@ abstract class Model extends Eloquent implements
     protected $hashable = [];
 
     /**
+     * Attributes to cast to a different type.
+     *
+     * @var array
+     */
+    protected $jugglable = [];
+
+    /**
      * The attributes to purge before saving.
      *
      * @var array
@@ -124,7 +143,6 @@ abstract class Model extends Eloquent implements
      */
     protected $relationships = [];
 
-
     /**
      * Dynamically retrieve attributes.
      *
@@ -133,6 +151,7 @@ abstract class Model extends Eloquent implements
      */
     public function __get( $key )
     {
+
         // Resolve relationship dynamically
         if( $relationship = $this->getDynamicRelationship( $key ) )
         {
@@ -142,11 +161,40 @@ abstract class Model extends Eloquent implements
         // Dynamically retrieve the encryptable attribute
         if( $attribute = $this->getDynamicEncrypted( $key ) )
         {
-            return $attribute;
+            $value = $attribute;
         }
 
-        // Default Eloquent dynamic getter
-        return parent::__get( $key );
+        // Fallback to the default Eloquent dynamic getter
+        else
+        {
+            $value = parent::__get( $key );
+        }
+
+        // Dynamically juggle the attribute.
+        // This is always called so that even decrypted values
+        // can be casted after decrypting.
+        return $this->getDynamicJuggle( $key, $value );
+
+    }
+
+    /**
+     * Dynamically set attributes.
+     *
+     * @param  string $key
+     * @param  mixed $value
+     * @return void
+     */
+    public function __set( $key, $value )
+    {
+
+        // Dynamically set the encryptable attribute
+        if( $this->setDynamicEncryptable( $key, $value ) )
+        {
+            return;
+        }
+
+        // Fallback to the default Eloquent dynamic setter
+        parent::__set( $key, $value );
     }
 
 }

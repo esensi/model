@@ -128,7 +128,7 @@ trait RelatingModelTrait {
      * @param string $name of related model
      * @return mixed
      */
-    function callRelationship( $name )
+    protected function callRelationship( $name )
     {
         $args = $this->getRelationship( $name );
 
