@@ -210,24 +210,9 @@ trait JugglingModelTrait {
     protected function juggleAttribute( $key, $value )
     {
         $jugglable = $this->getJugglable();
-
         $type = $jugglable[$key];
 
-        // if the value is a date, we'll convert it from a DateTime
-        // instance into a form proper for storage on the database tables using
-        // the connection grammar's date format.
-        // @see \Illuminate\Database\Eloquent\Model::fromDateTime()
-
-        if (array_search($type, ['date', 'datetime', 'timestamp']) !== false)
-        {
-            $value = $this->fromDateTime($value);
-        }
-        else
-        {
-            $value = $this->juggle($key, $value);
-        }
-
-        $this->attributes[$key] = $value;
+        $this->attributes[$key] = $this->juggle($key, $value);
     }
 
     /**
