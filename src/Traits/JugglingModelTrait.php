@@ -291,7 +291,7 @@ trait JugglingModelTrait {
             $method = "juggle". studly_case($normalizedType);
             if ( ! method_exists($this, $method) )
             {
-                throw new InvalidArgumentException("The type “$normalizedType“ is not a valid type or method $method does not exist on “. get_class($this) . “ class.");
+                throw new InvalidArgumentException("The type $normalizedType is not a valid type or method $method does not exist on . get_class($this) . class.");
             }
             $value = $this->{$method}($key, $value);
 
