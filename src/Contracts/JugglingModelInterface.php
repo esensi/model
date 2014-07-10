@@ -77,14 +77,22 @@ interface JugglingModelInterface {
     public function isJugglable( $attribute );
 
     /**
+     * Gets the type that the attribute will be casted to.
+     *
+     * @param string $attribute
+     * @return string
+     */
+    public function getJuggleType( $attribute );
+
+    /**
      * Casts a value to the coresponding attribute type and sets
      * it on the attributes array of this model.
      *
-     * @param  string $key
-     * @param  string $value
-     * @return  void
+     * @param string $attribute
+     * @param string $value
+     * @return void
      */
-    public function juggleAttribute( $key, $value );
+    public function juggleAttribute( $attribute, $value );
 
     /**
      * Juggles all attributes that are configured to be juggled.

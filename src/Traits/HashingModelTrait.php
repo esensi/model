@@ -215,7 +215,7 @@ trait HashingModelTrait {
      * @param string $value to hash
      * @return void
      */
-    protected function setHashingAttribute( $attribute, $value )
+    public function setHashingAttribute( $attribute, $value )
     {
         // Set the value which is presumably plain text
         $this->attributes[ $attribute ] = $value;

@@ -1,15 +1,20 @@
 <?php
 
+use \Carbon\Carbon;
 use \Esensi\Model\Model;
+use \Illuminate\Database\Connection;
+use \Illuminate\Database\ConnectionResolverInterface;
+use \Illuminate\Database\Query\Grammars\Grammar;
+use \Illuminate\Database\Query\Processors\Processor;
 use \Mockery;
 use \PHPUnit_Framework_TestCase as PHPUnit;
-
 
 /**
  * Tests for the Purging Model Trait
  *
  * @package Esensi\Model
  * @author Diego Caprioli <diego@emersonmedia.com>
+ * @author Dnaiel LaBarge <dalabarge@emersonmedia.com>
  * @copyright 2014 Emerson Media LP
  * @license https://github.com/esensi/model/blob/master/LICENSE.txt MIT License
  * @link http://www.emersonmedia.com
@@ -68,7 +73,8 @@ class JugglingModelTraitTest extends PHPUnit {
         $this->assertTrue(is_array($attributes));
 
         // Check that the count matches the expected stub
-        $this->assertCount(9, $attributes);
+        $count = count($this->model->tmpAttributes);
+        $this->assertCount($count, $attributes);
     }
 
     /**
@@ -77,7 +83,7 @@ class JugglingModelTraitTest extends PHPUnit {
     public function testSettingJugglableAttributes()
     {
         // Set the attributes
-        $this->model->setJugglable(['myNewDatetime' => 'datetime']);
+        $this->model->setJugglable(['foo' => 'bar']);
 
         // Get the attributes
         $attributes = $this->model->getJugglable();
@@ -86,8 +92,7 @@ class JugglingModelTraitTest extends PHPUnit {
         $this->assertTrue(is_array($attributes));
 
         // Check that it returned the set value
-        $this->assertNotContains('myDate', array_keys($attributes));
-        $this->assertContains('myNewDatetime', array_keys($attributes));
+        $this->assertContains('foo', array_keys($attributes));
 
         // Check that the count matches
         $this->assertCount(1, $attributes);
@@ -99,7 +104,7 @@ class JugglingModelTraitTest extends PHPUnit {
     public function testAddingSingleJugglableAttribute()
     {
         // Add a single attribute
-        $this->model->addJugglable('myNewVar', 'string');
+        $this->model->addJugglable('foo', 'bar');
 
         // Get the attributes
         $attributes = $this->model->getJugglable();
@@ -108,12 +113,12 @@ class JugglingModelTraitTest extends PHPUnit {
         $this->assertTrue(is_array($attributes));
 
         // Check that it returned the set value
-        $this->assertContains('myString', array_keys($attributes));
-        $this->assertContains('myArray', array_keys($attributes));
-        $this->assertContains('myNewVar', array_keys($attributes));
+        $this->assertContains('foo', array_keys($attributes));
+        $this->assertEquals('bar', $attributes['foo']);
 
         // Check that the count matches
-        $this->assertCount(10, $attributes);
+        $count = count($this->model->tmpAttributes) + 1;
+        $this->assertCount($count, $attributes);
     }
 
     /**
@@ -135,7 +140,8 @@ class JugglingModelTraitTest extends PHPUnit {
         $this->assertNotContains('myString', array_keys($attributes));
 
         // Check that the count matches
-        $this->assertCount(8, $attributes);
+        $count = count($this->model->tmpAttributes) - 1;
+        $this->assertCount($count, $attributes);
     }
 
     /**
@@ -158,7 +164,8 @@ class JugglingModelTraitTest extends PHPUnit {
         $this->assertNotContains('myDate', array_keys($attributes));
 
         // Check that the count matches
-        $this->assertCount(7, $attributes);
+        $count = count($this->model->tmpAttributes) - 2;
+        $this->assertCount($count, $attributes);
 
         // Remove multiple attributes
         $this->model->removeJugglable(['myFloat', 'myArray']);
@@ -166,13 +173,17 @@ class JugglingModelTraitTest extends PHPUnit {
         // Get the attributes
         $attributes = $this->model->getJugglable();
 
+        // Check that its an array
+        $this->assertTrue(is_array($attributes));
+
         // Check that it did not returned the unset values
         $this->assertContains('myDateTime', array_keys($attributes));
         $this->assertNotContains('myString', array_keys($attributes));
         $this->assertNotContains('myDate', array_keys($attributes));
 
         // Check that the count matches
-        $this->assertCount(5, $attributes);
+        $count = count($this->model->tmpAttributes) - 4;
+        $this->assertCount($count, $attributes);
     }
 
     /**
@@ -181,10 +192,7 @@ class JugglingModelTraitTest extends PHPUnit {
     public function testRemovingAllJugglableAttributes()
     {
         // Remove all attributes
-        $this->model->removeJugglable('myString', 'myDate', 'myDateTime',
-            'myTimestamp', 'myInteger', 'myBoolean', 'myDouble',
-            'myFloat', 'myArray'
-        );
+        $this->model->removeJugglable( array_keys($this->model->tmpAttributes) );
 
         // Get the attributes
         $attributes = $this->model->getJugglable();
@@ -198,13 +206,14 @@ class JugglingModelTraitTest extends PHPUnit {
 
     /**
      * Test that Jugglable attributes can be merged.
+     * Depends on testRemovingAllJugglableAttributes() being ran previously.
      */
     public function testMergingJugglableAttributes()
     {
         // Merge the attributes
         $this->model->mergeJugglable([
-            'myNewInt' => 'int',
-            'myNewBool' => 'bool',
+            'foo' => 'integer',
+            'bar' => 'boolean',
         ]);
 
         // Get the attributes
@@ -214,12 +223,12 @@ class JugglingModelTraitTest extends PHPUnit {
         $this->assertTrue(is_array($attributes));
 
         // Check that it returned the merged values
-        $this->assertContains('myNewInt', array_keys($attributes));
-        $this->assertContains('myNewBool', array_keys($attributes));
-        $this->assertContains('myString', array_keys($attributes));
+        $this->assertContains('foo', array_keys($attributes));
+        $this->assertContains('bar', array_keys($attributes));
 
         // Check that the count matches
-        $this->assertCount(11, $attributes);
+        $count = count($this->model->tmpAttributes) + 2;
+        $this->assertCount($count, $attributes);
     }
 
     /**
@@ -231,7 +240,7 @@ class JugglingModelTraitTest extends PHPUnit {
         // Enable juggling
         $this->model->setJuggling(true);
 
-        // Check that the attribute is Purgeable
+        // Check that the attribute is Jugglable
         $this->assertTrue($this->model->isJugglable('myString'));
     }
 
@@ -245,7 +254,7 @@ class JugglingModelTraitTest extends PHPUnit {
         $this->model->setJuggling(true);
 
         // Check that the attribute is not Jugglable
-        $this->assertFalse($this->model->isPurgeable('myNotJugglableAtr'));
+        $this->assertFalse($this->model->isJugglable('foo'));
     }
 
     /**
@@ -257,7 +266,7 @@ class JugglingModelTraitTest extends PHPUnit {
         // Disable juggling
         $this->model->setJuggling(false);
 
-        // Check that the attribute is not Purgeable
+        // Check that the attribute is not Jugglable
         $this->assertFalse($this->model->isJugglable('myString'));
     }
 
@@ -266,33 +275,44 @@ class JugglingModelTraitTest extends PHPUnit {
      */
     public function testJuggleAttributes()
     {
+        $this->model->setConnectionResolver($resolver = Mockery::mock('\Illuminate\Database\ConnectionResolverInterface'));
+        $resolver->shouldReceive('connection')->andReturn(Mockery::mock('\Illuminate\Database\Connection'));
+        $grammar = Mockery::mock('\Illuminate\Database\Query\Grammars\Grammar');
+        $grammar->shouldReceive('getDateFormat')->andReturn('Y-m-d H:i:s');
+        $this->model->getConnection()->shouldReceive('getQueryGrammar')->andReturn($grammar);
+        $this->model->getConnection()->shouldReceive('getPostProcessor')->andReturn(Mockery::mock('\Illuminate\Database\Query\Processors\Processor'));
 
-        //check that the attributes have not been set yet
-        $this->assertEmpty($this->model->getAttributes());
+        // Make sure we are dealing with an empty model
+        $this->assertEmpty( $this->model->getAttributes() );
 
-        //Enable juggling
-        $this->model->setJuggling(false);
+        // Enable juggling
+        $this->model->setJuggling(true);
 
-        // set attributes into the model using fill
-        $this->model->unguard();
-        $this->model->fill($this->model->tmpAttributes);
+        // Set attributes into the model using fill
+        foreach ($this->model->tmpAttributes as $key => $value)
+        {
+            $this->model->{$key} = $value;
+        }
 
+        // Get the attributes
         $attributes = $this->model->getAttributes();
 
-        //check that the attributes have been set to the $attributes array
-        $this->assertCount(9, $attributes);
+        // Check that the attributes count matches
+        $count = count($this->model->tmpAttributes);
+        $this->assertCount($count, $attributes);
 
-        //check that the attributes are set using the correct types
-        $this->assertInternalType('string', $attributes['myString']);
-        $this->assertInstanceOf('\Carbon\Carbon', $attributes['myDate']);
-        $this->assertInternalType('string', $attributes['myDatetime']);
-        $this->assertInternalType('integer', $attributes['myTimestamp']);
-        $this->assertInternalType('integer', $attributes['myInteger']);
-        $this->assertInternalType('boolean', $attributes['myBoolean']);
-        $this->assertInternalType('float', $attributes['myDouble']);
-        $this->assertInternalType('float', $attributes['myFloat']);
-        $this->assertInternalType('array', $attributes['myArray']);
-
+        // Check that the attributes are set and return the correct types
+        $this->assertInternalType('string', $this->model->myString);
+        $this->assertInstanceOf('\Carbon\Carbon', $this->model->myDate);
+        $this->assertInternalType('string', $this->model->myDateTime);
+        $this->assertInternalType('integer', $this->model->myTimestamp);
+        $this->assertInternalType('integer', $this->model->myInt);
+        $this->assertInternalType('integer', $this->model->myInteger);
+        $this->assertInternalType('boolean', $this->model->myBool);
+        $this->assertInternalType('boolean', $this->model->myBoolean);
+        $this->assertInternalType('float', $this->model->myDouble);
+        $this->assertInternalType('float', $this->model->myFloat);
+        $this->assertInternalType('array', $this->model->myArray);
     }
 
 }
@@ -303,38 +323,50 @@ class JugglingModelTraitTest extends PHPUnit {
 class ModelJugglingStub extends Model {
 
     /**
+     * Indicates if the model exists.
+     *
+     * @var boolean
+     */
+    public $exists = false;
+
+    /**
      * The attributes to type juggle
      *
      * @var array
      */
     protected $jugglable = [
-        'myString' => 'string',
-        'myDate' => 'date',
-        'myDateTime' => 'date_time',
+        'myString'    => 'string',
+        'myDate'      => 'date',
+        'myDateTime'  => 'dateTime',
         'myTimestamp' => 'timestamp',
-        'myInteger' => 'integer',
-        'myBoolean' => 'boolean',
-        'myDouble' => 'double',
-        'myFloat' => 'float',
-        'myArray' => 'array',
+        'myInt'       => 'int',
+        'myInteger'   => 'integer',
+        'myBool'      => 'bool',
+        'myBoolean'   => 'boolean',
+        'myDouble'    => 'double',
+        'myFloat'     => 'float',
+        'myArray'     => 'array',
     ];
 
     /**
-     * The temporal var that holds the values to use
-     * in the tests to set the attributes in the object
+     * The temporary attributes that holds the values used
+     * in the tests to set the attributes in the object.
+     * Make sure the keys align with $jugglabe property on this stub.
+     *
      * @var array
      */
     public $tmpAttributes = [
-        'myString' => 'Hello world',
-        'myDate' => '2014-01-01',
-        'myDateTime' => '2014-01-01',
+        'myString'    => 'Hello world',
+        'myDate'      => '2014-01-01',
+        'myDateTime'  => '2014-01-01',
         'myTimestamp' => '2014-01-01',
-        'myInteger' => '123',
-        'myBoolean' => '1',
-        'myDouble' => '1.12',
-        'myFloat' => '1.12',
-        'myArray' => 'elem',
+        'myInt'       => '123',
+        'myInteger'   => '123',
+        'myBool'      => '1',
+        'myBoolean'   => '1',
+        'myDouble'    => '1.12',
+        'myFloat'     => '1.12',
+        'myArray'     => 'elem',
     ];
-
 
 }

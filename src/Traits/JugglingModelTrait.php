@@ -77,7 +77,7 @@ trait JugglingModelTrait {
 
     /**
      * If juggling is active, it returns the juggleAttribute.
-     * If not it just returns the value as if was passed.
+     * If not it just returns the value as it was passed.
      *
      * @param  string $key
      * @param  mixed $value
@@ -87,7 +87,7 @@ trait JugglingModelTrait {
     {
         if ( $this->isJugglable( $key ) )
         {
-            return $this->juggle( $key, $value ); // no change to $attributes is made
+            return $this->juggle( $value, $this->getJuggleType( $key ) );
         }
 
         return $value;
@@ -212,19 +212,29 @@ trait JugglingModelTrait {
     }
 
     /**
+     * Gets the type that the attribute will be casted to.
+     *
+     * @param string $attribute
+     * @return string
+     */
+    public function getJuggleType( $attribute )
+    {
+        $jugglable = $this->getJugglable();
+        return $jugglable[ $attribute ];
+    }
+
+    /**
      * Casts a value to the coresponding attribute type and sets
      * it on the attributes array of this model.
      *
-     * @param  string $key
-     * @param  string $value
-     * @return  void
+     * @param string $attribute
+     * @param string $value
+     * @return void
      */
-    public function juggleAttribute( $key, $value )
+    public function juggleAttribute( $attribute, $value )
     {
-        $jugglable = $this->getJugglable();
-        $type = $jugglable[$key];
-
-        $this->attributes[$key] = $this->juggle( $value, $type );
+        $type = $this->getJuggleType( $attribute );
+        $this->attributes[ $attribute ] = $this->juggle( $value, $type );
     }
 
     /**
@@ -236,11 +246,11 @@ trait JugglingModelTrait {
     {
         // Iterate the juggable fields, and if the field is present
         // cast the attribute and replace within the array.
-        foreach( $this->getJugglable() as $key => $type )
+        foreach( $this->getJugglable() as $attribute => $type )
         {
-            if ( isset($this->attributes[ $key ]) )
+            if ( isset($this->attributes[ $attribute ]) )
             {
-                $this->juggleAttribute( $key, $this->attributes[ $key ] ) ;
+                $this->juggleAttribute( $attribute, $this->attributes[ $attribute ] ) ;
             }
         }
     }
@@ -419,7 +429,8 @@ trait JugglingModelTrait {
      */
     protected function juggleType( $value, $type = "null" )
     {
-        return settype( $value, $type );
+        settype( $value, $type );
+        return $value;
     }
 
 }

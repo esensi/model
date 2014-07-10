@@ -51,6 +51,9 @@ class ModelTest extends PHPUnit {
         // Check Model uses the Hashing trait
         $this->assertContains('Esensi\Model\Traits\HashingModelTrait', $traits);
 
+        // Check Model uses the Juggling trait
+        $this->assertContains('Esensi\Model\Traits\JugglingModelTrait', $traits);
+
         // Check Model uses the Purging trait
         $this->assertContains('Esensi\Model\Traits\PurgingModelTrait', $traits);
 
@@ -79,6 +82,9 @@ class ModelTest extends PHPUnit {
 
         // Check Model implements the Hashing interface
         $this->assertInstanceOf('\Esensi\Model\Contracts\HashingModelInterface', $this->model);
+
+        // Check Model implements the Juggling interface
+        $this->assertInstanceOf('\Esensi\Model\Contracts\JugglingModelInterface', $this->model);
 
         // Check Model implements the Purging interface
         $this->assertInstanceOf('\Esensi\Model\Contracts\PurgingModelInterface', $this->model);

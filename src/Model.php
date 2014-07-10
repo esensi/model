@@ -151,7 +151,6 @@ abstract class Model extends Eloquent implements
      */
     public function __get( $key )
     {
-
         // Resolve relationship dynamically
         if( $relationship = $this->getDynamicRelationship( $key ) )
         {
@@ -174,7 +173,6 @@ abstract class Model extends Eloquent implements
         // This is always called so that even decrypted values
         // can be casted after decrypting.
         return $this->getDynamicJuggle( $key, $value );
-
     }
 
     /**
@@ -186,7 +184,6 @@ abstract class Model extends Eloquent implements
      */
     public function __set( $key, $value )
     {
-
         // Dynamically set the encryptable attribute
         if( $this->setDynamicEncryptable( $key, $value ) )
         {
@@ -195,6 +192,9 @@ abstract class Model extends Eloquent implements
 
         // Fallback to the default Eloquent dynamic setter
         parent::__set( $key, $value );
+
+        // Dynamically juggle the attribute.
+        $this->setDynamicJuggle( $key, $value );
     }
 
 }
