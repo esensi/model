@@ -1,7 +1,7 @@
 {
     "name": "esensi/model",
     "description": "The base model traits of Esensi",
-    "keywords": ["emersonmedia", "esensi", "laravel", "model", "trait", "eloquent", "validating", "validation", "encrypting", "hashing", "purge", "purging", "soft deleting", "trashing"],
+    "keywords": ["emersonmedia", "esensi", "laravel", "model", "trait", "eloquent", "validating", "validation", "encrypting", "hashing", "purge", "purging", "soft deleting", "trashing", "cast", "type", "juggling"],
     "authors": [
         {
             "name": "Emerson Media, LP.",
