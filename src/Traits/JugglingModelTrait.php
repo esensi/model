@@ -152,7 +152,14 @@ trait JugglingModelTrait {
         {
             $attributes = func_get_args();
         }
-        $this->jugglable = array_diff_key($this->jugglable, $attributes);
+        $remove = [];
+        foreach ($attributes as $value) {
+            $remove[$value] = 'type';
+        }
+        /*print_r($this->getJugglable());
+        print_r($remove);
+        print_r(array_diff_key($this->getJugglable(), $remove));*/
+        $this->setJugglable(array_diff_key($this->getJugglable(), $remove));
     }
 
     /**
@@ -163,7 +170,7 @@ trait JugglingModelTrait {
      */
     public function mergeJugglable( array $attributes )
     {
-        $this->jugglable = array_merge( $this->jugglable, $attributes );
+        $this->setJugglable(array_merge( $this->getJugglable(), $attributes ));
     }
 
     /**
@@ -252,10 +259,12 @@ trait JugglingModelTrait {
             switch ($type) {
 
                 case 'bool':
+                case 'boolean':
                     $normalizedType = 'boolean';
                     break;
 
                 case 'int':
+                case 'integer':
                     $normalizedType = 'integer';
                     break;
 
