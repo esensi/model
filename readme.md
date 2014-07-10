@@ -21,7 +21,7 @@ Email us at [sales@emersonmedia.com](http://emersonmedia.com/contact), or call 1
 
 ### Extend the Default Model
 
-The simplest way to demonstrate the traits is to extend the base [`Esensi\Model\Model`](https://github.com/esensi/model/blob/master/src/Model.php). For example, if the application requires a simple blog, then the developer could create a `Post` model that **automatically handles validation, purging, hashing, encrypting, and even simplified relationship bindings** by simply extending this ready-to-go model:
+The simplest way to demonstrate the traits is to extend the base [`Esensi\Model\Model`](https://github.com/esensi/model/blob/master/src/Model.php). For example, if the application requires a simple blog, then the developer could create a `Post` model that **automatically handles validation, purging, hashing, encrypting, attribute type juggling and even simplified relationship bindings** by simply extending this ready-to-go model:
 
 ```php
 <?php
@@ -79,6 +79,10 @@ class Post extends SoftModel {
     - Auto-Decrypting on Get
     - [Manually Encrypting Model Attributes](#manually-encrypting-model-attributes)
     - Checking Encryption State
+- **[Juggling Model Trait](#juggling-model-trait)**
+    - Auto-Juggling on Set
+    - Auto-Juggling on Get
+    - [Manually Juggling Model Attributes](#manually-juggling-model-attributes)
 - **[Soft Deleting Model Trait](#soft-deleting-model-trait)**
     - Using Soft Deletes
     - Adding Custom Dates
@@ -507,6 +511,68 @@ $post->setEncrypter( new MyEncrypter() );
 
 // Disable encrypting
 $post->setEncrypting(false); // a value of true would enable it
+```
+
+## Juggling Model Trait
+
+This package includes the [`JugglingModelTrait`](https://github.com/esensi/model/blob/master/src/Traits/JugglingModelTrait.php) which implements the [`JugglingModelInterface`](https://github.com/esensi/model/blob/master/src/Contracts/JugglingModelInterface.php) on any `Eloquent` model that uses it. The `JugglingModelTrait` adds methods to `Eloquent` models for automatically type casting (juggling) attributes on the model whenever they are got or set. The trait includes the ability to:
+
+- automatically cast attributes to a type when getting them
+- automatically cast attributes to a type when setting them
+- manually casting a value using the `juggle()` method
+- manually casting to pre-defined types including:
+    - string => `juggleString()`
+    - boolean|bool => `juggleBoolean()`
+    - integer|int => `juggleInteger()`
+    - float|double => `juggleFloat()`
+    - array => `juggleArray()`
+    - date => `juggleDate()` (returns Carbon date)
+    - dateTime|datetime|date_time => `juggleDateTime()` (returns 0000-00-00 00:00:00 format)
+    - timestamp => `juggleTimestamp()` (returns Unix timestamp)
+- create custom types to cast to with magic methods like:
+    - Example: fooBar => `juggleFooBar()`
+
+Like all the traits, it is self-contained and can be used individually. Be aware, however, that using this trait does overload the magic `__get()` and `__set()` methods of the model (see [Esensi\Model\Model](https://github.com/esensi/model/blob/master/src/Model.php) source code for how to deal with overloading conflicts).
+
+### Manually Juggling Model Attributes
+
+It is also possible to manually juggle attributes. The `JugglingModelTrait` includes several helper functions to make manual manipulation of the `$jugglable` property easier.
+
+```php
+// Hydrate the model from the Input
+$post = Model::find($id);
+$post->foo = Input::get('foo'); // automatically juggled
+
+// Manually juggle attributes after setting
+$post->juggleAttributes();
+
+// Manually juggle a value to a type
+$boolean = $post->juggle( 'true', 'boolean' ); // bool(true)
+$boolean = $post->juggleBoolean( '0' ); // bool(false)
+$array = $post->juggleArray( 'foo' ); // array(0 => foo)
+$date = $post->juggleDate( '2014-07-10' ); // object(\Carbon\Carbon)
+$dateTime = $post->juggleDateTime( Carbon::now() ); // string(2014-07-10 11:17:00)
+$timestamp = $post->juggleTimestamp( '07/10/2014 11:17pm' ); // integer(1405034225)
+
+// Manually get the attributes
+$post->getJugglable(); // ['foo' => 'string']
+
+// Manually set the jugglable attributes
+$post->setJugglable( ['bar' => 'boolean'] ); // ['bar' => 'boolean']
+
+// Manually add an attribute to the jugglable attributes
+$post->addJugglable( 'baz', 'integer' ); // ['bar' => 'boolean', 'baz' => 'integer']
+$post->mergeJugglable( ['zip' => 'array'] ); // ['bar' => 'boolean', 'baz' => 'integer', 'zip' => 'array']
+$post->removeJugglable( 'bar' ); // ['baz' => 'integer', 'zip' => 'array']
+
+// Check if an attribute is in the Model::$jugglable property
+if ( $post->isJugglable( 'foo' ) )
+{
+    // ... foo is not jugglable so this would not get executed
+}
+
+// Disable juggling
+$post->setJuggling(false); // a value of true would enable it
 ```
 
 ## Soft Deleting Model Trait
