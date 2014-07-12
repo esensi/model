@@ -41,4 +41,54 @@ trait ValidatingModelTrait {
         static::observe(new ValidatingModelObserver);
     }
 
+    /**
+     * Add rules to the default $rules or a specified $rulesets[$ruleset]
+     *
+     * @param array   $add_rules
+     * @param string  $ruleset
+     * @param boolean $merge_with_saving
+     * @return void
+     */
+    public function addRules(array $add_rules, $ruleset = null, $merge_with_saving = false)
+    {
+        if ($ruleset)
+        {
+            $combined_rules = array_merge($this->getRuleset($ruleset, $merge_with_saving), $add_rules);
+            $this->setRuleset($combined_rules, $ruleset);
+            return;
+        }
+
+        $combined_rules = array_merge($this->getRules(), $add_rules);
+        $this->setRules($combined_rules);
+    }
+
+    /**
+     * Remove rules from the default $rules or a specified $rulesets[$ruleset]
+     *
+     * @param array   $remove_rules_keys
+     * @param string  $ruleset
+     * @param boolean $merge_with_saving
+     * @return void
+     */
+    public function removeRules(array $remove_rules_keys, $ruleset = null, $merge_with_saving = false)
+    {
+        if ($ruleset)
+        {
+            $rules = $this->getRuleset($ruleset, $merge_with_saving);
+            foreach ($remove_rules_keys as $key)
+            {
+                if (array_key_exists($key, $rules)) unset($rules[$key]);
+            }
+            $this->setRuleset($rules, $ruleset);
+            return;
+        }
+
+        $rules = $this->getRules();
+        foreach ($remove_rules_keys as $key)
+        {
+            if (array_key_exists($key, $rules)) unset($rules[$key]);
+        }
+        $this->setRules($rules);
+    }
+
 }
