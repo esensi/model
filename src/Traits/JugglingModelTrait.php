@@ -129,6 +129,13 @@ trait JugglingModelTrait {
      */
     public function setJugglable( array $attributes )
     {
+        // Validate that only valid, jugglable, desired types are set.
+        foreach ($attributes as $property_name => $desired_type) {
+            /**
+             * @throws \InvalidArgumentException
+             */
+            $this->getJuggleMethodName($desired_type);
+        }
         $this->jugglable = $attributes;
     }
 
@@ -261,57 +268,87 @@ trait JugglingModelTrait {
      * @param  mixed  $value
      * @param  string $type
      * @return mixed
-     * @throws \InvalidArgumentException
      */
     public function juggle( $value, $type )
     {
-        if ( ! is_null($value) )
+        if (is_null($value)) return $value;
+
+        $method  = $this->getJuggleMethodName($type);
+        $juggled = $this->{$method}($value);
+        return $juggled;
+    }
+
+    /**
+     * Given a desired type "int", normalize string and build/return dynamic method name "juggleInteger"
+     *
+     * @param  string $type
+     * @return string
+     */
+    public function getJuggleMethodName($type)
+    {
+        $normalizedType = $this->normalizeTypeString($type);
+        $method         = $this->buildJuggleMethodName($normalizedType);
+        return $method;
+    }
+
+    /**
+     * Build a dynamic method name from a normalized type string
+     *
+     * @param  string $normalizedType
+     * @return string
+     * @throws \InvalidArgumentException
+     */
+    public function buildJuggleMethodName($normalizedType)
+    {
+        $method = "juggle". studly_case($normalizedType);
+        if ( ! method_exists($this, $method) )
         {
-            // Convert type to acceptable pattern
-            $type = lcfirst( studly_case( $type ) );
+            throw new InvalidArgumentException("The type \"" . $normalizedType . "\" is not a valid type or method " . $method ."() does not exist on " . get_class($this) . " class.");
+        }
+        return $method;
+    }
 
-            // Map the type to it's normalized type
-            switch ($type) {
+    /**
+     * Given a string "int", return the normalized string "integer"
+     *
+     * @param  string $type
+     * @return string
+     */
+    public function normalizeTypeString($type)
+    {
+        $type = lcfirst( studly_case( $type ) );
+        switch ($type)
+        {
+            case 'bool':
+            case 'boolean':
+                $normalizedType = 'boolean';
+                break;
 
-                case 'bool':
-                case 'boolean':
-                    $normalizedType = 'boolean';
-                    break;
+            case 'int':
+            case 'integer':
+                $normalizedType = 'integer';
+                break;
 
-                case 'int':
-                case 'integer':
-                    $normalizedType = 'integer';
-                    break;
+            case 'float':
+            case 'double':
+                $normalizedType = 'float';
+                break;
 
-                case 'float':
-                case 'double':
-                    $normalizedType = 'float';
-                    break;
+            case 'datetime':
+            case 'dateTime':
+                $normalizedType = 'dateTime';
+                break;
 
-                case 'datetime':
-                case 'dateTime':
-                    $normalizedType = 'dateTime';
-                    break;
-
-                case 'date':
-                case 'timestamp':
-                case 'string':
-                case 'array':
-                default:
-                    $normalizedType = $type;
-                    break;
-            }
-
-            // Constrct a dynamic method and call it
-            $method = "juggle". studly_case($normalizedType);
-            if ( ! method_exists($this, $method) )
-            {
-                throw new InvalidArgumentException("The type \"" . $normalizedType . "\" is not a valid type or method " . $method ."() does not exist on " . get_class($this) . " class.");
-            }
-            $value = $this->{$method}($value);
+            case 'date':
+            case 'timestamp':
+            case 'string':
+            case 'array':
+            default:
+                $normalizedType = $type;
+                break;
         }
 
-        return $value;
+        return $normalizedType;
     }
 
     /**

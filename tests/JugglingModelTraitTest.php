@@ -83,7 +83,7 @@ class JugglingModelTraitTest extends PHPUnit {
     public function testSettingJugglableAttributes()
     {
         // Set the attributes
-        $this->model->setJugglable(['foo' => 'bar']);
+        $this->model->setJugglable(['foo' => 'integer']);
 
         // Get the attributes
         $attributes = $this->model->getJugglable();
@@ -104,7 +104,7 @@ class JugglingModelTraitTest extends PHPUnit {
     public function testAddingSingleJugglableAttribute()
     {
         // Add a single attribute
-        $this->model->addJugglable('foo', 'bar');
+        $this->model->addJugglable('foo', 'integer');
 
         // Get the attributes
         $attributes = $this->model->getJugglable();
@@ -114,7 +114,7 @@ class JugglingModelTraitTest extends PHPUnit {
 
         // Check that it returned the set value
         $this->assertContains('foo', array_keys($attributes));
-        $this->assertEquals('bar', $attributes['foo']);
+        $this->assertEquals('integer', $attributes['foo']);
 
         // Check that the count matches
         $count = count($this->model->tmpAttributes) + 1;
@@ -313,6 +313,30 @@ class JugglingModelTraitTest extends PHPUnit {
         $this->assertInternalType('float', $this->model->myDouble);
         $this->assertInternalType('float', $this->model->myFloat);
         $this->assertInternalType('array', $this->model->myArray);
+    }
+
+    /**
+     * Test adding single invalid desired types throws exception at time of adding and not at time of juggling.
+     *
+     * @expectedException InvalidArgumentException
+     */
+    public function testAddInvalidJugglableThrowsException()
+    {
+        $this->model->addJugglable('foo', 'bar');
+    }
+
+    /**
+     * Test setting invalid desired types throws exception at time of adding and not at time of juggling.
+     *
+     * @expectedException InvalidArgumentException
+     */
+    public function testSetInvalidJugglablesThrowsException()
+    {
+        $jugglables_with_invalid = [
+            'goodVar' => 'integer',
+            'badFoo'  => 'bar'
+        ];
+        $this->model->setJugglable($jugglables_with_invalid);
     }
 
 }

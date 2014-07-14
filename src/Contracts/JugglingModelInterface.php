@@ -24,6 +24,7 @@ interface JugglingModelInterface {
      *
      * @param  array $attributes to juggle
      * @return void
+     * @throws \InvalidArgumentException
      */
     public function setJugglable( array $attributes );
 
