@@ -6,6 +6,7 @@ use \Illuminate\Database\Connection;
 use \Illuminate\Database\ConnectionResolverInterface;
 use \Illuminate\Database\Query\Grammars\Grammar;
 use \Illuminate\Database\Query\Processors\Processor;
+use \InvalidArgumentException;
 use \Mockery;
 use \PHPUnit_Framework_TestCase as PHPUnit;
 
@@ -99,6 +100,16 @@ class JugglingModelTraitTest extends PHPUnit {
     }
 
     /**
+     * Test that setting invalid juggle types throws exception.
+     *
+     * @expectedException \InvalidArgumentException
+     */
+    public function testSettingInvalidJuggleTypeThrowsException()
+    {
+        $this->model->setJugglable(['foo' => 'foo']);
+    }
+
+    /**
      * Test that a single Jugglable attribute can be added.
      */
     public function testAddingSingleJugglableAttribute()
@@ -119,6 +130,16 @@ class JugglingModelTraitTest extends PHPUnit {
         // Check that the count matches
         $count = count($this->model->tmpAttributes) + 1;
         $this->assertCount($count, $attributes);
+    }
+
+    /**
+     * Test that adding an invalid juggle type throws exception.
+     *
+     * @expectedException \InvalidArgumentException
+     */
+    public function testAddingInvalidJuggleTypeThrowsException()
+    {
+        $this->model->addJugglable('foo', 'foo');
     }
 
     /**
@@ -232,6 +253,16 @@ class JugglingModelTraitTest extends PHPUnit {
     }
 
     /**
+     * Test that merging invalid juggle types throws exception.
+     *
+     * @expectedException \InvalidArgumentException
+     */
+    public function testMergingInvalidJuggleTypeThrowsException()
+    {
+        $this->model->mergeJugglable(['foo' => 'foo']);
+    }
+
+    /**
      * Test that isJugglable returns true when Juggling is enabled
      * and the attribute is Jugglable.
      */
@@ -271,6 +302,74 @@ class JugglingModelTraitTest extends PHPUnit {
     }
 
     /**
+     * Test that the valid juggle types return true.
+     */
+    public function testIsJuggleTypeReturnsTrueForValidTypes()
+    {
+        $types = ['boolean', 'integer', 'float', 'string', 'array', 'date', 'datetime', 'timestamp', 'bar'];
+        foreach($types as $type)
+        {
+            $this->assertTrue($this->model->isJuggleType( $type ));
+        }
+    }
+
+    /**
+     * Test that the invalid juggle type return false.
+     *
+     * @expectedException \InvalidArgumentException
+     */
+    public function testIsJuggleTypeReturnsFalseForInvalidType()
+    {
+        $this->model->shouldReceive('buildJuggleMethod')
+            ->once()
+            ->with('foo')
+            ->andReturn('juggleFoo');
+
+        $this->assertFalse($this->model->isJuggleType( 'foo' ));
+    }
+
+    /**
+     * Test that the juggle method builder returns normalized method names.
+     */
+    public function testBuildJuggleMethod()
+    {
+        $map = [
+            'juggleBoolean' => ['bool', 'boolean', 'Bool', 'Boolean'],
+            'juggleInteger' => ['int', 'integer', 'Int', 'Integer'],
+            'juggleFloat' => ['float', 'double', 'Float', 'Double'],
+            'juggleString' => ['string', 'String'],
+            'juggleArray' => ['array', 'Array'],
+            'juggleDate' => ['date', 'Date'],
+            'juggleDateTime' => ['datetime', 'dateTime', 'date_time', 'DateTime'],
+            'juggleTimestamp' => ['timestamp', 'Timestamp'],
+            'juggleFooBar' => ['foo_bar', 'fooBar', 'FooBar'],
+        ];
+
+        foreach($map as $method => $types)
+        {
+            foreach($types as $type)
+            {
+                $this->assertEquals($method, $this->model->buildJuggleMethod($type));
+            }
+        }
+    }
+
+    /**
+     * Test that getJuggleType returns the value from the jugglable array.
+     */
+    public function testGetJuggleType()
+    {
+        // Make sure the attributes are gotten with getJugglable()
+        $this->model->shouldReceive('getJugglable')
+            ->once()
+            ->andReturn(['foo' => 'bar']);
+
+        // Check the type
+        $type = $this->model->getJuggleType('foo');
+        $this->assertEquals('bar', $type);
+    }
+
+    /**
      * Test that all Jugglable attributes are juggled.
      */
     public function testJuggleAttributes()
@@ -281,6 +380,11 @@ class JugglingModelTraitTest extends PHPUnit {
         $grammar->shouldReceive('getDateFormat')->andReturn('Y-m-d H:i:s');
         $this->model->getConnection()->shouldReceive('getQueryGrammar')->andReturn($grammar);
         $this->model->getConnection()->shouldReceive('getPostProcessor')->andReturn(Mockery::mock('\Illuminate\Database\Query\Processors\Processor'));
+
+        // Make sure juggleAttributes calls juggleAttribute iteratively
+        $count = count($this->model->tmpAttributes);
+        $this->model->shouldReceive('juggleAttribute')
+            ->times($count);
 
         // Make sure we are dealing with an empty model
         $this->assertEmpty( $this->model->getAttributes() );
@@ -298,7 +402,6 @@ class JugglingModelTraitTest extends PHPUnit {
         $attributes = $this->model->getAttributes();
 
         // Check that the attributes count matches
-        $count = count($this->model->tmpAttributes);
         $this->assertCount($count, $attributes);
 
         // Check that the attributes are set and return the correct types
@@ -315,6 +418,128 @@ class JugglingModelTraitTest extends PHPUnit {
         $this->assertInternalType('array', $this->model->myArray);
     }
 
+    /**
+     * Test that juggling an invalid juggle type throws exception.
+     *
+     * @expectedException \InvalidArgumentException
+     */
+    public function testJugglingInvalidJuggleTypeThrowsException()
+    {
+        $this->model->juggle('foo', 'foo');
+    }
+
+    /**
+     * Test that juggleDate returns Carbon date object.
+     */
+    public function testJuggleDate()
+    {
+        // A date string should cast to a Carbon object
+        $date = '1970-01-01';
+        $carbon = $this->model->juggleDate( $date );
+        $this->assertInstanceOf('\Carbon\Carbon', $carbon );
+        $this->assertEquals($carbon->format('Y-m-d'),  $date );
+
+        // A Carbon object should return the same Carbon date on a second call
+        $carbon2 = $this->model->juggledate( $carbon );
+        $this->assertEquals($carbon, $carbon2 );
+    }
+
+    /**
+     * Test that juggleDateTime returns ISO standard for datetime.
+     */
+    public function testJuggleDateTime()
+    {
+        $datetime = $this->model->juggleDateTime( '1970-01-01' );
+        $this->assertEquals('1970-01-01 00:00:00', $datetime);
+    }
+
+    /**
+     * Test that juggleTimestamp returns an Unix timestamp as an integer.
+     */
+    public function testJuggleTimestamp()
+    {
+        $timestamp = $this->model->juggleTimestamp( '1970-01-01' );
+        $this->assertInternalType('integer', $timestamp);
+        $this->assertEquals(18000, $timestamp);
+    }
+
+    /**
+     * Test that juggleBoolean returns boolean values for boolean like values.
+     *
+     * Note that settype("false", "boolean") returns true which is why string("true")
+     * and string("false") have been left out of this test.
+     * @link http://php.net/manual/en/language.types.boolean.php#language.types.boolean.casting
+     */
+    public function testJuggleBoolean()
+    {
+        // Test true values
+        foreach([true, 1, '1'] as $value)
+        {
+            $boolean = $this->model->juggleBoolean( $value );
+            $this->assertInternalType('boolean', $boolean);
+            $this->assertTrue($boolean);
+        }
+
+        // Test false values
+        foreach([false, 0, '0'] as $value)
+        {
+            $boolean = $this->model->juggleBoolean( $value );
+            $this->assertInternalType('boolean', $boolean);
+            $this->assertFalse($boolean);
+        }
+    }
+
+    /**
+     * Test that juggleInteger returns integer values.
+     */
+    public function testJuggleInteger()
+    {
+        $integer = $this->model->juggleInteger( '1' );
+        $this->assertInternalType('integer', $integer);
+        $this->assertEquals(1, $integer);
+
+        $integer = $this->model->juggleInteger( '1 large pizza' );
+        $this->assertInternalType('integer', $integer);
+        $this->assertEquals(1, $integer);
+    }
+
+    /**
+     * Test that juggleFloat returns floating point values.
+     */
+    public function testJuggleFloat()
+    {
+        $float = $this->model->juggleFloat( '1.23456789' );
+        $this->assertInternalType('float', $float);
+        $this->assertEquals(1.23456789, $float);
+
+        $float = $this->model->juggleFloat( 1/4 );
+        $this->assertInternalType('float', $float);
+        $this->assertEquals(0.25, $float);
+    }
+
+    /**
+     * Test that juggleString returns string values.
+     */
+    public function testJuggleString()
+    {
+        $string = $this->model->juggleString( 1/4 );
+        $this->assertInternalType('string', $string);
+        $this->assertEquals('0.25', $string);
+    }
+
+    /**
+     * Test that juggleArray returns array values.
+     */
+    public function testJuggleArray()
+    {
+        $array = $this->model->juggleArray( [] );
+        $this->assertInternalType('array', $array);
+        $this->assertEmpty($array);
+
+        $array = $this->model->juggleArray( 'foo' );
+        $this->assertInternalType('array', $array);
+        $this->assertEquals(['foo'], $array);
+    }
 }
 
 /**
@@ -369,4 +594,14 @@ class ModelJugglingStub extends Model {
         'myArray'     => 'elem',
     ];
 
+    /**
+     * Example custom juggle type.
+     *
+     * @param  mixed $value
+     * @return string
+     */
+    protected function juggleBar( $value )
+    {
+        return 'bar';
+    }
 }

@@ -126,9 +126,20 @@ trait JugglingModelTrait {
      *
      * @param  array $attributes to juggle
      * @return void
+     * @throws \InvalidArgumentException
      */
     public function setJugglable( array $attributes )
     {
+        // Check that each of the types are indeed jugglable types
+        foreach( $attributes as $attribute => $type)
+        {
+            if( ! $this->isJuggleType( $type ) )
+            {
+                throw new InvalidArgumentException("The type \"" . $type . "\" is not a valid type to cast " . $attribute ." attribute to.");
+            }
+        }
+
+        // Set the juggle attributes
         $this->jugglable = $attributes;
     }
 
@@ -138,6 +149,7 @@ trait JugglingModelTrait {
      * @param  string $attribute
      * @param  string $type
      * @return void
+     * @throws \InvalidArgumentException
      */
     public function addJugglable( $attribute, $type )
     {
@@ -172,6 +184,7 @@ trait JugglingModelTrait {
      *
      * @param  array $attributes to juggle
      * @return void
+     * @throws \InvalidArgumentException
      */
     public function mergeJugglable( array $attributes )
     {
@@ -212,6 +225,75 @@ trait JugglingModelTrait {
     }
 
     /**
+     * Returns whether the type is a type that can be juggled to.
+     *
+     * @param string $type to cast
+     * @return boolean
+     * @throws \InvalidArgumentException
+     */
+    public function isJuggleType( $type )
+    {
+        // Construct a normalized juggle method from the type
+        $method = $this->buildJuggleMethod( $type );
+
+        // Any type that does map to a model method is invalid
+        if ( ! method_exists($this, $method) )
+        {
+            throw new InvalidArgumentException("The type \"" . $type . "\" is not a valid type cast or method " . $method ."() does not exist on " . get_class($this) . " class.");
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Build the method name that the type normalizes to.
+     *
+     * @param string $type to cast
+     * @return string
+     */
+    public function buildJuggleMethod( $type )
+    {
+        // Convert type to acceptable pattern
+        $type = lcfirst( studly_case( $type ) );
+
+        // Map the type to it's normalized type
+        switch ($type) {
+
+            case 'bool':
+            case 'boolean':
+                $normalizedType = 'boolean';
+                break;
+
+            case 'int':
+            case 'integer':
+                $normalizedType = 'integer';
+                break;
+
+            case 'float':
+            case 'double':
+                $normalizedType = 'float';
+                break;
+
+            case 'datetime':
+            case 'dateTime':
+                $normalizedType = 'dateTime';
+                break;
+
+            case 'date':
+            case 'timestamp':
+            case 'string':
+            case 'array':
+            default:
+                $normalizedType = $type;
+                break;
+        }
+
+        // Construct a dynamic method name
+        return "juggle". studly_case($normalizedType);
+    }
+
+    /**
      * Gets the type that the attribute will be casted to.
      *
      * @param string $attribute
@@ -221,6 +303,24 @@ trait JugglingModelTrait {
     {
         $jugglable = $this->getJugglable();
         return $jugglable[ $attribute ];
+    }
+
+    /**
+     * Juggles all attributes that are configured to be juggled.
+     *
+     * @return void
+     */
+    public function juggleAttributes()
+    {
+        // Iterate the juggable fields, and if the field is present
+        // cast the attribute and replace within the attributes array.
+        foreach( $this->getJugglable() as $attribute => $type )
+        {
+            if ( isset($this->attributes[ $attribute ]) )
+            {
+                $this->juggleAttribute( $attribute, $this->attributes[ $attribute ] ) ;
+            }
+        }
     }
 
     /**
@@ -238,24 +338,6 @@ trait JugglingModelTrait {
     }
 
     /**
-     * Juggles all attributes that are configured to be juggled.
-     *
-     * @return void
-     */
-    public function juggleAttributes()
-    {
-        // Iterate the juggable fields, and if the field is present
-        // cast the attribute and replace within the array.
-        foreach( $this->getJugglable() as $attribute => $type )
-        {
-            if ( isset($this->attributes[ $attribute ]) )
-            {
-                $this->juggleAttribute( $attribute, $this->attributes[ $attribute ] ) ;
-            }
-        }
-    }
-
-    /**
      * Cast the value to the attribute's type as specified in the juggable array.
      *
      * @param  mixed  $value
@@ -265,50 +347,20 @@ trait JugglingModelTrait {
      */
     public function juggle( $value, $type )
     {
+        // Cast non-null values
         if ( ! is_null($value) )
         {
-            // Convert type to acceptable pattern
-            $type = lcfirst( studly_case( $type ) );
-
-            // Map the type to it's normalized type
-            switch ($type) {
-
-                case 'bool':
-                case 'boolean':
-                    $normalizedType = 'boolean';
-                    break;
-
-                case 'int':
-                case 'integer':
-                    $normalizedType = 'integer';
-                    break;
-
-                case 'float':
-                case 'double':
-                    $normalizedType = 'float';
-                    break;
-
-                case 'datetime':
-                case 'dateTime':
-                    $normalizedType = 'dateTime';
-                    break;
-
-                case 'date':
-                case 'timestamp':
-                case 'string':
-                case 'array':
-                default:
-                    $normalizedType = $type;
-                    break;
-            }
-
-            // Constrct a dynamic method and call it
-            $method = "juggle". studly_case($normalizedType);
-            if ( ! method_exists($this, $method) )
+            // Ensure that the type is a valid type to cast.
+            // We do this check here because it might not have been done
+            // as is the case when the model is first initialized.
+            if( $this->isJuggleType( $type ) )
             {
-                throw new InvalidArgumentException("The type \"" . $normalizedType . "\" is not a valid type or method " . $method ."() does not exist on " . get_class($this) . " class.");
+                // Get the method that the type maps to
+                $method = $this->buildJuggleMethod( $type );
+
+                // Cast the value to the type using the method
+                $value = $this->{$method}( $value );
             }
-            $value = $this->{$method}($value);
         }
 
         return $value;
@@ -329,7 +381,10 @@ trait JugglingModelTrait {
             return $value;
         }
 
-        // Use Eloquent helper function to convert it to a Carbon date
+        // Use Eloquent helper function to convert it to a Carbon date.
+        // The $value must be a format that asDateTime can parse.
+        // Errors like "InvalidArgumentException: Unexpected data found."
+        // mean you don't have a parseable format.
         return $this->asDateTime( $value );
     }
 

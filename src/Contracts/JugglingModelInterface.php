@@ -24,6 +24,7 @@ interface JugglingModelInterface {
      *
      * @param  array $attributes to juggle
      * @return void
+     * @throws \InvalidArgumentException
      */
     public function setJugglable( array $attributes );
 
@@ -33,6 +34,7 @@ interface JugglingModelInterface {
      * @param  string $attribute
      * @param  string $type
      * @return void
+     * @throws \InvalidArgumentException
      */
     public function addJugglable( $attribute, $type );
 
@@ -50,6 +52,7 @@ interface JugglingModelInterface {
      *
      * @param  array $attributes to juggle
      * @return void
+     * @throws \InvalidArgumentException
      */
     public function mergeJugglable( array $attributes );
 
@@ -77,12 +80,36 @@ interface JugglingModelInterface {
     public function isJugglable( $attribute );
 
     /**
+     * Returns whether the type is a type that can be juggled to.
+     *
+     * @param string $type to cast
+     * @return boolean
+     * @throws \InvalidArgumentException
+     */
+    public function isJuggleType( $type );
+
+    /**
+     * Build the method name that the type normalizes to.
+     *
+     * @param string $type to cast
+     * @return string
+     */
+    public function buildJuggleMethod( $type );
+
+    /**
      * Gets the type that the attribute will be casted to.
      *
      * @param string $attribute
      * @return string
      */
     public function getJuggleType( $attribute );
+
+    /**
+     * Juggles all attributes that are configured to be juggled.
+     *
+     * @return void
+     */
+    public function juggleAttributes();
 
     /**
      * Casts a value to the coresponding attribute type and sets
@@ -93,13 +120,6 @@ interface JugglingModelInterface {
      * @return void
      */
     public function juggleAttribute( $attribute, $value );
-
-    /**
-     * Juggles all attributes that are configured to be juggled.
-     *
-     * @return void
-     */
-    public function juggleAttributes();
 
     /**
      * Cast the value to the attribute's type as specified in the juggable array.
