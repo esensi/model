@@ -30,6 +30,9 @@ class JugglingModelTraitTest extends PHPUnit {
         // Mock the Model that uses the custom trait
         $this->model = Mockery::mock('ModelJugglingStub');
         $this->model->makePartial();
+
+        // For date operations make sure we're in EST
+        date_default_timezone_set('America/New_York');
     }
 
     /**
