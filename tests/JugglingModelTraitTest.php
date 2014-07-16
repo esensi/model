@@ -315,8 +315,6 @@ class JugglingModelTraitTest extends PHPUnit {
 
     /**
      * Test that the invalid juggle type return false.
-     *
-     * @expectedException \InvalidArgumentException
      */
     public function testIsJuggleTypeReturnsFalseForInvalidType()
     {
@@ -326,6 +324,34 @@ class JugglingModelTraitTest extends PHPUnit {
             ->andReturn('juggleFoo');
 
         $this->assertFalse($this->model->isJuggleType( 'foo' ));
+    }
+
+    /**
+     * Test that the valid juggle types return true.
+     */
+    public function testCheckJuggleTypeReturnsTrueForValidTypes()
+    {
+        $this->model->shouldReceive('isJuggleType')
+            ->once()
+            ->with('foo')
+            ->andReturn(true);
+
+        $this->assertTrue($this->model->checkJuggleType( 'foo' ));
+    }
+
+    /**
+     * Test that an invalid juggle type return false.
+     *
+     * @expectedException \InvalidArgumentException
+     */
+    public function testCheckJuggleTypeReturnsFalseForInvalidType()
+    {
+        $this->model->shouldReceive('isJuggleType')
+            ->once()
+            ->with('foo')
+            ->andReturn(false);
+
+        $this->assertFalse($this->model->checkJuggleType( 'foo' ));
     }
 
     /**

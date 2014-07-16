@@ -571,6 +571,17 @@ if ( $post->isJugglable( 'foo' ) )
     // ... foo is not jugglable so this would not get executed
 }
 
+// Check if a type is castable
+// For this example juggleBar() is not a method.
+if ( $post->isJuggleType( 'bar' ) )
+{
+    // ... this code wouldn't get executed because bar is not a cast type
+}
+
+// Throws an exception on invalid cast type
+// It's used internally by setJugglable() to enforce valid cast types
+$post->checkJuggleType( 'bar' );
+
 // Disable juggling
 $post->setJuggling(false); // a value of true would enable it
 ```

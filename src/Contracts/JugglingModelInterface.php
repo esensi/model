@@ -84,9 +84,17 @@ interface JugglingModelInterface {
      *
      * @param string $type to cast
      * @return boolean
-     * @throws \InvalidArgumentException
      */
     public function isJuggleType( $type );
+
+    /**
+     * Checks whether the type is a type that can be juggled to.
+     *
+     * @param string $type to cast
+     * @return boolean
+     * @throws \InvalidArgumentException
+     */
+    public function checkJuggleType( $type );
 
     /**
      * Build the method name that the type normalizes to.

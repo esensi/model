@@ -133,10 +133,7 @@ trait JugglingModelTrait {
         // Check that each of the types are indeed jugglable types
         foreach( $attributes as $attribute => $type)
         {
-            if( ! $this->isJuggleType( $type ) )
-            {
-                throw new InvalidArgumentException("The type \"" . $type . "\" is not a valid type to cast " . $attribute ." attribute to.");
-            }
+            $this->checkJuggleType( $type );
         }
 
         // Set the juggle attributes
@@ -229,7 +226,6 @@ trait JugglingModelTrait {
      *
      * @param string $type to cast
      * @return boolean
-     * @throws \InvalidArgumentException
      */
     public function isJuggleType( $type )
     {
@@ -239,7 +235,25 @@ trait JugglingModelTrait {
         // Any type that does map to a model method is invalid
         if ( ! method_exists($this, $method) )
         {
-            throw new InvalidArgumentException("The type \"" . $type . "\" is not a valid type cast or method " . $method ."() does not exist on " . get_class($this) . " class.");
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Checks whether the type is a type that can be juggled to.
+     *
+     * @param string $type to cast
+     * @return boolean
+     * @throws \InvalidArgumentException
+     */
+    public function checkJuggleType( $type )
+    {
+        // If not valid, throw an exception.
+        if ( ! $this->isJuggleType( $type ) )
+        {
+            throw new InvalidArgumentException("The type \"" . $type . "\" is not a valid type cast.");
             return false;
         }
 
@@ -353,7 +367,7 @@ trait JugglingModelTrait {
             // Ensure that the type is a valid type to cast.
             // We do this check here because it might not have been done
             // as is the case when the model is first initialized.
-            if( $this->isJuggleType( $type ) )
+            if( $this->checkJuggleType( $type ) )
             {
                 // Get the method that the type maps to
                 $method = $this->buildJuggleMethod( $type );
