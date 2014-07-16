@@ -80,8 +80,7 @@ class Post extends SoftModel {
     - [Manually Encrypting Model Attributes](#manually-encrypting-model-attributes)
     - Checking Encryption State
 - **[Juggling Model Trait](#juggling-model-trait)**
-    - Auto-Juggling on Set
-    - Auto-Juggling on Get
+    - [Auto-Juggling on Access](#auto-juggling-on-access)
     - [Manually Juggling Model Attributes](#manually-juggling-model-attributes)
 - **[Soft Deleting Model Trait](#soft-deleting-model-trait)**
     - Using Soft Deletes
@@ -378,7 +377,7 @@ class User extends Eloquent implements HashingModelInterface {
 The developer can now pass form input to the `User` model from a controller or repository and the trait will automatically hash the `password` before saving. For demonstrative purposes the following code shows this in practice from a simple route closure:
 
 ```php
-Route::post( 'account', function( $id )
+Route::post( 'account', function()
 {
     // Hydrate the model from the Input
     $user = Auth::user();
@@ -533,6 +532,79 @@ This package includes the [`JugglingModelTrait`](https://github.com/esensi/model
     - Example: fooBar => `juggleFooBar()`
 
 Like all the traits, it is self-contained and can be used individually. Be aware, however, that using this trait does overload the magic `__get()` and `__set()` methods of the model (see [Esensi\Model\Model](https://github.com/esensi/model/blob/master/src/Model.php) source code for how to deal with overloading conflicts). Special credit goes to the brilliant [Dayle Rees](https://github.com/daylerees), author of [Code Bright book](https://leanpub.com/codebright), who inspired this trait with his [pull request to Laravel](https://github.com/laravel/framework/pull/4948).
+
+### Auto-Juggling on Access
+
+While developers can of course use the [`Model`](https://github.com/esensi/model/blob/master/src/Model.php) or [`SoftModel`](https://github.com/esensi/model/blob/master/src/SoftModel.php) classes which already include the [`JugglingModelTrait`](https://github.com/esensi/model/blob/master/src/Traits/JugglingModelTrait.php), the following code will demonstrate using automatic type juggling on any `Eloquent` based model. For this example, the implementation of automatic type juggling will be applied to a `Post` model which requires certain attributes to be type casted when attributes are accessed:
+
+```php
+<?php
+
+use \Esensi\Model\Contracts\JugglingModelInterface;
+use \Esensi\Model\Traits\JugglingModelTrait;
+use \Illuminate\Database\Eloquent\Model as Eloquent;
+
+class Post extends Eloquent implements JugglingModelInterface {
+
+    use JugglingModelTrait;
+
+    /**
+     * Attributes to cast to a different type.
+     *
+     * @var array
+     */
+    protected $jugglable = [
+
+        // Cast the published_at attribute to a date
+        'published_at' => 'date',
+
+        // Cast the terms attribute to a boolean
+        'terms'        => 'boolean',
+
+        // Cast the foo attribute to a custom bar type
+        'foo'          => 'bar',
+    ];
+
+    /**
+     * Example of a custom juggle "bar" type.
+     *
+     * @param  mixed $value
+     * @return string
+     */
+    protected function juggleBar( $value )
+    {
+        return 'bar';
+    }
+
+}
+```
+
+The developer can now pass form input to the `Post` model from a controller or repository and the trait will automatically type cast/juggle the attributes when setting. The same holds true for when the attributes are loaded from persistent storage as the model is constructed: the attributes are juggled to their types. Even for persistent storage that does not comply, the jugglable attributes are automatically type casted when retrieved from the model. For demonstrative purposes the following code shows this in practice from a simple route closure:
+
+```php
+Route::post( 'post/{id}/publish', function( $id )
+{
+    // Hydrate the model from the Input
+    $post = Post::find($id);
+
+    // published_at will be converted to a Carbon date object.
+    // You could then do $post->published_at->format('Y-m-d').
+    $post->published_at = Input::get('published_at');
+
+    // Convert those pesky checkboxes to proper boolean.
+    $post->terms = Input::get('terms', false);
+
+    // foo attribute will be casted as the custom "bar" type
+    // using the method juggleBar: so it's value would now be "bar".
+    $post->foo = Input::get('bar');
+
+    // Save the Post or do something else
+    $post->save();
+});
+```
+
+> **Pro Tip:** Some great uses for `JugglingModelTrait` would be custom "types" that map to commonly mutators jugglers for `phone`, `url`, `json`, types etc. Normally developers would have to map the attributes to attribute mutators and accessors which are hard-coded to the attribute name. Using the `$jugglable` property these attributes can be mapped to custom juggle methods easily in a reusable way.
+
 
 ### Manually Juggling Model Attributes
 
