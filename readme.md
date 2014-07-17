@@ -520,20 +520,22 @@ This package includes the [`JugglingModelTrait`](https://github.com/esensi/model
 - automatically cast attributes to a type when setting them
 - manually casting a value using the `juggle()` method
 - manually casting to pre-defined types including:
-    - string => `juggleString()`
-    - boolean|bool => `juggleBoolean()`
-    - integer|int => `juggleInteger()`
-    - float|double => `juggleFloat()`
-    - array => `juggleArray()`
-    - date => `juggleDate()` (returns Carbon date)
-    - dateTime|datetime|date_time => `juggleDateTime()` (returns 0000-00-00 00:00:00 format)
-    - timestamp => `juggleTimestamp()` (returns Unix timestamp)
+    - `string` => `juggleString()`
+    - `boolean` (`bool`) => `juggleBoolean()`
+    - `integer` (`integer`) => `juggleInteger()`
+    - `float` (`double`) => `juggleFloat()`
+    - `array` => `juggleArray()`
+    - `date` => `juggleDate()` (returns Carbon date)
+    - `dateTime` (`datetime` or `date_time`) => `juggleDateTime()` (returns 0000-00-00 00:00:00 format)
+    - `timestamp` => `juggleTimestamp()` (returns Unix timestamp)
 - create custom types to cast to with magic methods like:
-    - Example: fooBar => `juggleFooBar()`
+    - Example: `fooBar` => `juggleFooBar()`
 
 Like all the traits, it is self-contained and can be used individually. Be aware, however, that using this trait does overload the magic `__get()` and `__set()` methods of the model (see [Esensi\Model\Model](https://github.com/esensi/model/blob/master/src/Model.php) source code for how to deal with overloading conflicts). Special credit goes to the brilliant [Dayle Rees](https://github.com/daylerees), author of [Code Bright book](https://leanpub.com/codebright), who inspired this trait with his [pull request to Laravel](https://github.com/laravel/framework/pull/4948).
 
 ### Auto-Juggling on Access
+
+> **Pro Tip:** PHP extensions like `php-mysqlnd` should be used when available to handle casting from and to persistent storage, this trait serves a dual purpose of type casting and simplified attribute mutation (juggling) especially when a native extension is not available.
 
 While developers can of course use the [`Model`](https://github.com/esensi/model/blob/master/src/Model.php) or [`SoftModel`](https://github.com/esensi/model/blob/master/src/SoftModel.php) classes which already include the [`JugglingModelTrait`](https://github.com/esensi/model/blob/master/src/Traits/JugglingModelTrait.php), the following code will demonstrate using automatic type juggling on any `Eloquent` based model. For this example, the implementation of automatic type juggling will be applied to a `Post` model which requires certain attributes to be type casted when attributes are accessed:
 
