@@ -144,6 +144,13 @@ abstract class Model extends Eloquent implements
     protected $relationships = [];
 
     /**
+     * Extra attributes to be added to pivot relationships.
+     *
+     * @var array
+     */
+    protected $relationshipPivots = [];
+
+    /**
      * Dynamically retrieve attributes.
      *
      * @param  string $key

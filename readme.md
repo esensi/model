@@ -673,6 +673,7 @@ Like all the traits, it is self-contained and can be used individually. As a con
 This package includes the [`RelatingModelTrait`](https://github.com/esensi/model/blob/master/src/Traits/RelatingModelTrait.php) which implements the [`RelatingModelInterface`](https://github.com/esensi/model/blob/master/src/Contracts/RelatingModelInterface.php) on any `Eloquent` model that uses it. The `RelatingModelTrait` adds methods to `Eloquent` models for automatically resolving related models:
 
 - from simplified configs using the `$relationships` property
+- add pivot attributes from simplified configs using the `$relationshipPivots` property
 - as magic method calls such as `Post::find($id)->comments()->all()`
 - as magic attribute calls such as `Post::find($id)->author`
 
@@ -716,14 +717,30 @@ class Post extends Eloquent implements RelatingModelInterface {
     protected $relationships = [
 
         // Bind Comment model as a hasMany relationship.
-        // Use Post::comments() to query the relationship.
+        // Use $post->comments to query the relationship.
         'comments' => [ 'hasMany', 'Comment' ],
 
         // Bind User model as a belongsTo relationship.
         // Use $post->author to get the User model.
-        'author' => [ 'belongsTo', 'User' ]
+        'author' => [ 'belongsTo', 'User' ],
+
+        // Bind User model as a belongsTo relationship.
+        // Use $post->author to get the User model.
+        'tags' => [ 'belongsToMany', 'Tag']
     ];
 
+    /**
+     * These are the additional pivot attributes that the model
+     * will setup on the relationships that support pivot tables.
+     *
+     * @var array
+     */
+    protected $relationshipPivots = [
+
+        // Bind pivot attributes to Tag model when querying the relationship.
+        // This is equivalent to $post->tags()->withTimestamps()->withPivot('foo').
+        'tags' => [ 'timestamps', 'foo' ]
+    ];
 }
 ```
 

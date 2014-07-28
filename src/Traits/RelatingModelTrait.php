@@ -3,6 +3,7 @@
 use \Illuminate\Database\Eloquent\ModelNotFoundException;
 use \Illuminate\Database\Eloquent\Relations\BelongsTo;
 use \Illuminate\Database\Eloquent\Relations\MorphTo;
+use \InvalidArgumentException;
 
 /**
  * Trait that implements the Relating Model Interface
@@ -92,6 +93,16 @@ trait RelatingModelTrait {
     }
 
     /**
+     * Get the relationships.
+     *
+     * @return array
+     */
+    public function getRelationships()
+    {
+        return $this->relationships ?: [];
+    }
+
+    /**
      * Return the relationship configurations.
      *
      * @param string $name of related model
@@ -111,6 +122,18 @@ trait RelatingModelTrait {
     }
 
     /**
+     * Return the relationship configurations.
+     *
+     * @param string $name of related model
+     * @return array
+     * @throws \InvalidArgumentException
+     */
+    public function getPivotAttributes( $name )
+    {
+        return $this->relationshipPivots[ $name ] ?: [];
+    }
+
+    /**
      * Return whether the name is a relationship or not.
      *
      * @param string $name of related model
@@ -122,6 +145,17 @@ trait RelatingModelTrait {
     }
 
     /**
+     * Return whether the relationshpi has pivot attributes or not.
+     *
+     * @param string $name of related model
+     * @return boolean
+     */
+    public function hasPivotAttributes( $name )
+    {
+        return array_key_exists( $name, $this->relationshipPivots );
+    }
+
+    /**
      * Proxy call a relationship method using the
      * configuration arguments of the relationship.
      *
@@ -130,10 +164,29 @@ trait RelatingModelTrait {
      */
     protected function callRelationship( $name )
     {
+        // Get the relationship arguments
         $args = $this->getRelationship( $name );
 
+        // Build the relationship
         $method = array_shift( $args );
-        return call_user_func_array( [ $this, $method ], $args );
+        $relationship = call_user_func_array( [ $this, $method ], $args );
+
+        // Check to see if this relationship has extended pivot attributes
+        if( $this->hasPivotAttributes( $name ) )
+        {
+            // Add timestamps to relationship
+            $attributes = $this->getPivotAttributes( $name );
+            if( in_array('timestamps', $attributes) )
+            {
+                unset($attributes[array_search('timestamps', $attributes)]);
+                $relationship->withTimestamps();
+            }
+
+            // Add the pivot attributes to the relationship
+            $relationship->withPivot( $attributes );
+        }
+
+        return $relationship;
     }
 
     /**
