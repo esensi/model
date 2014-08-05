@@ -3,7 +3,6 @@
 use \Illuminate\Database\Eloquent\ModelNotFoundException;
 use \Illuminate\Database\Eloquent\Relations\BelongsTo;
 use \Illuminate\Database\Eloquent\Relations\MorphTo;
-use \InvalidArgumentException;
 
 /**
  * Trait that implements the Relating Model Interface
@@ -126,7 +125,6 @@ trait RelatingModelTrait {
      *
      * @param string $name of related model
      * @return array
-     * @throws \InvalidArgumentException
      */
     public function getPivotAttributes( $name )
     {
