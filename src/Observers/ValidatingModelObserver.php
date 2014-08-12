@@ -1,6 +1,5 @@
 <?php namespace Esensi\Model\Observers;
 
-use \Esensi\Model\Model;
 use \Watson\Validating\ValidatingObserver;
 
 /**

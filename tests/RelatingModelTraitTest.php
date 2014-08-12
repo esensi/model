@@ -71,6 +71,16 @@ class RelatingModelTraitTest extends PHPUnit {
     }
 
     /**
+     * Test that getPivotAttributes returns the attributes
+     * for a many-to-many relationship.
+     */
+    public function testGettingPivotAttributes()
+    {
+        $attributes = $this->model->getPivotAttributes('many');
+        $this->assertEquals($attributes, ['foo', 'timestamps']);
+    }
+
+    /**
      * Test that isRelationship returns true when relationship exists.
      */
     public function testIsRelationshipReturnsTrue()
@@ -84,6 +94,24 @@ class RelatingModelTraitTest extends PHPUnit {
     public function testIsRelationshipReturnsFalse()
     {
         $this->assertFalse($this->model->isRelationship('baz'));
+    }
+
+    /**
+     * Test that hasPivotAttributes returns true when relationship
+     * has pivot attributes.
+     */
+    public function testHasPivotAttributesReturnsTrue()
+    {
+        $this->assertTrue($this->model->hasPivotAttributes('many'));
+    }
+
+    /**
+     * Test that hasPivotAttributes returns false when relationship
+     * does not have pivot attributes.
+     */
+    public function testHasPivotAttributesReturnsFalse()
+    {
+        $this->assertFalse($this->model->hasPivotAttributes('foo'));
     }
 
     /**
@@ -134,9 +162,23 @@ class ModelRelatingStub extends Model {
         'bar' => [
             'morphTo',
             'BarModelStub',
-        ]
+        ],
+
+        'many' => [
+            'belongsToMany',
+            'ManyModelStub',
+        ],
     ];
 
+    /**
+     * Extra attributes to be added to pivot relationships.
+     *
+     * @var array
+     */
+    protected $relationshipPivots = [
+
+        'many' => [ 'foo', 'timestamps' ],
+    ];
 }
 
 /**
@@ -150,5 +192,12 @@ class FooModelStub extends Model {
  * Bar Model Stub for Relationship Tests
  */
 class BarModelStub extends Model {
+
+}
+
+/**
+ * Many Model Stub for Relationship Tests
+ */
+class ManyModelStub extends Model {
 
 }

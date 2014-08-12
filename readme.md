@@ -75,8 +75,7 @@ class Post extends SoftModel {
     - [Auto-Hashing on Save](#auto-hashing-on-save)
     - [Manually Hashing Model Attributes](#manually-hashing-model-attributes)
 - **[Encrypting Model Trait](#encrypting-model-trait)**
-    - Auto-Encrypting on Set
-    - Auto-Decrypting on Get
+    - Auto-Encrypting on Access
     - [Manually Encrypting Model Attributes](#manually-encrypting-model-attributes)
     - Checking Encryption State
 - **[Juggling Model Trait](#juggling-model-trait)**
@@ -762,7 +761,11 @@ Route::get( 'posts/{id}/comments', function( $id )
     // the above call.
     $comments = $post->comments;
 
-    // ... pass the $comments collection to the view
+    // Access the pivot table columns off a
+    // many-to-many relationship model.
+    $tag = $post->tags()->first();
+    $carbon = $tag->pivot->created_at; // Carbon Date
+    $bar = $tag->pivot->foo;
 });
 ```
 
@@ -789,11 +792,11 @@ The test suite can be ran from the command line using the `phpunit` test runner:
 phpunit ./tests
 ```
 
-> **Pro Tip:** Please help the open-source community out by including good code test coverage with your pull requests. The Esensi development team will review pull requests with unit tests and passing tests as a priority. Significant code changes that do not include unit tests will _not_ be merged.
+> **Pro Tip:** Please help the open-source community by including good code test coverage with your pull requests. The Esensi development team will review pull requests with unit tests and passing tests as a priority. Significant code changes that do not include unit tests will _not_ be merged.
 
 ## Contributing
 
-[Emerson Media](http://www.emersonmedia.com) is proud to work with some of the most talented developers in the PHP community. The developer team welcomes requests, suggestions, issues, and of course pull requests. When submitting issues please be as detailed as possible and provide code examples where possible. When submitting pull requests please follow the same code formatting and style guides that the Esensi code base uses. Please help the open-source community out by including good code test coverage with your pull requests. **All pull requests _must_ be submitted to the version branch to which the code changes apply.**
+[Emerson Media](http://www.emersonmedia.com) is proud to work with some of the most talented developers in the PHP community. The developer team welcomes requests, suggestions, issues, and of course pull requests. When submitting issues please be as detailed as possible and provide code examples where possible. When submitting pull requests please follow the same code formatting and style guides that the Esensi code base uses. Please help the open-source community by including good code test coverage with your pull requests. **All pull requests _must_ be submitted to the version branch to which the code changes apply.**
 
 > **Note:** The Esensi team does its best to address all issues on Wednesdays. Pull requests are reviewed in priority followed by urgent bug fixes. Each week the package dependencies are re-evaluated and updates are made for new tag releases.
 

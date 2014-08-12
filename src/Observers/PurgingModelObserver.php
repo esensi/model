@@ -1,6 +1,6 @@
 <?php namespace Esensi\Model\Observers;
 
-use \Esensi\Model\Model;
+use \Esensi\Model\Contracts\PurgingModelInterface;
 
 /**
  * Model observer for Purging Model Trait
@@ -19,10 +19,10 @@ class PurgingModelObserver {
      * Register an event listener for the creating event.
      * Listener purgees the purgeable attributes before save.
      *
-     * @param \Esensi\Model\Model $model
+     * @param \Esensi\Model\Contracts\PurgingModelInterface $model
      * @return void
      */
-    public function creating( Model $model )
+    public function creating( PurgingModelInterface $model )
     {
         $this->performPurging( $model, 'creating' );
     }
@@ -31,10 +31,10 @@ class PurgingModelObserver {
      * Register an event listener for the updating event.
      * Listener purgees the purgeable attributes before save.
      *
-     * @param \Esensi\Model\Model $model
+     * @param \Esensi\Model\Contracts\PurgingModelInterface $model
      * @return void
      */
-    public function updating( Model $model )
+    public function updating( PurgingModelInterface $model )
     {
         $this->performPurging( $model, 'updating' );
     }
@@ -43,11 +43,11 @@ class PurgingModelObserver {
      * Check if purging is enabled and then purge the attributes
      * that need purging.
      *
-     * @param \Esensi\Model\Model $model
+     * @param \Esensi\Model\Contracts\PurgingModelInterface $model
      * @param string $event name
      * @return void
      */
-    protected function performPurging( Model $model, $event )
+    protected function performPurging( PurgingModelInterface $model, $event )
     {
         if( $model->getPurging() )
         {
