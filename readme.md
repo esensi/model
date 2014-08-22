@@ -792,6 +792,8 @@ The test suite can be ran from the command line using the `phpunit` test runner:
 phpunit ./tests
 ```
 
+> **Important:** There is currently a bug in Laravel (see issue [#1181](https://github.com/laravel/framework/issues/1181)) that prevents model events from firing more than once in a test suite. This means that the first test that uses model tests will pass but any subseqeuent tests will fail. There are a couple of temporary solutions listed in that thread which you can use to make your tests pass in the meantime: namely `Model::flushEventListeners()` and `Model::boot()` after each test runs.
+
 > **Pro Tip:** Please help the open-source community by including good code test coverage with your pull requests. The Esensi development team will review pull requests with unit tests and passing tests as a priority. Significant code changes that do not include unit tests will _not_ be merged.
 
 ## Contributing
