@@ -295,4 +295,23 @@ trait RelatingModelTrait {
         }
     }
 
+    /**
+     * Set the relationships that should not be eager loaded.
+     *
+     * @param  Illuminate\Database\Query\Builder $query
+     * @param  mixed $relations
+     * @return $this
+     */
+    public function scopeWithout( $query, $relations )
+    {
+        $relationships = $query->getEagerLoads();
+        $relations = is_array($relations) ? $relations : array_slice(func_get_args(), 1);
+        foreach($relations as $relation)
+        {
+            unset($relationships[ $relation ]);
+        }
+        $query->setEagerLoads($relationships);
+        return $query;
+    }
+
 }

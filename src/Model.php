@@ -13,6 +13,7 @@ use \Esensi\Model\Traits\PurgingModelTrait;
 use \Esensi\Model\Traits\RelatingModelTrait;
 use \Esensi\Model\Traits\ValidatingModelTrait;
 use \Illuminate\Database\Eloquent\Model as Eloquent;
+use \Illuminate\Support\Contracts\MessageProviderInterface;
 
 /**
  * Base Model
@@ -31,11 +32,13 @@ use \Illuminate\Database\Eloquent\Model as Eloquent;
  * @see \Esensi\Model\Contracts\PurgingModelInterface
  * @see \Esensi\Model\Contracts\RelatingModelInterface
  * @see \Esensi\Model\Contracts\ValidatingModelInterface
+ * @see \Illuminate\Support\Contracts\MessageProviderInterface
  */
 abstract class Model extends Eloquent implements
     EncryptingModelInterface,
     HashingModelInterface,
     JugglingModelInterface,
+    MessageProviderInterface,
     PurgingModelInterface,
     RelatingModelInterface,
     ValidatingModelInterface {
@@ -202,6 +205,16 @@ abstract class Model extends Eloquent implements
 
         // Dynamically juggle the attribute.
         $this->setDynamicJuggle( $key, $value );
+    }
+
+    /**
+     * Get the messages for the instance.
+     *
+     * @return \Illuminate\Support\MessageBag
+     */
+    public function getMessageBag()
+    {
+        return $this->getErrors();
     }
 
 }
