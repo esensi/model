@@ -676,6 +676,8 @@ This package includes the [`RelatingModelTrait`](https://github.com/esensi/model
 - as magic method calls such as `Post::find($id)->comments()->all()`
 - as magic attribute calls such as `Post::find($id)->author`
 
+> **Pro Tip:** As an added bonus, this trait includes a special Eloquent `without()` scope which accepts relationships to remove from the eager loaded list, exactly opposite of the built in Eloquent support for `with()`. This is particularly useful for models that set the `$with` property but occassionally need to remove the eager loading to improve performance on larger queries. This does not impact lazy/manual loading using the dynamic or `load()` methods.
+
 Like all the traits, it is self-contained and can be used individually. Be aware, however, that using this trait does overload the magic `__call()` and `__get()` methods of the model (see [Esensi\Model\Model](https://github.com/esensi/model/blob/master/src/Model.php) source code for how to deal with overloading conflicts). Special credit goes to [Phillip Brown](https://github.com/phillipbrown) and his [Philipbrown/Magniloquent Laravel package](https://github.com/philipbrown/magniloquent) which inspired this trait.
 
 ### Using Simplified Relationships
@@ -768,6 +770,8 @@ Route::get( 'posts/{id}/comments', function( $id )
     $bar = $tag->pivot->foo;
 });
 ```
+
+
 
 ## Unit Testing
 

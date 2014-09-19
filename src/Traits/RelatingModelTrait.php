@@ -302,7 +302,7 @@ trait RelatingModelTrait {
      * @param  mixed $relations
      * @return $this
      */
-    public function scopeWithOut( $query, $relations )
+    public function scopeWithout( $query, $relations )
     {
         $relationships = $query->getEagerLoads();
         $relations = is_array($relations) ? $relations : array_slice(func_get_args(), 1);
