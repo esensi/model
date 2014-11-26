@@ -223,7 +223,7 @@ trait HashingModelTrait {
         // Do the hashing if it needs it
         if ( $this->isDirty( $attribute ) || ! $this->isHashed( $attribute ) )
         {
-            $this->attributes[ $attribute ] = $this->getHasher()->make( $value );
+            $this->attributes[ $attribute ] = $this->hash( $value );
         }
     }
 
