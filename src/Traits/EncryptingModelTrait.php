@@ -302,7 +302,8 @@ trait EncryptingModelTrait {
      */
     public function getEncryptedAttribute( $attribute )
     {
-        return $this->decrypt( array_get($this->attributes, $attribute) );
+        $value = array_get($this->attributes, $attribute);
+        return $this->isEncrypted( $attribute ) ? $this->decrypt( $value ) : $value;
     }
 
     /**
