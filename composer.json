@@ -22,7 +22,7 @@
         "illuminate/hashing": "dev-master",
         "illuminate/support": "dev-master",
         "illuminate/validation": "dev-master",
-        "watson/validating": "0.10.*"
+        "watson/validating": "dev-master"
     },
     "require-dev": {
         "phpunit/phpunit": "4.1.*",
