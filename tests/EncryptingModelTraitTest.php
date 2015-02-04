@@ -379,7 +379,7 @@ class EncryptingModelTraitTest extends PHPUnit {
         $this->model->shouldReceive('decrypt')
             ->once()
             ->with('plain text')
-            ->andThrow('\Illuminate\Encryption\DecryptException');
+            ->andThrow('\Illuminate\Contracts\Encryption\DecryptException');
 
         // Check that the attribute is not encrypted
         $this->assertFalse($this->model->isEncrypted('foo'));

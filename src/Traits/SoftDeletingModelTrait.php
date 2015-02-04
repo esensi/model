@@ -1,7 +1,7 @@
 <?php namespace Esensi\Model\Traits;
 
 use \Illuminate\Database\Eloquent\SoftDeletingScope;
-use \Illuminate\Database\Eloquent\SoftDeletingTrait;
+use \Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Trait that implements the Soft Deleting Model Interface
@@ -19,9 +19,9 @@ trait SoftDeletingModelTrait {
     /**
      * Use Illuminate's trait as a base.
      *
-     * @see \Illuminate\Database\Eloquent\SoftDeletingTrait
+     * @see \Illuminate\Database\Eloquent\SoftDeletes
      */
-    use SoftDeletingTrait;
+    use SoftDeletes;
 
     /**
      * We want to boot our own observer so we stub out this

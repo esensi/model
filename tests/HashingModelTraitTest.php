@@ -1,6 +1,7 @@
 <?php
 
 use \Esensi\Model\Model;
+use \Illuminate\Contracts\Hashing\Hasher;
 use \Illuminate\Hashing\BcryptHasher;
 use \Mockery;
 use \PHPUnit_Framework_TestCase as PHPUnit;
@@ -541,6 +542,6 @@ class ModelHashingStub extends Model {
 /**
  * Hasher Stub for Hasher Tests
  */
-class HasherStub extends BcryptHasher {
+class HasherStub extends BcryptHasher implements Hasher {
 
 }

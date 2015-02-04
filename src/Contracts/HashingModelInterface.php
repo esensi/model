@@ -1,6 +1,6 @@
 <?php namespace Esensi\Model\Contracts;
 
-use \Illuminate\Hashing\HasherInterface;
+use \Illuminate\Contracts\Hashing\Hasher;
 
 /**
  * Hashing Model Interface
@@ -74,17 +74,17 @@ interface HashingModelInterface {
     /**
      * Set the Hasher to use for hashing.
      *
-     * @return \Illuminate\Hashing\HasherInterface
+     * @return \Illuminate\Contracts\Hashing\Hasher
      */
     public function getHasher();
 
     /**
      * Set the Hasher to use for hashing.
      *
-     * @param \Illuminate\Hashing\HasherInterface $hasher
+     * @param \Illuminate\Contracts\Hashing\Hasher $hasher
      * @return void
      */
-    public function setHasher( HasherInterface $hasher );
+    public function setHasher( Hasher $hasher );
 
     /**
      * Returns whether the attribute is hashable.

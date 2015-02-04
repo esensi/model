@@ -1,7 +1,7 @@
 <?php namespace Esensi\Model\Traits;
 
 use \Esensi\Model\Observers\HashingModelObserver;
-use \Illuminate\Hashing\HasherInterface;
+use \Illuminate\Contracts\Hashing\Hasher;
 use \Illuminate\Support\Facades\Hash;
 
 /**
@@ -27,7 +27,7 @@ trait HashingModelTrait {
     /**
      * The Hasher to use for hashing.
      *
-     * @var \Illuminate\Hashing\HasherInterface
+     * @var \Illuminate\Contracts\Hashing\Hasher
      */
     protected $hasher;
 
@@ -123,7 +123,7 @@ trait HashingModelTrait {
     /**
      * Set the Hasher to use for hashing.
      *
-     * @return \Illuminate\Hashing\HasherInterface
+     * @return \Illuminate\Contracts\Hashing\Hasher
      */
     public function getHasher()
     {
@@ -133,10 +133,10 @@ trait HashingModelTrait {
     /**
      * Set the Hasher to use for hashing.
      *
-     * @param \Illuminate\Hashing\HasherInterface $hasher
+     * @param \Illuminate\Contracts\Hashing\Hasher $hasher
      * @return void
      */
-    public function setHasher( HasherInterface $hasher )
+    public function setHasher( Hasher $hasher )
     {
         $this->hasher = $hasher;
     }

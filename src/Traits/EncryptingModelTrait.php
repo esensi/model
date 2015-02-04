@@ -2,7 +2,7 @@
 
 use \Illuminate\Support\Facades\Crypt;
 use \Illuminate\Encryption\Encrypter;
-use \Illuminate\Encryption\DecryptException;
+use \Illuminate\Contracts\Encryption\DecryptException;
 
 /**
  * Trait that implements the Encrypting Model Interface
