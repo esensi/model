@@ -15,7 +15,7 @@
     "license": "MIT",
     "require": {
         "php": ">=5.4.0",
-        "nesbot/Carbon": "1.9.*",
+        "nesbot/Carbon": "~1.9",
         "illuminate/database": "~4.2.6",
         "illuminate/encryption": "~4.2.6",
         "illuminate/events": "~4.2.6",
