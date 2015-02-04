@@ -13,7 +13,7 @@ use \Esensi\Model\Traits\PurgingModelTrait;
 use \Esensi\Model\Traits\RelatingModelTrait;
 use \Esensi\Model\Traits\ValidatingModelTrait;
 use \Illuminate\Database\Eloquent\Model as Eloquent;
-use \Illuminate\Support\Contracts\MessageProviderInterface;
+use \Illuminate\Contracts\Support\MessageProvider;
 
 /**
  * Base Model
@@ -32,13 +32,13 @@ use \Illuminate\Support\Contracts\MessageProviderInterface;
  * @see \Esensi\Model\Contracts\PurgingModelInterface
  * @see \Esensi\Model\Contracts\RelatingModelInterface
  * @see \Esensi\Model\Contracts\ValidatingModelInterface
- * @see \Illuminate\Support\Contracts\MessageProviderInterface
+ * @see \Illuminate\Contracts\Support\MessageProvider
  */
 abstract class Model extends Eloquent implements
     EncryptingModelInterface,
     HashingModelInterface,
     JugglingModelInterface,
-    MessageProviderInterface,
+    MessageProvider,
     PurgingModelInterface,
     RelatingModelInterface,
     ValidatingModelInterface {
@@ -210,7 +210,7 @@ abstract class Model extends Eloquent implements
     /**
      * Get the messages for the instance.
      *
-     * @return \Illuminate\Support\MessageBag
+     * @return \Illuminate\Contracts\Support\MessageBag
      */
     public function getMessageBag()
     {
