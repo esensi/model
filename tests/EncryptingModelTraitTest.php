@@ -404,11 +404,7 @@ class EncryptingModelTraitTest extends PHPUnit {
         $this->model->setEncryptable(array_keys($encryptables));
 
         // Mutators should be called to get the attribute
-        $this->model->shouldReceive('getAttribute')
-            ->times(count($encryptables));
-
-        // Make sure each encryptable is encrypted
-        $this->model->shouldReceive('encrypt')
+        $this->model->shouldReceive('setEncryptingAttribute')
             ->times(count($encryptables));
 
         // Do it
@@ -453,12 +449,6 @@ class EncryptingModelTraitTest extends PHPUnit {
             ->once()
             ->with('foo')
             ->andReturn('plain text');
-
-        // Mutators should be called to get the attribute
-        $this->model->shouldReceive('getAttribute')
-            ->times(3)
-            ->with('foo')
-            ->andReturn($encrypted);
 
         // Decrypt should be called
         $this->model->shouldReceive('decrypt')

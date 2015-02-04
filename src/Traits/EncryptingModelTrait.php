@@ -102,7 +102,7 @@ trait EncryptingModelTrait {
             // Encrypt only decrypted values
             if ( $this->isDecrypted( $attribute ) )
             {
-                $this->attributes[ $attribute ] = $this->getEncrypter()->encrypt( $value );
+                array_set($this->attributes, $attribute, $this->getEncrypter()->encrypt( $value ));
                 return true;
             }
         }
@@ -236,7 +236,7 @@ trait EncryptingModelTrait {
 
         try
         {
-            $this->decrypt( $this->getAttribute( $attribute ) );
+            $this->decrypt( array_get($this->attributes, $attribute) );
         }
         catch (DecryptException $exception)
         {
@@ -266,7 +266,7 @@ trait EncryptingModelTrait {
     {
         foreach( $this->getEncryptable() as $attribute )
         {
-            $this->setEncryptingAttribute( $attribute, $this->getAttribute($attribute) );
+            $this->setEncryptingAttribute( $attribute, array_get($this->attributes, $attribute) );
         }
     }
 
@@ -302,7 +302,8 @@ trait EncryptingModelTrait {
      */
     public function getEncryptedAttribute( $attribute )
     {
-        return $this->decrypt( $this->getAttribute($attribute) );
+        $value = array_get($this->attributes, $attribute);
+        return $this->isEncrypted( $attribute ) ? $this->decrypt( $value ) : $value;
     }
 
     /**
@@ -314,7 +315,7 @@ trait EncryptingModelTrait {
      */
     public function setEncryptingAttribute( $attribute, $value )
     {
-        $this->attributes[ $attribute ] = $this->encrypt( $value );
+        array_set($this->attributes, $attribute, $this->encrypt( $value ));
     }
 
 }
