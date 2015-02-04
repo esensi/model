@@ -56,7 +56,7 @@ class Post extends SoftModel {
 }
 ```
 
-> **Pro Tip:** While Laravel includes `SoftDeletingTrait`, Esensi expands upon this by also forcing the trait to comply with a [`SoftDeletingModelInterface`](https://github.com/esensi/model/blob/0.3/src/Contracts/SoftDeletingModelInterface.php) contract. This ensures a higher level of compatibility and code integrity.
+> **Pro Tip:** While Laravel includes `SoftDeletingTrait`, Esensi expands upon this by also forcing the trait to comply with a [`SoftDeletingModelInterface`](https://github.com/esensi/model/blob/0.5/src/Contracts/SoftDeletingModelInterface.php) contract. This ensures a higher level of compatibility and code integrity.
 
 ## Table of Contents
 
@@ -97,7 +97,7 @@ class Post extends SoftModel {
 Add the `esensi/model` package as a dependency to the application. Using [Composer](https://getcomposer.org), this can be done from the command line:
 
 ```bash
-composer require esensi/model 0.3.*
+composer require esensi/model 0.5.*
 ```
 
 Or manually it can be added to the `composer.json` file:
@@ -105,7 +105,7 @@ Or manually it can be added to the `composer.json` file:
 ```json
 {
     "require": {
-        "esensi/model": "0.3.*"
+        "esensi/model": "0.5.*"
     }
 }
 ```
@@ -775,7 +775,7 @@ Route::get( 'posts/{id}/comments', function( $id )
 
 ## Unit Testing
 
-The [Esensi](http://github.com/esensi) platform includes other great packages just like this [Esensi/Model](http://github.com/esensi/model) package. This package is currently tagged as `0.3.x` because the other platform packages are not ready for public release. While the others may still be under development, this package already includes features that would be mature enough for a `1.x` release including unit testing and extensive testing in real-world applications.
+The [Esensi](http://github.com/esensi) platform includes other great packages just like this [Esensi/Model](http://github.com/esensi/model) package. This package is currently tagged as `0.5.x` because the other platform packages are not ready for public release. While the others may still be under development, this package already includes features that would be mature enough for a `1.x` release including unit testing and extensive testing in real-world applications.
 
 ### Running the Unit Tests
 
