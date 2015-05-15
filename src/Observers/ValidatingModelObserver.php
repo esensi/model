@@ -88,4 +88,41 @@ class ValidatingModelObserver extends ValidatingObserver {
         }
     }
 
+    /**
+     * Perform validation with the specified ruleset.
+     *
+     * @param  \Illuminate\Database\Eloquent\Model $model
+     * @param  string $event
+     * @return boolean
+     */
+    protected function performValidation(Model $model, $event)
+    {
+        // If the model has validating enabled, perform it.
+        if ($model->getValidating())
+        {
+            // Fire the namespaced validating event and prevent validation
+            // if it returns a value.
+            if ($this->fireValidatingEvent($model, $event) !== null) return;
+
+            if ($model->isValid($event) === false)
+            {
+                // Fire the validating failed event.
+                $this->fireValidatedEvent($model, 'failed');
+
+                if ($model->getThrowValidationExceptions())
+                {
+                    $model->throwValidationException();
+                }
+
+                return false;
+            }
+            // Fire the validating.passed event.
+            $this->fireValidatedEvent($model, 'passed');
+        }
+        else
+        {
+            $this->fireValidatedEvent($model, 'skipped');
+        }
+    }
+
 }
