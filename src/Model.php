@@ -106,6 +106,7 @@ abstract class Model extends Eloquent implements
     /**
      * The rulesets that the model will validate against.
      *
+     * @deprecated watson/validating 0.10.9
      * @var array
      */
     protected $rulesets = [];

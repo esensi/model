@@ -12,6 +12,11 @@ use \Watson\Validating\ValidatingTrait;
  * @license https://github.com/esensi/model/blob/master/LICENSE.txt MIT License
  * @link http://www.emersonmedia.com
  *
+ * @deprecated In watson/validating@0.10.9 the custom methods
+ *             used below were deprecated in favor of Laravel 5's
+ *             form request validation classes. Stop using
+ *             rulesets right now as they will be removed.
+ *
  * @see \Esensi\Model\Contracts\ValidatingModelInterface
  */
 trait ValidatingModelTrait {
@@ -46,6 +51,7 @@ trait ValidatingModelTrait {
      * 'saving' ruleset exists, fallback to '$rules' and otherwise return
      * an empty array
      *
+     * @deprecated watson/validating@0.10.9
      * @return array
      */
     public function getDefaultRules()
@@ -57,6 +63,7 @@ trait ValidatingModelTrait {
     /**
      * Get all the rulesets.
      *
+     * @deprecated watson/validating@0.10.9
      * @return array
      */
     public function getRulesets()
@@ -67,6 +74,7 @@ trait ValidatingModelTrait {
     /**
      * Set all the rulesets.
      *
+     * @deprecated watson/validating@0.10.9
      * @param  array $rulesets
      * @return void
      */
@@ -78,6 +86,7 @@ trait ValidatingModelTrait {
     /**
      * Get a ruleset, and merge it with saving if required.
      *
+     * @deprecated watson/validating@0.10.9
      * @param  string $ruleset
      * @param  bool   $mergeWithSaving
      * @return array
@@ -107,6 +116,7 @@ trait ValidatingModelTrait {
     /**
      * Set the rules used for a particular ruleset.
      *
+     * @deprecated watson/validating@0.10.9
      * @param  array  $rules
      * @param  string $ruleset
      * @return void
@@ -119,6 +129,7 @@ trait ValidatingModelTrait {
     /**
      * Add rules to the existing rules or ruleset, overriding any existing.
      *
+     * @deprecated watson/validating@0.10.9
      * @param  array   $rules
      * @param  string  $ruleset
      * @return void
@@ -140,6 +151,7 @@ trait ValidatingModelTrait {
     /**
      * Remove rules from the existing rules or ruleset.
      *
+     * @deprecated watson/validating@0.10.9
      * @param  mixed   $keys
      * @param  string  $ruleset
      * @return void
@@ -163,6 +175,7 @@ trait ValidatingModelTrait {
      * Helper method to merge rulesets, with later rules overwriting
      * earlier ones
      *
+     * @deprecated watson/validating@0.10.9
      * @param  array $keys
      * @return array
      */
@@ -180,8 +193,8 @@ trait ValidatingModelTrait {
     /**
      * Returns whether the model is valid or not.
      *
-     * @param  mixed $ruleset
-     * @param  bool  $mergeWithSaving
+     * @param  mixed $ruleset (@deprecated watson/validating@0.10.9)
+     * @param  bool  $mergeWithSaving (@deprecated watson/validating@0.10.9)
      * @return bool
      */
     public function isValid($ruleset = null, $mergeWithSaving = true)
@@ -193,7 +206,7 @@ trait ValidatingModelTrait {
     /**
      * Returns if the model is valid, otherwise throws an exception.
      *
-     * @param  string $ruleset
+     * @param  string $ruleset (@deprecated watson/validating@0.10.9)
      * @return bool
      * @throws \Watson\Validating\ValidationException
      */
@@ -209,8 +222,8 @@ trait ValidatingModelTrait {
     /**
      * Returns whether the model is invalid or not.
      *
-     * @param  mixed  $ruleset
-     * @param  bool   $mergeWithSaving
+     * @param  mixed  $ruleset (@deprecated watson/validating@0.10.9)
+     * @param  bool   $mergeWithSaving (@deprecated watson/validating@0.10.9)
      * @return bool
      */
     public function isInvalid($ruleset = null, $mergeWithSaving = true)
@@ -222,6 +235,7 @@ trait ValidatingModelTrait {
      * Update the unique rules of the given ruleset to
      * include the model identifier.
      *
+     * @deprecated watson/validating@0.10.9
      * @param  string $ruleset
      * @return void
      */
