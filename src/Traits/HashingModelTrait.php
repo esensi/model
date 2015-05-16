@@ -221,7 +221,7 @@ trait HashingModelTrait {
         $this->attributes[ $attribute ] = $value;
 
         // Do the hashing if it needs it
-        if ( $this->isDirty( $attribute ) || ! $this->isHashed( $attribute ) )
+        if ( ! empty($value) && ($this->isDirty( $attribute ) || ! $this->isHashed( $attribute )) )
         {
             $this->attributes[ $attribute ] = $this->hash( $value );
         }
