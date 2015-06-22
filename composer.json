@@ -16,13 +16,13 @@
     "require": {
         "php": ">=5.4.0",
         "nesbot/Carbon": "~1.9",
-        "illuminate/contracts": "~5.0.0",
-        "illuminate/database": "~5.0.0",
-        "illuminate/encryption": "~5.0.0",
-        "illuminate/events": "~5.0.0",
-        "illuminate/hashing": "~5.0.0",
-        "illuminate/support": "~5.0.0",
-        "illuminate/validation": "~5.0.0",
+        "illuminate/contracts": "~5.0.0||~5.1",
+        "illuminate/database": "~5.0.0||~5.1",
+        "illuminate/encryption": "~5.0.0||~5.1",
+        "illuminate/events": "~5.0.0||~5.1",
+        "illuminate/hashing": "~5.0.0||~5.1",
+        "illuminate/support": "~5.0.0||~5.1",
+        "illuminate/validation": "~5.0.0||~5.1",
         "watson/validating": "~1.0.0"
     },
     "require-dev": {
