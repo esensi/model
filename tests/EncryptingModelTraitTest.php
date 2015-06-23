@@ -62,7 +62,8 @@ class EncryptingModelTraitTest extends PHPUnit {
      */
     public function setEncrypterOnMock()
     {
-        $this->model->setEncrypter(new EncrypterStub('key'));
+        $encrypter = EncrypterStub::newInstance();
+        $this->model->setEncrypter($encrypter);
     }
 
     /**
@@ -282,7 +283,8 @@ class EncryptingModelTraitTest extends PHPUnit {
     public function testSettingEncrypter()
     {
         // Set the Encrypter
-        $this->model->setEncrypter(new EncrypterStub('key'));
+        $encrypter = EncrypterStub::newInstance();
+        $this->model->setEncrypter($encrypter);
 
         // Check that its an Encrypter stub
         $this->assertInstanceOf('EncrypterStub', $this->model->getEncrypter());
@@ -521,7 +523,7 @@ class ModelEncryptingStub extends Model {
         parent::__construct();
 
         // Assign a default encrypter for mocking purposes
-        $this->encrypter = new Encrypter('key');
+        $this->encrypter = EncrypterStub::newInstance();
     }
 
 }
@@ -531,4 +533,12 @@ class ModelEncryptingStub extends Model {
  */
 class EncrypterStub extends Encrypter {
 
+    /**
+     * Construct new instance of EncrypterStub
+     *
+     * @return Illuminate\Encryption\Encrypter
+     */
+    public static function newInstance(){
+        return new EncrypterStub('TESTL3drFL2P3Rnjw216bOZxkgZ0tKEY', 'AES-256-CBC');
+    }
 }
