@@ -1,23 +1,21 @@
 <?php
 
-use \Esensi\Model\Model;
-use \Illuminate\Contracts\Hashing\Hasher;
-use \Illuminate\Hashing\BcryptHasher;
-use \Mockery;
-use \PHPUnit_Framework_TestCase as PHPUnit;
-
+use Esensi\Model\Model;
+use Illuminate\Contracts\Hashing\Hasher;
+use Illuminate\Hashing\BcryptHasher;
+use PHPUnit_Framework_TestCase as PHPUnit;
 
 /**
  * Tests for the Hashing Model Trait
  *
  * @package Esensi\Model
- * @author Daniel LaBarge <dalabarge@emersonmedia.com>
+ * @author Daniel LaBarge <daniel@emersonmedia.com>
  * @copyright 2014 Emerson Media LP
  * @license https://github.com/esensi/model/blob/master/LICENSE.txt MIT License
  * @link http://www.emersonmedia.com
  */
-class HashingModelTraitTest extends PHPUnit {
-
+class HashingModelTraitTest extends PHPUnit
+{
     /**
      * Set Up and Prepare Tests.
      */
@@ -514,8 +512,8 @@ class HashingModelTraitTest extends PHPUnit {
 /**
  * Model Stub for Hashing Tests
  */
-class ModelHashingStub extends Model {
-
+class ModelHashingStub extends Model
+{
     /**
      * The attributes to hash before saving.
      *
@@ -542,6 +540,7 @@ class ModelHashingStub extends Model {
 /**
  * Hasher Stub for Hasher Tests
  */
-class HasherStub extends BcryptHasher implements Hasher {
+class HasherStub extends BcryptHasher implements Hasher
+{
 
 }

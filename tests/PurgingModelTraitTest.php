@@ -1,21 +1,19 @@
 <?php
 
-use \Esensi\Model\Model;
-use \Mockery;
-use \PHPUnit_Framework_TestCase as PHPUnit;
-
+use Esensi\Model\Model;
+use PHPUnit_Framework_TestCase as PHPUnit;
 
 /**
  * Tests for the Purging Model Trait
  *
  * @package Esensi\Model
- * @author Daniel LaBarge <dalabarge@emersonmedia.com>
+ * @author Daniel LaBarge <daniel@emersonmedia.com>
  * @copyright 2014 Emerson Media LP
  * @license https://github.com/esensi/model/blob/master/LICENSE.txt MIT License
  * @link http://www.emersonmedia.com
  */
-class PurgingModelTraitTest extends PHPUnit {
-
+class PurgingModelTraitTest extends PHPUnit
+{
     /**
      * Set Up and Prepare Tests.
      */
@@ -399,8 +397,8 @@ class PurgingModelTraitTest extends PHPUnit {
 /**
  * Model Stub for Purging Tests
  */
-class ModelPurgingStub extends Model {
-
+class ModelPurgingStub extends Model
+{
     /**
      * The attributes to purge before saving
      *

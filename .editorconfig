@@ -13,9 +13,18 @@ insert_final_newline = true
 spaces_around_operators = true
 
 # 4-spaced files
-[{**.js, **.json, **.php, **.xml, **.yml, **.md, !vendor/**}]
+[{!vendor/**, **.js, **.json, **.php, **.xml, **.yml, **.md}]
 indent_size = 4
 
 # 2-spaced files
-[{**.css, **.less, **.sass, **.html, **.xhtml, **.blade.php, !vendor/**}]
+[**.{css,less,sass,html,htm,xhtml,blade.php}]
 indent_size = 2
+
+[{node_modules,vendor,bower_components}/**]
+indent_style = ignore
+indent_size = ignore
+end_of_line = ignore
+charset = ignore
+trim_trailing_whitespace = ignore
+insert_final_newline = ignore
+spaces_around_operators = ignore

@@ -1,20 +1,19 @@
 <?php
 
-use \Esensi\Model\Observers\PurgingModelObserver;
-use \Mockery;
-use \PHPUnit_Framework_TestCase as PHPUnit;
+use Esensi\Model\Observers\PurgingModelObserver;
+use PHPUnit_Framework_TestCase as PHPUnit;
 
 /**
  * Tests for Purging Model Observer
  *
  * @package Esensi\Model
- * @author Daniel LaBarge <dalabarge@emersonmedia.com>
+ * @author Daniel LaBarge <daniel@emersonmedia.com>
  * @copyright 2014 Emerson Media LP
  * @license https://github.com/esensi/model/blob/master/LICENSE.txt MIT License
  * @link http://www.emersonmedia.com
  */
-class PurgingModelObserverTest extends PHPUnit {
-
+class PurgingModelObserverTest extends PHPUnit
+{
     /**
      * Set Up and Prepare Tests.
      */

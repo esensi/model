@@ -1,22 +1,24 @@
-<?php namespace Esensi\Model\Traits;
+<?php
 
-use \Carbon\Carbon;
-use \InvalidArgumentException;
+namespace Esensi\Model\Traits;
+
+use Carbon\Carbon;
+use InvalidArgumentException;
 
 /**
  * Trait that implements the Juggling Model Interface
  *
  * @package Esensi\Model
  * @author Diego Caprioli <diego@emersonmedia.com>
- * @author Daniel LaBarge <dalabarge@emersonmedia.com>
- * @copyright 2014 Emerson Media LP
+ * @author Daniel LaBarge <daniel@emersonmedia.com>
+ * @copyright 2015 Emerson Media LP
  * @license https://github.com/esensi/model/blob/master/LICENSE.txt MIT License
  * @link http://www.emersonmedia.com
  *
  * @see \Esensi\Model\Contracts\JugglingModelInterface
  */
-trait JugglingModelTrait {
-
+trait JugglingModelTrait
+{
     /**
      * Whether the model is type juggling attributes or not.
      *

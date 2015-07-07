@@ -1,27 +1,29 @@
-<?php namespace Esensi\Model;
+<?php
 
-use \Esensi\Model\Contracts\EncryptingModelInterface;
-use \Esensi\Model\Contracts\HashingModelInterface;
-use \Esensi\Model\Contracts\JugglingModelInterface;
-use \Esensi\Model\Contracts\PurgingModelInterface;
-use \Esensi\Model\Contracts\RelatingModelInterface;
-use \Esensi\Model\Contracts\ValidatingModelInterface;
-use \Esensi\Model\Traits\EncryptingModelTrait;
-use \Esensi\Model\Traits\HashingModelTrait;
-use \Esensi\Model\Traits\JugglingModelTrait;
-use \Esensi\Model\Traits\PurgingModelTrait;
-use \Esensi\Model\Traits\RelatingModelTrait;
-use \Esensi\Model\Traits\ValidatingModelTrait;
-use \Illuminate\Database\Eloquent\Model as Eloquent;
-use \Illuminate\Contracts\Support\MessageProvider;
+namespace Esensi\Model;
+
+use Esensi\Model\Contracts\EncryptingModelInterface;
+use Esensi\Model\Contracts\HashingModelInterface;
+use Esensi\Model\Contracts\JugglingModelInterface;
+use Esensi\Model\Contracts\PurgingModelInterface;
+use Esensi\Model\Contracts\RelatingModelInterface;
+use Esensi\Model\Contracts\ValidatingModelInterface;
+use Esensi\Model\Traits\EncryptingModelTrait;
+use Esensi\Model\Traits\HashingModelTrait;
+use Esensi\Model\Traits\JugglingModelTrait;
+use Esensi\Model\Traits\PurgingModelTrait;
+use Esensi\Model\Traits\RelatingModelTrait;
+use Esensi\Model\Traits\ValidatingModelTrait;
+use Illuminate\Database\Eloquent\Model as Eloquent;
+use Illuminate\Contracts\Support\MessageProvider;
 
 /**
  * Base Model
  *
  * @package Esensi\Model
  * @author Diego Caprioli <diego@emersonmedia.com>
- * @author Daniel LaBarge <dalabarge@emersonmedia.com>
- * @copyright 2014 Emerson Media LP
+ * @author Daniel LaBarge <daniel@emersonmedia.com>
+ * @copyright 2015 Emerson Media LP
  * @license https://github.com/esensi/model/blob/master/LICENSE.txt MIT License
  * @link http://www.emersonmedia.com
  *
@@ -41,8 +43,8 @@ abstract class Model extends Eloquent implements
     MessageProvider,
     PurgingModelInterface,
     RelatingModelInterface,
-    ValidatingModelInterface {
-
+    ValidatingModelInterface
+{
     /**
      * Make model validate attributes.
      *

@@ -1,18 +1,20 @@
-<?php namespace Esensi\Model\Contracts;
+<?php
 
-use \Illuminate\Encryption\Encrypter;
+namespace Esensi\Model\Contracts;
+
+use Illuminate\Encryption\Encrypter;
 
 /**
  * Encrypting Model Interface
  *
  * @package Esensi\Model
- * @author Daniel LaBarge <dalabarge@emersonmedia.com>
- * @copyright 2014 Emerson Media LP
+ * @author Daniel LaBarge <daniel@emersonmedia.com>
+ * @copyright 2015 Emerson Media LP
  * @license https://github.com/esensi/model/blob/master/LICENSE.txt MIT License
  * @link http://www.emersonmedia.com
  */
-interface EncryptingModelInterface {
-
+interface EncryptingModelInterface
+{
     /**
      * Get the encryptable attributes.
      *

@@ -1,20 +1,19 @@
 <?php
 
-use \Esensi\Model\SoftModel;
-use \Mockery;
-use \PHPUnit_Framework_TestCase as PHPUnit;
+use Esensi\Model\SoftModel;
+use PHPUnit_Framework_TestCase as PHPUnit;
 
 /**
  * Tests for the Soft Model
  *
  * @package Esensi\Model
- * @author Daniel LaBarge <dalabarge@emersonmedia.com>
+ * @author Daniel LaBarge <daniel@emersonmedia.com>
  * @copyright 2014 Emerson Media LP
  * @license https://github.com/esensi/model/blob/master/LICENSE.txt MIT License
  * @link http://www.emersonmedia.com
  */
-class SoftModelTest extends PHPUnit {
-
+class SoftModelTest extends PHPUnit
+{
     /**
      * Set Up and Prepare Tests.
      */
@@ -92,8 +91,8 @@ class SoftModelTest extends PHPUnit {
 /**
  * Soft Model Stub for Model Tests
  */
-class SoftModelStub extends SoftModel {
-
+class SoftModelStub extends SoftModel
+{
     /**
      * The attributes that should be mutated to dates.
      *

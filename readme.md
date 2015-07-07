@@ -87,6 +87,8 @@ class Post extends SoftModel {
     - Using Force Delete
 - **[Relating Model Trait](#relating-model-trait)**
     - [Using Simplified Relationships](#using-simplified-relationships)
+- **Sluggable Model Trait**
+    - Using Slugs on Models
 - **[Unit Testing](#unit-testing)**
     - [Running the Unit Tests](#running-the-unit-tests)
 - **[Contributing](#contributing)**
@@ -808,6 +810,6 @@ phpunit ./tests
 
 ## Licensing
 
-Copyright (c) 2014 [Emerson Media, LP](http://www.emersonmedia.com)
+Copyright (c) 2015 [Emerson Media, LP](http://www.emersonmedia.com)
 
 This package is released under the MIT license. Please see the [LICENSE.txt](https://github.com/esensi/model/blob/master/LICENSE.txt) file distributed with every copy of the code for commercial licensing terms.

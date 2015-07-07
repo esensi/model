@@ -1,20 +1,19 @@
 <?php
 
-use \Esensi\Model\Observers\HashingModelObserver;
-use \Mockery;
-use \PHPUnit_Framework_TestCase as PHPUnit;
+use Esensi\Model\Observers\HashingModelObserver;
+use PHPUnit_Framework_TestCase as PHPUnit;
 
 /**
  * Tests for Hashing Model Observer
  *
  * @package Esensi\Model
- * @author Daniel LaBarge <dalabarge@emersonmedia.com>
+ * @author Daniel LaBarge <daniel@emersonmedia.com>
  * @copyright 2014 Emerson Media LP
  * @license https://github.com/esensi/model/blob/master/LICENSE.txt MIT License
  * @link http://www.emersonmedia.com
  */
-class HashingModelObserverTest extends PHPUnit {
-
+class HashingModelObserverTest extends PHPUnit
+{
     /**
      * Set Up and Prepare Tests.
      */

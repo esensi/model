@@ -1,7 +1,7 @@
 {
     "name": "esensi/model",
     "description": "The base model traits of Esensi",
-    "keywords": ["emersonmedia", "esensi", "laravel", "model", "trait", "eloquent", "validating", "validation", "encrypting", "hashing", "purge", "purging", "soft deleting", "trashing", "cast", "type", "juggling"],
+    "keywords": ["emersonmedia", "esensi", "laravel", "model", "trait", "eloquent", "validating", "validation", "encrypting", "hashing", "purge", "purging", "soft deleting", "trashing", "cast", "casting", "type", "juggling", "slugs", "sluggable"],
     "authors": [
         {
             "name": "Emerson Media, LP.",
@@ -9,7 +9,7 @@
         },
         {
             "name": "Daniel LaBarge",
-            "email": "daniel@bexarcreative.com"
+            "email": "daniel@emersonmedia.com"
         }
     ],
     "license": "MIT",

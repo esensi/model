@@ -1,21 +1,23 @@
-<?php namespace Esensi\Model\Traits;
+<?php
 
-use \Esensi\Model\Observers\PurgingModelObserver;
-use \Illuminate\Support\Str;
+namespace Esensi\Model\Traits;
+
+use Esensi\Model\Observers\PurgingModelObserver;
+use Illuminate\Support\Str;
 
 /**
  * Trait that implements the Purging Model Interface
  *
  * @package Esensi\Model
- * @author Daniel LaBarge <dalabarge@emersonmedia.com>
- * @copyright 2014 Emerson Media LP
+ * @author Daniel LaBarge <daniel@emersonmedia.com>
+ * @copyright 2015 Emerson Media LP
  * @license https://github.com/esensi/model/blob/master/LICENSE.txt MIT License
  * @link http://www.emersonmedia.com
  *
  * @see \Esensi\Model\Contracts\PurgingModelInterface
  */
-trait PurgingModelTrait {
-
+trait PurgingModelTrait
+{
     /**
      * Whether the model is purging or not.
      *

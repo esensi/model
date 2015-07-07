@@ -1,13 +1,15 @@
-<?php namespace Esensi\Model\Contracts;
+<?php
 
-use \Watson\Validating\ValidatingInterface;
+namespace Esensi\Model\Contracts;
+
+use Watson\Validating\ValidatingInterface;
 
 /**
  * Validating Model Interface
  *
  * @package Esensi\Model
- * @author Daniel LaBarge <dalabarge@emersonmedia.com>
- * @copyright 2014 Emerson Media LP
+ * @author Daniel LaBarge <daniel@emersonmedia.com>
+ * @copyright 2015 Emerson Media LP
  * @license https://github.com/esensi/model/blob/master/LICENSE.txt MIT License
  * @link http://www.emersonmedia.com
  *
@@ -18,8 +20,8 @@ use \Watson\Validating\ValidatingInterface;
  *
  * @see \Watson\Validating\ValidatingInterface
  */
-interface ValidatingModelInterface extends ValidatingInterface {
-
+interface ValidatingModelInterface extends ValidatingInterface
+{
     /**
      * Get the default ruleset for any event. Will first search to see if a
      * 'saving' ruleset exists, fallback to '$rules' and otherwise return

@@ -1,20 +1,22 @@
-<?php namespace Esensi\Model\Observers;
+<?php
 
-use \Esensi\Model\Contracts\PurgingModelInterface;
+namespace Esensi\Model\Observers;
+
+use Esensi\Model\Contracts\PurgingModelInterface;
 
 /**
  * Model observer for Purging Model Trait
  *
  * @package Esensi\Model
- * @author Daniel LaBarge <dalabarge@emersonmedia.com>
- * @copyright 2014 Emerson Media LP
+ * @author Daniel LaBarge <daniel@emersonmedia.com>
+ * @copyright 2015 Emerson Media LP
  * @license https://github.com/esensi/model/blob/master/LICENSE.txt MIT License
  * @link http://www.emersonmedia.com
  *
  * @see \Esensi\Model\Traits\PurgingModelTrait
  */
-class PurgingModelObserver {
-
+class PurgingModelObserver
+{
     /**
      * Register an event listener for the creating event.
      * Listener purgees the purgeable attributes before save.

@@ -1,22 +1,24 @@
-<?php namespace Esensi\Model\Traits;
+<?php
 
-use \Illuminate\Database\Eloquent\ModelNotFoundException;
-use \Illuminate\Database\Eloquent\Relations\BelongsTo;
-use \Illuminate\Database\Eloquent\Relations\MorphTo;
+namespace Esensi\Model\Traits;
+
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 /**
  * Trait that implements the Relating Model Interface
  *
  * @package Esensi\Model
- * @author Daniel LaBarge <dalabarge@emersonmedia.com>
- * @copyright 2014 Emerson Media LP
+ * @author Daniel LaBarge <daniel@emersonmedia.com>
+ * @copyright 2015 Emerson Media LP
  * @license https://github.com/esensi/model/blob/master/LICENSE.txt MIT License
  * @link http://www.emersonmedia.com
  *
  * @see \Esensi\Model\Contracts\RelatingModelInterface
  */
-trait RelatingModelTrait {
-
+trait RelatingModelTrait
+{
     /**
      * Dynamically call methods.
      *

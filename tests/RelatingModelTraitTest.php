@@ -1,27 +1,26 @@
 <?php
 
-use \Esensi\Model\Model;
-use \Mockery;
-use \PHPUnit_Framework_TestCase as PHPUnit;
-use \Illuminate\Database\Eloquent\ModelNotFoundException;
-use \Illuminate\Database\Eloquent\Relations\BelongsTo;
-use \Illuminate\Database\Eloquent\Relations\MorphTo;
-use \Illuminate\Database\Connection;
-use \Illuminate\Database\ConnectionResolverInterface;
-use \Illuminate\Database\Query\Grammars\Grammar;
-use \Illuminate\Database\Query\Processors\Processor;
+use Esensi\Model\Model;
+use PHPUnit_Framework_TestCase as PHPUnit;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Database\Connection;
+use Illuminate\Database\ConnectionResolverInterface;
+use Illuminate\Database\Query\Grammars\Grammar;
+use Illuminate\Database\Query\Processors\Processor;
 
 /**
  * Tests for the Relating Model Trait
  *
  * @package Esensi\Model
- * @author Daniel LaBarge <dalabarge@emersonmedia.com>
+ * @author Daniel LaBarge <daniel@emersonmedia.com>
  * @copyright 2014 Emerson Media LP
  * @license https://github.com/esensi/model/blob/master/LICENSE.txt MIT License
  * @link http://www.emersonmedia.com
  */
-class RelatingModelTraitTest extends PHPUnit {
-
+class RelatingModelTraitTest extends PHPUnit
+{
     /**
      * Set Up and Prepare Tests.
      */
@@ -138,8 +137,8 @@ class RelatingModelTraitTest extends PHPUnit {
 /**
  * Model Stub for Relationships Tests
  */
-class ModelRelatingStub extends Model {
-
+class ModelRelatingStub extends Model
+{
     /**
      * Indicates if the model exists.
      *
@@ -184,20 +183,23 @@ class ModelRelatingStub extends Model {
 /**
  * Foo Model Stub for Relationship Tests
  */
-class FooModelStub extends Model {
+class FooModelStub extends Model
+{
 
 }
 
 /**
  * Bar Model Stub for Relationship Tests
  */
-class BarModelStub extends Model {
+class BarModelStub extends Model
+{
 
 }
 
 /**
  * Many Model Stub for Relationship Tests
  */
-class ManyModelStub extends Model {
+class ManyModelStub extends Model
+{
 
 }

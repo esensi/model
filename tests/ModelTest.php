@@ -1,20 +1,19 @@
 <?php
 
-use \Esensi\Model\Model;
-use \Mockery;
-use \PHPUnit_Framework_TestCase as PHPUnit;
+use Esensi\Model\Model;
+use PHPUnit_Framework_TestCase as PHPUnit;
 
 /**
  * Tests for the Model
  *
  * @package Esensi\Model
- * @author Daniel LaBarge <dalabarge@emersonmedia.com>
+ * @author Daniel LaBarge <daniel@emersonmedia.com>
  * @copyright 2014 Emerson Media LP
  * @license https://github.com/esensi/model/blob/master/LICENSE.txt MIT License
  * @link http://www.emersonmedia.com
  */
-class ModelTest extends PHPUnit {
-
+class ModelTest extends PHPUnit
+{
     /**
      * Set Up and Prepare Tests.
      */
@@ -98,6 +97,7 @@ class ModelTest extends PHPUnit {
 /**
  * Model Stub for Model Tests
  */
-class ModelStub extends Model {
+class ModelStub extends Model
+{
 
 }

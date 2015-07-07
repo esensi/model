@@ -1,22 +1,20 @@
 <?php
 
-use \Esensi\Model\Model;
-use \Illuminate\Encryption\Encrypter;
-use \Mockery;
-use \PHPUnit_Framework_TestCase as PHPUnit;
-
+use Esensi\Model\Model;
+use Illuminate\Encryption\Encrypter;
+use PHPUnit_Framework_TestCase as PHPUnit;
 
 /**
  * Tests for the Encrypting Model Trait
  *
  * @package Esensi\Model
- * @author Daniel LaBarge <dalabarge@emersonmedia.com>
+ * @author Daniel LaBarge <daniel@emersonmedia.com>
  * @copyright 2014 Emerson Media LP
  * @license https://github.com/esensi/model/blob/master/LICENSE.txt MIT License
  * @link http://www.emersonmedia.com
  */
-class EncryptingModelTraitTest extends PHPUnit {
-
+class EncryptingModelTraitTest extends PHPUnit
+{
     /**
      * Set Up and Prepare Tests.
      */
@@ -503,8 +501,8 @@ class EncryptingModelTraitTest extends PHPUnit {
 /**
  * Model Stub for Encrypting Tests
  */
-class ModelEncryptingStub extends Model {
-
+class ModelEncryptingStub extends Model
+{
     /**
      * The attributes to encrypt when set and
      * decrypt when gotten.
@@ -531,8 +529,8 @@ class ModelEncryptingStub extends Model {
 /**
  * Encrypter Stub for Encrypter Tests
  */
-class EncrypterStub extends Encrypter {
-
+class EncrypterStub extends Encrypter
+{
     /**
      * Construct new instance of EncrypterStub
      *

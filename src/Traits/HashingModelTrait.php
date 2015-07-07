@@ -1,22 +1,24 @@
-<?php namespace Esensi\Model\Traits;
+<?php
 
-use \Esensi\Model\Observers\HashingModelObserver;
-use \Illuminate\Contracts\Hashing\Hasher;
-use \Illuminate\Support\Facades\Hash;
+namespace Esensi\Model\Traits;
+
+use Esensi\Model\Observers\HashingModelObserver;
+use Illuminate\Contracts\Hashing\Hasher;
+use Illuminate\Support\Facades\Hash;
 
 /**
  * Trait that implements the Hashing Model Interface
  *
  * @package Esensi\Model
- * @author Daniel LaBarge <dalabarge@emersonmedia.com>
- * @copyright 2014 Emerson Media LP
+ * @author Daniel LaBarge <daniel@emersonmedia.com>
+ * @copyright 2015 Emerson Media LP
  * @license https://github.com/esensi/model/blob/master/LICENSE.txt MIT License
  * @link http://www.emersonmedia.com
  *
  * @see \Esensi\Model\Contracts\HashingModelInterface
  */
-trait HashingModelTrait {
-
+trait HashingModelTrait
+{
     /**
      * Whether the model is hashing or not.
      *

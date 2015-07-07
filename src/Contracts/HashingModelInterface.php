@@ -1,18 +1,20 @@
-<?php namespace Esensi\Model\Contracts;
+<?php
 
-use \Illuminate\Contracts\Hashing\Hasher;
+namespace Esensi\Model\Contracts;
+
+use Illuminate\Contracts\Hashing\Hasher;
 
 /**
  * Hashing Model Interface
  *
  * @package Esensi\Model
- * @author Daniel LaBarge <dalabarge@emersonmedia.com>
- * @copyright 2014 Emerson Media LP
+ * @author Daniel LaBarge <daniel@emersonmedia.com>
+ * @copyright 2015 Emerson Media LP
  * @license https://github.com/esensi/model/blob/master/LICENSE.txt MIT License
  * @link http://www.emersonmedia.com
  */
-interface HashingModelInterface {
-
+interface HashingModelInterface
+{
     /**
      * Get the hashable attributes.
      *

@@ -1,22 +1,24 @@
-<?php namespace Esensi\Model\Traits;
+<?php
 
-use \Illuminate\Support\Facades\Crypt;
-use \Illuminate\Encryption\Encrypter;
-use \Illuminate\Contracts\Encryption\DecryptException;
+namespace Esensi\Model\Traits;
+
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Encryption\Encrypter;
+use Illuminate\Contracts\Encryption\DecryptException;
 
 /**
  * Trait that implements the Encrypting Model Interface
  *
  * @package Esensi\Model
- * @author Daniel LaBarge <dalabarge@emersonmedia.com>
- * @copyright 2014 Emerson Media LP
+ * @author Daniel LaBarge <daniel@emersonmedia.com>
+ * @copyright 2015 Emerson Media LP
  * @license https://github.com/esensi/model/blob/master/LICENSE.txt MIT License
  * @link http://www.emersonmedia.com
  *
  * @see \Esensi\Model\Contracts\EncryptionModelInterface
  */
-trait EncryptingModelTrait {
-
+trait EncryptingModelTrait
+{
     /**
      * Whether the model is encrypting or not.
      *

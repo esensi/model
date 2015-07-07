@@ -1,14 +1,16 @@
-<?php namespace Esensi\Model\Traits;
+<?php
 
-use \Esensi\Model\Observers\ValidatingModelObserver;
-use \Watson\Validating\ValidatingTrait;
+namespace Esensi\Model\Traits;
+
+use Esensi\Model\Observers\ValidatingModelObserver;
+use Watson\Validating\ValidatingTrait;
 
 /**
  * Trait that implements the Validating Model Interface
  *
  * @package Esensi\Model
- * @author Daniel LaBarge <dalabarge@emersonmedia.com>
- * @copyright 2014 Emerson Media LP
+ * @author Daniel LaBarge <daniel@emersonmedia.com>
+ * @copyright 2015 Emerson Media LP
  * @license https://github.com/esensi/model/blob/master/LICENSE.txt MIT License
  * @link http://www.emersonmedia.com
  *
@@ -19,8 +21,8 @@ use \Watson\Validating\ValidatingTrait;
  *
  * @see \Esensi\Model\Contracts\ValidatingModelInterface
  */
-trait ValidatingModelTrait {
-
+trait ValidatingModelTrait
+{
     /**
      * Use Watson's trait as a base.
      *

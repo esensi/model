@@ -1,14 +1,16 @@
-<?php namespace Esensi\Model\Observers;
+<?php
 
-use \Illuminate\Database\Eloquent\Model;
-use \Watson\Validating\ValidatingObserver;
+namespace Esensi\Model\Observers;
+
+use Illuminate\Database\Eloquent\Model;
+use Watson\Validating\ValidatingObserver;
 
 /**
  * Model observer for Validating Model Trait
  *
  * @package Esensi\Model
- * @author Daniel LaBarge <dalabarge@emersonmedia.com>
- * @copyright 2014 Emerson Media LP
+ * @author Daniel LaBarge <daniel@emersonmedia.com>
+ * @copyright 2015 Emerson Media LP
  * @license https://github.com/esensi/model/blob/master/LICENSE.txt MIT License
  * @link http://www.emersonmedia.com
  *
@@ -20,8 +22,8 @@ use \Watson\Validating\ValidatingObserver;
  * @see \Esensi\Model\Traits\ValidatingModelTrait
  * @see \Watson\Validating\ValidatingObserver
  */
-class ValidatingModelObserver extends ValidatingObserver {
-
+class ValidatingModelObserver extends ValidatingObserver
+{
     /**
      * Register the validation event for creating the model.
      *

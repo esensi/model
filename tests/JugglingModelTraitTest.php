@@ -1,14 +1,12 @@
 <?php
 
-use \Carbon\Carbon;
-use \Esensi\Model\Model;
-use \Illuminate\Database\Connection;
-use \Illuminate\Database\ConnectionResolverInterface;
-use \Illuminate\Database\Query\Grammars\Grammar;
-use \Illuminate\Database\Query\Processors\Processor;
-use \InvalidArgumentException;
-use \Mockery;
-use \PHPUnit_Framework_TestCase as PHPUnit;
+use Carbon\Carbon;
+use Esensi\Model\Model;
+use Illuminate\Database\Connection;
+use Illuminate\Database\ConnectionResolverInterface;
+use Illuminate\Database\Query\Grammars\Grammar;
+use Illuminate\Database\Query\Processors\Processor;
+use PHPUnit_Framework_TestCase as PHPUnit;
 
 /**
  * Tests for the Purging Model Trait
@@ -20,8 +18,8 @@ use \PHPUnit_Framework_TestCase as PHPUnit;
  * @license https://github.com/esensi/model/blob/master/LICENSE.txt MIT License
  * @link http://www.emersonmedia.com
  */
-class JugglingModelTraitTest extends PHPUnit {
-
+class JugglingModelTraitTest extends PHPUnit
+{
     /**
      * Set Up and Prepare Tests.
      */
@@ -574,8 +572,8 @@ class JugglingModelTraitTest extends PHPUnit {
 /**
  * Model Stub for Juggling Tests
  */
-class ModelJugglingStub extends Model {
-
+class ModelJugglingStub extends Model
+{
     /**
      * Indicates if the model exists.
      *
