@@ -306,14 +306,13 @@ trait RelatingModelTrait
      */
     public function scopeWithout( $query, $relations )
     {
-        $relationships = $query->getEagerLoads();
         $relations = is_array($relations) ? $relations : array_slice(func_get_args(), 1);
+        $relationships = array_dot($query->getEagerLoads());
         foreach($relations as $relation)
         {
-            unset($relationships[ $relation ]);
+            unset($relationships[$relation]);
         }
-        $query->setEagerLoads($relationships);
-        return $query;
+        return $query->setEagerLoads([])->with(array_keys($relationships));
     }
 
 }

@@ -132,6 +132,38 @@ class RelatingModelTraitTest extends PHPUnit
         $this->assertInstanceOf('\Illuminate\Database\Eloquent\Relations\MorphTo', $model->bar());
     }
 
+    /**
+     * Test that scopeWithout removes array dot keys.
+     */
+    public function testScopeWithoutRemovesArrayDotKeys()
+    {
+        $model = new ModelRelatingStub();
+
+        // Make sure deep unsetting of relationships does not affect deep set relationship's high level
+        $relationships = $model->with('foo.bar')->without('foo.bar')->getEagerLoads();
+        $keys = array_keys(array_dot($relationships));
+        $this->assertContains('foo', $keys);
+        $this->assertNotContains('foo.bar', $keys);
+
+        // Make sure high level setting can be unset with explicit low level setting
+        $relationships = $model->with('foo.bar')->without('foo', 'foo.bar')->getEagerLoads();
+        $keys = array_keys(array_dot($relationships));
+        $this->assertNotContains('foo', $keys);
+        $this->assertNotContains('foo.bar', $keys);
+
+        // Make sure high level unsetting maintains deep relationships
+        $relationships = $model->with('foo.bar')->without('foo')->getEagerLoads();
+        $keys = array_keys(array_dot($relationships));
+        $this->assertContains('foo', $keys);
+        $this->assertContains('foo.bar', $keys);
+
+        // Make sure high level relationships are not unset by low level
+        $relationships = $model->with('foo')->without('foo.bar')->getEagerLoads();
+        $keys = array_keys(array_dot($relationships));
+        $this->assertContains('foo', $keys);
+        $this->assertNotContains('foo.bar', $keys);
+    }
+
 }
 
 /**
@@ -186,6 +218,18 @@ class ModelRelatingStub extends Model
 class FooModelStub extends Model
 {
 
+    /**
+     * Relationships that the model should set up.
+     *
+     * @var array
+     */
+    protected $relationships = [
+
+        'bar' => [
+            'belongsTo',
+            'BarModelStub',
+        ],
+    ];
 }
 
 /**
