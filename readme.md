@@ -130,11 +130,11 @@ Like all the traits, it is self-contained and can be used individually. Special 
 
 ### Self-Taught Coders Tutorial
 
-This Esensi package has been featured in various places from university classrooms to coding schools to online programming courses. Among one of those online programming courses is [Alex Coleman](https://twitter.com/alexpcoleman)'s [Self-Taught Coders](https://selftaughtcoders.com) series [_From Idea To Launch_](https://selftaughtcoders.com/from-idea-to-launch). Throughout the course, Alex teaches how to design and build a complete Laravel web application. Lesson 24 in the series covers automatic model validation using `Esensi\Model` as a basis for the workflow. According to the lesson:
+This Esensi package has been featured in various places from university classrooms to coding schools to online programming courses. Among one of those online programming courses is [Alex Coleman](https://twitter.com/alexpcoleman)'s [Self-Taught Coders](https://selftaughtcoders.com) series [_From Idea To Launch_](https://selftaughtcoders.com/from-idea-to-launch). Throughout the course, Alex teaches how to design and build a complete Laravel web application. Lesson 24 in the series covers automatic model validation using `Esensi\Model` as a basis for the workflow. According to Alex:
 
-> *Model validation* is the method of establishing rules to ensure when you’re creating, or updating, an object based on a model, that all of its field values are set appropriately. That all required fields are filled, that all date fields are formatted properly, etc.
+> **Model validation** is the method of establishing rules to ensure when you’re creating, or updating, an object based on a model, that all of its field values are set appropriately. That all required fields are filled, that all date fields are formatted properly, etc.
 
-- [Read the _Laravel 5 Model Validation With the Esensi Model Traits Package_](https://selftaughtcoders.com/from-idea-to-launch/lesson-24/laravel-5-model-validation-esensi-model-traits-package/)
+- [Read _Laravel 5 Model Validation With the Esensi Model Traits Package_](https://selftaughtcoders.com/from-idea-to-launch/lesson-24/laravel-5-model-validation-esensi-model-traits-package/)
 - [Signup for _From Ideas to Launch_](https://selftaughtcoders.com/from-idea-to-launch/)
 
 ### Auto-Validating On Save
@@ -539,7 +539,7 @@ This package includes the [`JugglingModelTrait`](https://github.com/esensi/model
     - `float` (`double`) => `juggleFloat()`
     - `array` => `juggleArray()`
     - `date` => `juggleDate()` (returns Carbon date)
-    - `dateTime` (`datetime` or `date_time`) => `juggleDateTime()` (returns 0000-00-00 00:00:00 format)
+    - `datetime` (`date_time`) => `juggleDateTime()` (returns as 0000-00-00 00:00:00)
     - `timestamp` => `juggleTimestamp()` (returns Unix timestamp)
 - create custom types to cast to with magic methods like:
     - Example: `fooBar` => `juggleFooBar()`
