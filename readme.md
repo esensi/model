@@ -26,7 +26,7 @@ The simplest way to demonstrate the traits is to extend the base [`Esensi\Model\
 ```php
 <?php
 
-use \Esensi\Model\Model;
+use Esensi\Model\Model;
 
 class Post extends Model {
 
@@ -40,7 +40,7 @@ class Post extends Model {
 }
 ```
 
-> **Pro Tip:** Take a look at the generously commented [`Esensi\Model\Model`](https://github.com/esensi/model/blob/master/src/Model.php) source code for details on how to use individual traits with and without extending the default model.
+> **Pro Tip:** The more lean way to use `Esensi\Model` traits is to consume traits on the individual models instead of creating an inheritance dependency. Take a look at the generously commented [`Esensi\Model\Model`](https://github.com/esensi/model/blob/master/src/Model.php) source code for details on how to use individual traits with and without extending the default model.
 
 ### Use Soft Deletes Instead
 
@@ -49,14 +49,14 @@ If the application requires that the articles be sent to the trash before perman
 ```php
 <?php
 
-use \Esensi\Model\SoftModel;
+use Esensi\Model\SoftModel;
 
 class Post extends SoftModel {
 
 }
 ```
 
-> **Pro Tip:** While Laravel includes `SoftDeletingTrait`, Esensi expands upon this by also forcing the trait to comply with a [`SoftDeletingModelInterface`](https://github.com/esensi/model/blob/0.5/src/Contracts/SoftDeletingModelInterface.php) contract. This ensures a higher level of compatibility and code integrity.
+> **Pro Tip:** While Laravel includes `SoftDeletingTrait`, Esensi expands upon this by also forcing the trait to comply with a [`SoftDeletingModelInterface`](https://github.com/esensi/model/blob/0.5/src/Contracts/SoftDeletingModelInterface.php) contract. This ensures a higher level of compatibility and code integrity. You can then do checks like `$model instanceof SoftDeletingModelInterface` to conditionally handle actions.
 
 ## Table of Contents
 
@@ -64,6 +64,7 @@ class Post extends SoftModel {
 
 - **[Installation](#installation)**
 - **[Validating Model Trait](#validating-model-trait)**
+    - [Self-Taught Coders Tutorial](#self-taught-coders-tutorial)
     - [Auto-Validating on Save](#auto-validating-on-save)
     - Manually Validating Model Attributes
     - Handling Validation Errors
@@ -87,8 +88,8 @@ class Post extends SoftModel {
     - Using Force Delete
 - **[Relating Model Trait](#relating-model-trait)**
     - [Using Simplified Relationships](#using-simplified-relationships)
-- **Sluggable Model Trait**
-    - Using Slugs on Models
+- **[Sluggable Model Trait](https://github.com/esensi/model/blob/master/src/Traits/SluggableModelTrait.php)**
+    - [Using Slugs on Models](https://github.com/esensi/model/issues/24)
 - **[Unit Testing](#unit-testing)**
     - [Running the Unit Tests](#running-the-unit-tests)
 - **[Contributing](#contributing)**
@@ -118,14 +119,23 @@ If manually adding the package, then be sure to run `composer update` to update 
 
 This package includes the [`ValidatingModelTrait`](https://github.com/esensi/model/blob/master/src/Traits/ValidatingModelTrait.php) which implements the [`ValidatingModelInterface`](https://github.com/esensi/model/blob/master/src/Contracts/ValidatingModelInterface.php) on any `Eloquent` model that uses it. The `ValidatingModelTrait` adds methods to `Eloquent` models for:
 
-- Automatic validation of models on `create()`, `update()`, `save()`, `delete()`, and `restore()` method calls
-- Integration with Laravel's `Validation` facade to validate model attributes according to sets of rules
+- Automatic validation on `create()`, `update()`, `save()`, `delete()`, and `restore()` methods
+- Integration with Laravel's `Validation` services to validate model attributes
 - Integration with Laravel's `MessageBag` so that models can return errors when validation fails
 - Option to throw `ValidationException` when validation fails
-- Ability to `forceSave()` and bypass validation rules that would other wise prevent a model from saving
+- Ability to `forceSave()` and bypass validation rules entirely
 - Automatic injection (or not) of the model's identifier for `unique` validation rules
 
 Like all the traits, it is self-contained and can be used individually. Special credit goes to the very talented [Dwight Watson](https://github.com/dwightwatson) and his [Watson/Validating Laravel package](https://github.com/dwightwatson/validating) which is the basis for this trait. Emerson Media collaborated with him as he created the package. Esensi wraps his traits with consistent naming conventions for the other Esensi model traits. Please review his package in detail to see the inner workings.
+
+### Self-Taught Coders Tutorial
+
+This Esensi package has been featured in various places from university classrooms to coding schools to online programming courses. Among one of those online programming courses is [Alex Coleman](https://twitter.com/alexpcoleman)'s [Self-Taught Coders](https://selftaughtcoders.com) series [_From Idea To Launch_](https://selftaughtcoders.com/from-idea-to-launch). Throughout the course, Alex teaches how to design and build a complete Laravel web application. Lesson 24 in the series covers automatic model validation using `Esensi\Model` as a basis for the workflow. According to the lesson:
+
+> *Model validation* is the method of establishing rules to ensure when you’re creating, or updating, an object based on a model, that all of its field values are set appropriately. That all required fields are filled, that all date fields are formatted properly, etc.
+
+- [Read the _Laravel 5 Model Validation With the Esensi Model Traits Package_](https://selftaughtcoders.com/from-idea-to-launch/lesson-24/laravel-5-model-validation-esensi-model-traits-package/)
+- [Signup for _From Ideas to Launch_](https://selftaughtcoders.com/from-idea-to-launch/)
 
 ### Auto-Validating On Save
 
@@ -134,9 +144,9 @@ While developers can of course use the [`Model`](https://github.com/esensi/model
 ```php
 <?php
 
-use \Esensi\Model\Contracts\ValidatingModelInterface;
-use \Esensi\Model\Traits\ValidatingModelTrait;
-use \Illuminate\Database\Eloquent\Model as Eloquent;
+use Esensi\Model\Contracts\ValidatingModelInterface;
+use Esensi\Model\Traits\ValidatingModelTrait;
+use Illuminate\Database\Eloquent\Model as Eloquent;
 
 class Post extends Eloquent implements ValidatingModelInterface {
 
@@ -152,8 +162,8 @@ class Post extends Eloquent implements ValidatingModelInterface {
      * @var array
      */
     protected $rules = [
-       'title' => [ 'max:64' ],
-       'slug' => [ 'max:16', 'alpha_dash', 'unique' ],
+       'title'     => [ 'max:64' ],
+       'slug'      => [ 'max:16', 'alpha_dash', 'unique' ],
        'published' => [ 'boolean' ],
        // ... more attribute rules
     ];
@@ -178,15 +188,15 @@ class Post extends Eloquent implements ValidatingModelInterface {
     protected $rulesets = [
 
         'creating' => [
-            'title' => [ 'required', 'max:64' ],
-            'slug' => [ 'required', 'alpha_dash', 'max:16', 'unique' ],
+            'title'     => [ 'required', 'max:64' ],
+            'slug'      => [ 'required', 'alpha_dash', 'max:16', 'unique' ],
             'published' => [ 'boolean' ],
             // ... more attribute rules to validate against when creating
         ],
 
         'updating' => [
-            'title' => [ 'required', 'max:64' ],
-            'slug' => [ 'required', 'alpha_dash', 'max:16', 'unique' ],
+            'title'     => [ 'required', 'max:64' ],
+            'slug'      => [ 'required', 'alpha_dash', 'max:16', 'unique' ],
             'published' => [ 'boolean' ],
             // ... more attribute rules to validate against when updating
         ],
@@ -224,6 +234,8 @@ Route::post( 'posts', function()
 
 Calling the `save()` method on the newly created `Post` model would instead use the "updating" ruleset from `Post::$ruleset` while saving. If that ruleset did not exist then it would default to using the `Post::$rules`.
 
+**Pro Tip:** While using this pattern is perfectly fine, try not to actually validate your form requests using such rulesets. Instead use Laravel 5.1's `FormRequest` injection to validate your forms. The `ValidatingModelTrait` is for validating your model's data integrity, not your entry form validation.
+
 ## Purging Model Trait
 
 This package includes the [`PurgingModelTrait`](https://github.com/esensi/model/blob/master/src/Traits/PurgingModelTrait.php) which implements the [`PurgingModelInterface`](https://github.com/esensi/model/blob/master/src/Contracts/PurgingModelInterface.php) on any `Eloquent` model that uses it. The `PurgingModelTrait` adds methods to `Eloquent` models for automatically purging attributes from the model just before write operations to the database. The trait automatically purges:
@@ -243,9 +255,9 @@ While developers can of course use the [`Model`](https://github.com/esensi/model
 ```php
 <?php
 
-use \Esensi\Model\Contracts\PurgingModelInterface;
-use \Esensi\Model\Traits\PurgingModelTrait;
-use \Illuminate\Database\Eloquent\Model as Eloquent;
+use Esensi\Model\Contracts\PurgingModelInterface;
+use Esensi\Model\Traits\PurgingModelTrait;
+use Illuminate\Database\Eloquent\Model as Eloquent;
 
 class Post extends Eloquent implements PurgingModelInterface {
 
@@ -271,7 +283,7 @@ class Post extends Eloquent implements PurgingModelInterface {
 
 > **Pro Tip:** From an efficiency stand point, it is theoretically better to assign all purgeable attributes in the `$purgeable` property including underscore prefixed and `_confirmation` suffixed attributes since the `$purgeable` property is checked first and does not require string parsing and comparisons.
 
-The developer can now pass form input to the `Post` model from a controller or repository and the trait will automatically purge the non-attributes before saving. This gets around those pesky "Unknown column" MySQL errors. For demonstrative purposes the following code shows this in practice from a simple route closure:
+The developer can now pass form input to the `Post` model from a controller or repository and the trait will automatically purge the non-attributes before saving. This gets around those pesky "Unknown column" MySQL errors when the set value is mutated to an internal attribute or when you conditionally want to ignore any fill values. For demonstrative purposes the following code shows this in practice from a simple route closure:
 
 ```php
 Route::post( 'posts', function( $id )
@@ -287,7 +299,7 @@ Route::post( 'posts', function( $id )
     $post->save();
 
     // At this point $post->analytics_id is for sure purged.
-    // It was filtered becaused it existed in Post::$purgeable.
+    // It was excluded becaused it existed in Post::$purgeable.
 });
 ```
 
@@ -355,9 +367,9 @@ While developers can of course use the [`Model`](https://github.com/esensi/model
 ```php
 <?php
 
-use \Esensi\Model\Contracts\HashingModelInterface;
-use \Esensi\Model\Traits\HashingModelTrait;
-use \Illuminate\Database\Eloquent\Model as Eloquent;
+use Esensi\Model\Contracts\HashingModelInterface;
+use Esensi\Model\Traits\HashingModelTrait;
+use Illuminate\Database\Eloquent\Model as Eloquent;
 
 class User extends Eloquent implements HashingModelInterface {
 
@@ -532,7 +544,7 @@ This package includes the [`JugglingModelTrait`](https://github.com/esensi/model
 - create custom types to cast to with magic methods like:
     - Example: `fooBar` => `juggleFooBar()`
 
-Like all the traits, it is self-contained and can be used individually. Be aware, however, that using this trait does overload the magic `__get()` and `__set()` methods of the model (see [Esensi\Model\Model](https://github.com/esensi/model/blob/master/src/Model.php) source code for how to deal with overloading conflicts). Special credit goes to the brilliant [Dayle Rees](https://github.com/daylerees), author of [Code Bright book](https://leanpub.com/codebright), who inspired this trait with his [pull request to Laravel](https://github.com/laravel/framework/pull/4948).
+Like all the traits, it is self-contained and can be used individually. Be aware, however, that using this trait does overload the magic `__get()` and `__set()` methods of the model (see [Esensi\Model\Model](https://github.com/esensi/model/blob/master/src/Model.php) source code for how to deal with overloading conflicts). Special credit goes to the brilliant [Dayle Rees](https://github.com/daylerees), author of [Code Bright book](https://leanpub.com/codebright), who inspired this trait with his [pull request to Laravel](https://github.com/laravel/framework/pull/4948) which eventually arrived in [Laravel 5.0 as Attribute Casting](http://laravel.com/docs/eloquent-mutators#attribute-casting) which supports basic type casting.
 
 ### Auto-Juggling on Access
 
@@ -543,9 +555,9 @@ While developers can of course use the [`Model`](https://github.com/esensi/model
 ```php
 <?php
 
-use \Esensi\Model\Contracts\JugglingModelInterface;
-use \Esensi\Model\Traits\JugglingModelTrait;
-use \Illuminate\Database\Eloquent\Model as Eloquent;
+use Esensi\Model\Contracts\JugglingModelInterface;
+use Esensi\Model\Traits\JugglingModelTrait;
+use Illuminate\Database\Eloquent\Model as Eloquent;
 
 class Post extends Eloquent implements JugglingModelInterface {
 
@@ -558,25 +570,25 @@ class Post extends Eloquent implements JugglingModelInterface {
      */
     protected $jugglable = [
 
-        // Cast the published_at attribute to a date
+        // Juggle the published_at attribute to a date
         'published_at' => 'date',
 
         // Cast the terms attribute to a boolean
-        'terms'        => 'boolean',
+        'terms' => 'boolean',
 
-        // Cast the foo attribute to a custom bar type
-        'foo'          => 'bar',
+        // Juggle the foo attribute to a custom bar type
+        'foo' => 'bar',
     ];
 
     /**
      * Example of a custom juggle "bar" type.
      *
      * @param  mixed $value
-     * @return string
+     * @return \Bar
      */
     protected function juggleBar( $value )
     {
-        return 'bar';
+        return new Bar($value);
     }
 
 }
@@ -590,23 +602,23 @@ Route::post( 'post/{id}/publish', function( $id )
     // Hydrate the model from the Input
     $post = Post::find($id);
 
-    // published_at will be converted to a Carbon date object.
-    // You could then do $post->published_at->format('Y-m-d').
+    // The published_at attribute will be converted to a Carbon date
+    // object. You could then use $post->published_at->format('Y-m-d').
     $post->published_at = Input::get('published_at');
 
-    // Convert those pesky checkboxes to proper boolean.
+    // Convert those pesky checkboxes to proper booleans.
     $post->terms = Input::get('terms', false);
 
-    // foo attribute will be casted as the custom "bar" type
-    // using the method juggleBar: so it's value would now be "bar".
-    $post->foo = Input::get('bar');
+    // The foo attribute will be casted as the custom "bar" type using
+    // juggleBar() so it's value would now be a Bar object.
+    $post->foo = Input::get('foo');
 
     // Save the Post or do something else
     $post->save();
 });
 ```
 
-> **Pro Tip:** Some great uses for `JugglingModelTrait` would be custom "types" that map to commonly mutators jugglers for `phone`, `url`, `json`, types etc. Normally developers would have to map the attributes to attribute mutators and accessors which are hard-coded to the attribute name. Using the `$jugglable` property these attributes can be mapped to custom juggle methods easily in a reusable way.
+> **Pro Tip:** Some great uses for `JugglingModelTrait` would be custom "types" that map to commonly mutators jugglers for `phone`, `url`, `json`, types etc. Normally developers would have to map the attributes to attribute mutators and accessors which are hard-coded to the attribute name. Using the `$jugglable` property these attributes can be mapped to custom juggle methods easily in a reusable way. Custom services could be used as part of the juggle method too. This would make converting currency from one type to a normalized type or to convert from floating values (1.99) to integers (199) when persisted.
 
 
 ### Manually Juggling Model Attributes
@@ -622,11 +634,11 @@ $post->foo = Input::get('foo'); // automatically juggled
 $post->juggleAttributes();
 
 // Manually juggle a value to a type
-$boolean = $post->juggle( 'true', 'boolean' ); // bool(true)
-$boolean = $post->juggleBoolean( '0' ); // bool(false)
-$array = $post->juggleArray( 'foo' ); // array(0 => foo)
-$date = $post->juggleDate( '2014-07-10' ); // object(\Carbon\Carbon)
-$dateTime = $post->juggleDateTime( Carbon::now() ); // string(2014-07-10 11:17:00)
+$boolean   = $post->juggle( 'true', 'boolean' ); // bool(true)
+$boolean   = $post->juggleBoolean( '0' ); // bool(false)
+$array     = $post->juggleArray( 'foo' ); // array(0 => foo)
+$date      = $post->juggleDate( '2014-07-10' ); // object(\Carbon\Carbon)
+$dateTime  = $post->juggleDateTime( Carbon::now() ); // string(2014-07-10 11:17:00)
 $timestamp = $post->juggleTimestamp( '07/10/2014 11:17pm' ); // integer(1405034225)
 
 // Manually get the attributes
@@ -689,9 +701,9 @@ While developers can of course use the [`Model`](https://github.com/esensi/model
 ```php
 <?php
 
-use \Esensi\Model\Contracts\RelatingModelInterface;
-use \Esensi\Model\Traits\RelatingModelTrait;
-use \Illuminate\Database\Eloquent\Model as Eloquent;
+use Esensi\Model\Contracts\RelatingModelInterface;
+use Esensi\Model\Traits\RelatingModelTrait;
+use Illuminate\Database\Eloquent\Model as Eloquent;
 
 class Post extends Eloquent implements RelatingModelInterface {
 
