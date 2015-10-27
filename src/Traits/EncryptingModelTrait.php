@@ -102,7 +102,7 @@ trait EncryptingModelTrait {
             // Encrypt only decrypted values
             if ( $this->isDecrypted( $attribute ) )
             {
-                array_set($this->attributes, $attribute, $this->getEncrypter()->encrypt( $value ));
+                $this->setEncryptingAttribute($attribute, $value);
                 return true;
             }
         }
