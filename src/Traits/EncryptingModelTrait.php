@@ -42,9 +42,10 @@ trait EncryptingModelTrait
     public function __get( $key )
     {
         // Dynamically retrieve the encrypted attribute
-        if( $attribute = $this->getDynamicEncrypted( $key ) )
+        $value = $this->getDynamicEncrypted( $key );
+        if( ! is_null($value) || is_string($value) )
         {
-            return $attribute;
+            return $value;
         }
 
         // Default Eloquent dynamic getter
