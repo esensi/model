@@ -60,7 +60,7 @@ trait EncryptingModelTrait {
     public function __set( $key, $value )
     {
         // Dynamically set the encryptable attribute
-        if( $this->setDynamicEncryptable( $key, $value ) )
+        if( ! empty($value) && $this->setDynamicEncryptable( $key, $value ) )
         {
             return;
         }
