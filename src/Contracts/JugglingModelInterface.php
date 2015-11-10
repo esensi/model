@@ -206,4 +206,11 @@ interface JugglingModelInterface
      */
     public function juggleArray( $value );
 
+    /**
+     * Casts to null on empty.
+     *
+     * @param  mixed $value
+     * @return mixed|null
+     */
+    public function juggleNull( $value );
 }

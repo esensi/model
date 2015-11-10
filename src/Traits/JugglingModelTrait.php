@@ -490,15 +490,26 @@ trait JugglingModelTrait
     }
 
     /**
+     * Casts to null on empty.
+     *
+     * @param  mixed $value
+     * @return mixed|null
+     */
+    public function juggleNull( $value )
+    {
+        return empty($value) ? $this->juggleType( $value, "null") : $value;
+    }
+
+    /**
      * Casts the value to the type. Possibles types are:
      *     boolean, integer, float, string, array, object, null
      * @link http://php.net/manual/en/function.settype.php
      *
      * @param  mixed $value
-     * @param  string $type (optional)
+     * @param  string $type
      * @return mixed
      */
-    protected function juggleType( $value, $type = "null" )
+    protected function juggleType( $value, $type )
     {
         settype( $value, $type );
         return $value;

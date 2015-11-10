@@ -533,6 +533,7 @@ This package includes the [`JugglingModelTrait`](https://github.com/esensi/model
 - automatically cast attributes to a type when setting them
 - manually casting a value using the `juggle()` method
 - manually casting to pre-defined types including:
+    - `null` => `juggleNull()` (returns null on empty)
     - `string` => `juggleString()`
     - `boolean` (`bool`) => `juggleBoolean()`
     - `integer` (`integer`) => `juggleInteger()`
@@ -541,7 +542,7 @@ This package includes the [`JugglingModelTrait`](https://github.com/esensi/model
     - `date` => `juggleDate()` (returns Carbon date)
     - `datetime` (`date_time`) => `juggleDateTime()` (returns as 0000-00-00 00:00:00)
     - `timestamp` => `juggleTimestamp()` (returns Unix timestamp)
-- create custom types to cast to with magic methods like:
+- create custom types to cast to with magic model methods like:
     - Example: `fooBar` => `juggleFooBar()`
 
 Like all the traits, it is self-contained and can be used individually. Be aware, however, that using this trait does overload the magic `__get()` and `__set()` methods of the model (see [Esensi\Model\Model](https://github.com/esensi/model/blob/master/src/Model.php) source code for how to deal with overloading conflicts). Special credit goes to the brilliant [Dayle Rees](https://github.com/daylerees), author of [Code Bright book](https://leanpub.com/codebright), who inspired this trait with his [pull request to Laravel](https://github.com/laravel/framework/pull/4948) which eventually arrived in [Laravel 5.0 as Attribute Casting](http://laravel.com/docs/eloquent-mutators#attribute-casting) which supports basic type casting.
