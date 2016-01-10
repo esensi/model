@@ -289,6 +289,8 @@ trait RelatingModelTrait
         // we will pass in the appropriate values so that it behaves as expected.
         else
         {
+            $class = $this->getActualClassNameForMorph($class);
+            
             $instance = new $class;
 
             return new MorphTo(
