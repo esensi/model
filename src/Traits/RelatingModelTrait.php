@@ -152,7 +152,7 @@ trait RelatingModelTrait
      */
     public function hasPivotAttributes( $name )
     {
-        return array_key_exists( $name, $this->relationshipPivots );
+        return array_key_exists( $name, $this->relationshipPivots ?: [] );
     }
 
     /**
