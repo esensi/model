@@ -37,10 +37,6 @@ before_install:
 install:
   - composer install
 
-# make sure the cache folders exist
-before_script:
-  - mkdir $HOME/.php-cs-fixer
-
 # run the tests
 script:
   - composer test
