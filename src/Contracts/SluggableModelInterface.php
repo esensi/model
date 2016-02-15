@@ -3,12 +3,12 @@
 namespace Esensi\Model\Contracts;
 
 /**
- * Sluggable Model Interface
+ * Sluggable Model Interface.
  *
- * @package Esensi\Model
  * @author Daniel LaBarge <daniel@emersonmedia.com>
- * @copyright 2015 Emerson Media LP
- * @license https://github.com/esensi/model/blob/master/LICENSE.txt MIT License
+ * @copyright 2015-2016 Emerson Media LP
+ * @license https://github.com/esensi/model/blob/master/license.md MIT License
+ *
  * @link http://www.emersonmedia.com
  */
 interface SluggableModelInterface
@@ -16,7 +16,8 @@ interface SluggableModelInterface
     /**
      * Convert the value into a slug using a regexp replacement.
      *
-     * @param  string $value
+     * @param string $value
+     *
      * @return string
      */
     public function makeSlug($value);
@@ -32,6 +33,7 @@ interface SluggableModelInterface
      * Set the key that defines the model's sluggable attribute.
      *
      * @param string $key
+     *
      * @return Illuminate\Database\Eloquent\Model
      */
     public function setSlugKey($key);
@@ -47,8 +49,6 @@ interface SluggableModelInterface
      * Mutate the value to a slug format and assign to the sluggable key.
      *
      * @param string $value
-     * @return void
      */
     public function setSlugAttribute($value);
-
 }

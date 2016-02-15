@@ -12,12 +12,17 @@ trim_trailing_whitespace = true
 insert_final_newline = true
 spaces_around_operators = true
 
+# 4-tabbed files
+[Makefile]
+indent_size = 4
+indent_style = tab
+
 # 4-spaced files
-[{!vendor/**, **.js, **.json, **.php, **.xml, **.yml, **.md}]
+[**.{js,json,php,xml,md}]
 indent_size = 4
 
 # 2-spaced files
-[**.{css,less,sass,html,htm,xhtml,blade.php}]
+[**.{css,less,sass,scss,html,htm,xhtml,yml,blade.php}]
 indent_size = 2
 
 [{node_modules,vendor,bower_components}/**]

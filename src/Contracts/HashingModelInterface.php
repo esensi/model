@@ -5,12 +5,12 @@ namespace Esensi\Model\Contracts;
 use Illuminate\Contracts\Hashing\Hasher;
 
 /**
- * Hashing Model Interface
+ * Hashing Model Interface.
  *
- * @package Esensi\Model
  * @author Daniel LaBarge <daniel@emersonmedia.com>
- * @copyright 2015 Emerson Media LP
- * @license https://github.com/esensi/model/blob/master/LICENSE.txt MIT License
+ * @copyright 2015-2016 Emerson Media LP
+ * @license https://github.com/esensi/model/blob/master/license.md MIT License
+ *
  * @link http://www.emersonmedia.com
  */
 interface HashingModelInterface
@@ -25,42 +25,40 @@ interface HashingModelInterface
     /**
      * Set the hashable attributes.
      *
-     * @param  array $attributes to hash
-     * @return void
+     * @param array $attributes to hash
      */
-    public function setHashable( array $attributes );
+    public function setHashable(array $attributes);
 
     /**
      * Add an attribute to the hashable array.
      *
      * @example addHashable( string $attribute, ... )
-     * @param  string $attribute to purge
-     * @return void
+     *
+     * @param string $attribute to purge
      */
-    public function addHashable( $attribute );
+    public function addHashable($attribute);
 
     /**
      * Remove an attribute from the hashable array.
      *
      * @example addHashable( string $attribute, ... )
-     * @param  string $attribute to purge
-     * @return void
+     *
+     * @param string $attribute to purge
      */
-    public function removeHashable( $attribute );
+    public function removeHashable($attribute);
 
     /**
      * Merge an array of attributes with the hashable array.
      *
-     * @param  array $attributes to purge
-     * @return void
+     * @param array $attributes to purge
      */
-    public function mergeHashable( array $attributes );
+    public function mergeHashable(array $attributes);
 
     /**
      * Returns whether or not the model will hash
      * attributes before saving.
      *
-     * @return boolean
+     * @return bool
      */
     public function getHashing();
 
@@ -68,46 +66,44 @@ interface HashingModelInterface
      * Set whether or not the model will hash attributes
      * before saving.
      *
-     * @param  boolean
-     * @return void
+     * @param  bool
      */
-    public function setHashing( $value );
+    public function setHashing($value);
 
     /**
      * Set the Hasher to use for hashing.
      *
-     * @return \Illuminate\Contracts\Hashing\Hasher
+     * @return Illuminate\Contracts\Hashing\Hasher
      */
     public function getHasher();
 
     /**
      * Set the Hasher to use for hashing.
      *
-     * @param \Illuminate\Contracts\Hashing\Hasher $hasher
-     * @return void
+     * @param Illuminate\Contracts\Hashing\Hasher $hasher
      */
-    public function setHasher( Hasher $hasher );
+    public function setHasher(Hasher $hasher);
 
     /**
      * Returns whether the attribute is hashable.
      *
      * @param string $attribute name
-     * @return boolean
+     *
+     * @return bool
      */
-    public function isHashable( $attribute );
+    public function isHashable($attribute);
 
     /**
      * Returns whether the attribute is hashed.
      *
      * @param string $attribute name
-     * @return boolean
+     *
+     * @return bool
      */
-    public function isHashed( $attribute );
+    public function isHashed($attribute);
 
     /**
      * Hash attributes that should be hashed.
-     *
-     * @return void
      */
     public function hashAttributes();
 
@@ -115,31 +111,32 @@ interface HashingModelInterface
      * Return a hashed string for the value.
      *
      * @param string $value
+     *
      * @return string
      */
-    public function hash( $value );
+    public function hash($value);
 
     /**
      * Return whether a plain value matches a hashed value.
      *
      * @param string $value
-     * @param string $hash to compare to
-     * @return boolean
+     * @param string $hash  to compare to
+     *
+     * @return bool
      */
-    public function checkHash( $value, $hash );
+    public function checkHash($value, $hash);
 
     /**
      * Save with hashing even if hashing is disabled.
      *
-     * @return boolean
+     * @return bool
      */
     public function saveWithHashing();
 
     /**
      * Save without hashing even if hashing is enabled.
      *
-     * @return boolean
+     * @return bool
      */
     public function saveWithoutHashing();
-
 }

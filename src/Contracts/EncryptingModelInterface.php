@@ -5,12 +5,12 @@ namespace Esensi\Model\Contracts;
 use Illuminate\Encryption\Encrypter;
 
 /**
- * Encrypting Model Interface
+ * Encrypting Model Interface.
  *
- * @package Esensi\Model
  * @author Daniel LaBarge <daniel@emersonmedia.com>
- * @copyright 2015 Emerson Media LP
- * @license https://github.com/esensi/model/blob/master/LICENSE.txt MIT License
+ * @copyright 2015-2016 Emerson Media LP
+ * @license https://github.com/esensi/model/blob/master/license.md MIT License
+ *
  * @link http://www.emersonmedia.com
  */
 interface EncryptingModelInterface
@@ -25,42 +25,40 @@ interface EncryptingModelInterface
     /**
      * Set the encryptable attributes.
      *
-     * @param  array $attributes to encrypt
-     * @return void
+     * @param array $attributes to encrypt
      */
-    public function setEncryptable( array $attributes );
+    public function setEncryptable(array $attributes);
 
     /**
      * Add an attribute to the encryptable array.
      *
      * @example addEncryptable( string $attribute, ... )
-     * @param  string $attribute to encrypt
-     * @return void
+     *
+     * @param string $attribute to encrypt
      */
-    public function addEncryptable( $attribute );
+    public function addEncryptable($attribute);
 
     /**
      * Remove an attribute from the encryptable array.
      *
      * @example addEncryptable( string $attribute, ... )
-     * @param  string $attribute to encrypt
-     * @return void
+     *
+     * @param string $attribute to encrypt
      */
-    public function removeEncryptable( $attribute );
+    public function removeEncryptable($attribute);
 
     /**
      * Merge an array of attributes with the encryptable array.
      *
-     * @param  array $attributes to encrypt
-     * @return void
+     * @param array $attributes to encrypt
      */
-    public function mergeEncryptable( array $attributes );
+    public function mergeEncryptable(array $attributes);
 
     /**
      * Returns whether or not the model will encrypt
      * attributes when setting and decrypt when getting.
      *
-     * @return boolean
+     * @return bool
      */
     public function getEncrypting();
 
@@ -68,54 +66,53 @@ interface EncryptingModelInterface
      * Set whether or not the model will encrypt attributes
      * when setting and decrypt when getting.
      *
-     * @param  boolean
-     * @return void
+     * @param  bool
      */
-    public function setEncrypting( $value );
+    public function setEncrypting($value);
 
     /**
      * Set the Encrypter to use for encryption.
      *
-     * @return \Illuminate\Encryption\Encrypter $encrypter
+     * @return Illuminate\Encryption\Encrypter $encrypter
      */
     public function getEncrypter();
 
     /**
      * Set the Encrypter to use for encryption.
      *
-     * @param \Illuminate\Encryption\Encrypter $encrypter
-     * @return void
+     * @param Illuminate\Encryption\Encrypter $encrypter
      */
-    public function setEncrypter( Encrypter $encrypter );
+    public function setEncrypter(Encrypter $encrypter);
 
     /**
      * Returns whether the attribute is encryptable.
      *
      * @param string $attribute name
-     * @return boolean
+     *
+     * @return bool
      */
-    public function isEncryptable( $attribute );
+    public function isEncryptable($attribute);
 
     /**
      * Returns whether the attribute is encrypted.
      *
      * @param string $attribute name
-     * @return boolean
+     *
+     * @return bool
      */
-    public function isEncrypted( $attribute );
+    public function isEncrypted($attribute);
 
     /**
      * Returns whether the attribute is decrypted.
      *
      * @param string $attribute name
-     * @return boolean
+     *
+     * @return bool
      */
-    public function isDecrypted( $attribute );
+    public function isDecrypted($attribute);
 
     /**
      * Encrypt attributes that should be encrypted.
-     *
-     * @return void
      */
     public function encryptAttributes();
 
@@ -123,16 +120,17 @@ interface EncryptingModelInterface
      * Return an encrypted string for the value.
      *
      * @param string $value
+     *
      * @return string
      */
-    public function encrypt( $value );
+    public function encrypt($value);
 
     /**
      * Return a decrypted string for the value.
      *
      * @param string $value
+     *
      * @return string
      */
-    public function decrypt( $value );
-
+    public function decrypt($value);
 }

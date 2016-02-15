@@ -6,12 +6,12 @@ use Illuminate\Hashing\BcryptHasher;
 use PHPUnit_Framework_TestCase as PHPUnit;
 
 /**
- * Tests for the Hashing Model Trait
+ * Tests for the Hashing Model Trait.
  *
- * @package Esensi\Model
  * @author Daniel LaBarge <daniel@emersonmedia.com>
  * @copyright 2014 Emerson Media LP
- * @license https://github.com/esensi/model/blob/master/LICENSE.txt MIT License
+ * @license https://github.com/esensi/model/blob/master/license.md MIT License
+ *
  * @link http://www.emersonmedia.com
  */
 class HashingModelTraitTest extends PHPUnit
@@ -506,41 +506,37 @@ class HashingModelTraitTest extends PHPUnit
         // Check that hashing is still enabled
         $this->assertTrue($this->model->getHashing());
     }
-
 }
 
 /**
- * Model Stub for Hashing Tests
+ * Model Stub for Hashing Tests.
  */
 class ModelHashingStub extends Model
 {
     /**
      * The attributes to hash before saving.
      *
-     * @var array
+     * @type array
      */
     protected $hashable = ['foo'];
 
     /**
-     * Create a new model instance
+     * Create a new model instance.
      *
      * @return ModelHashingStub
      */
     public function __construct()
     {
-
         parent::__construct();
 
         // Assign a default hasher for mocking purposes
         $this->hasher = new BcryptHasher();
     }
-
 }
 
 /**
- * Hasher Stub for Hasher Tests
+ * Hasher Stub for Hasher Tests.
  */
 class HasherStub extends BcryptHasher implements Hasher
 {
-
 }

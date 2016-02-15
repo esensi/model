@@ -7,40 +7,37 @@ use Illuminate\Contracts\Hashing\Hasher;
 use Illuminate\Support\Facades\Hash;
 
 /**
- * Trait that implements the Hashing Model Interface
+ * Trait that implements the Hashing Model Interface.
  *
- * @package Esensi\Model
  * @author Daniel LaBarge <daniel@emersonmedia.com>
- * @copyright 2015 Emerson Media LP
- * @license https://github.com/esensi/model/blob/master/LICENSE.txt MIT License
- * @link http://www.emersonmedia.com
+ * @copyright 2015-2016 Emerson Media LP
+ * @license https://github.com/esensi/model/blob/master/license.md MIT License
  *
- * @see \Esensi\Model\Contracts\HashingModelInterface
+ * @link http://www.emersonmedia.com
+ * @see Esensi\Model\Contracts\HashingModelInterface
  */
 trait HashingModelTrait
 {
     /**
      * Whether the model is hashing or not.
      *
-     * @var boolean
+     * @type bool
      */
     protected $hashing = true;
 
     /**
      * The Hasher to use for hashing.
      *
-     * @var \Illuminate\Contracts\Hashing\Hasher
+     * @type Illuminate\Contracts\Hashing\Hasher
      */
     protected $hasher;
 
     /**
-     * Boot the trait's observers
-     *
-     * @return void
+     * Boot the trait's observers.
      */
     public static function bootHashingModelTrait()
     {
-        static::observe(new HashingModelObserver);
+        static::observe(new HashingModelObserver());
     }
 
     /**
@@ -56,10 +53,9 @@ trait HashingModelTrait
     /**
      * Set the hashable attributes.
      *
-     * @param  array $attributes to hash
-     * @return void
+     * @param array $attributes to hash
      */
-    public function setHashable( array $attributes )
+    public function setHashable(array $attributes)
     {
         $this->hashable = $attributes;
     }
@@ -68,42 +64,41 @@ trait HashingModelTrait
      * Add an attribute to the hashable array.
      *
      * @example addHashable( string $attribute, ... )
-     * @param  string $attribute to hash
-     * @return void
+     *
+     * @param string $attribute to hash
      */
-    public function addHashable( $attribute )
+    public function addHashable($attribute)
     {
-        $this->mergeHashable( func_get_args() );
+        $this->mergeHashable(func_get_args());
     }
 
     /**
      * Remove an attribute from the hashable array.
      *
      * @example addHashable( string $attribute, ... )
-     * @param  string $attribute to hash
-     * @return void
+     *
+     * @param string $attribute to hash
      */
-    public function removeHashable( $attribute )
+    public function removeHashable($attribute)
     {
-        $this->hashable = array_diff( $this->hashable, func_get_args() );
+        $this->hashable = array_diff($this->hashable, func_get_args());
     }
 
     /**
      * Merge an array of attributes with the hashable array.
      *
-     * @param  array $attributes to hash
-     * @return void
+     * @param array $attributes to hash
      */
-    public function mergeHashable( array $attributes )
+    public function mergeHashable(array $attributes)
     {
-        $this->hashable = array_merge( $this->hashable, $attributes );
+        $this->hashable = array_merge($this->hashable, $attributes);
     }
 
     /**
      * Returns whether or not the model will hash
      * attributes before saving.
      *
-     * @return boolean
+     * @return bool
      */
     public function getHashing()
     {
@@ -114,10 +109,9 @@ trait HashingModelTrait
      * Set whether or not the model will hash attributes
      * before saving.
      *
-     * @param  boolean
-     * @return void
+     * @param  bool
      */
-    public function setHashing( $value )
+    public function setHashing($value)
     {
         $this->hashing = (bool) $value;
     }
@@ -125,7 +119,7 @@ trait HashingModelTrait
     /**
      * Set the Hasher to use for hashing.
      *
-     * @return \Illuminate\Contracts\Hashing\Hasher
+     * @return Illuminate\Contracts\Hashing\Hasher
      */
     public function getHasher()
     {
@@ -135,10 +129,9 @@ trait HashingModelTrait
     /**
      * Set the Hasher to use for hashing.
      *
-     * @param \Illuminate\Contracts\Hashing\Hasher $hasher
-     * @return void
+     * @param Illuminate\Contracts\Hashing\Hasher $hasher
      */
-    public function setHasher( Hasher $hasher )
+    public function setHasher(Hasher $hasher)
     {
         $this->hasher = $hasher;
     }
@@ -147,41 +140,40 @@ trait HashingModelTrait
      * Returns whether the attribute is hashable.
      *
      * @param string $attribute name
-     * @return boolean
+     *
+     * @return bool
      */
-    public function isHashable( $attribute )
+    public function isHashable($attribute)
     {
         return $this->getHashing()
-            && in_array( $attribute, $this->getHashable() );
+            && in_array($attribute, $this->getHashable());
     }
 
     /**
      * Returns whether the attribute is hashed.
      *
      * @param string $attribute name
-     * @return boolean
+     *
+     * @return bool
      */
-    public function isHashed( $attribute )
+    public function isHashed($attribute)
     {
-        if( ! array_key_exists($attribute, $this->attributes) )
-        {
+        if ( ! array_key_exists($attribute, $this->attributes)) {
             return false;
         }
 
-        $info = password_get_info( $this->attributes[ $attribute ] );
-        return (boolean) ( $info['algo'] != 0 );
+        $info = password_get_info($this->attributes[ $attribute ]);
+
+        return (bool) ($info['algo'] !== 0);
     }
 
     /**
      * Hash attributes that should be hashed.
-     *
-     * @return void
      */
     public function hashAttributes()
     {
-        foreach( $this->getHashable() as $attribute )
-        {
-            $this->setHashingAttribute( $attribute, $this->getAttribute($attribute) );
+        foreach ($this->getHashable() as $attribute) {
+            $this->setHashingAttribute($attribute, $this->getAttribute($attribute));
         }
     }
 
@@ -189,87 +181,87 @@ trait HashingModelTrait
      * Return a hashed string for the value.
      *
      * @param string $value
+     *
      * @return string
      */
-    public function hash( $value )
+    public function hash($value)
     {
         return $this->getHasher()
-            ->make( $value );
+            ->make($value);
     }
 
     /**
      * Return whether a plain value matches a hashed value.
      *
      * @param string $value
-     * @param string $hash to compare to
-     * @return boolean
+     * @param string $hash  to compare to
+     *
+     * @return bool
      */
-    public function checkHash( $value, $hash )
+    public function checkHash($value, $hash)
     {
         return $this->getHasher()
-            ->check( $value, $hash );
+            ->check($value, $hash);
     }
 
     /**
      * Set a hashed value for a hashable attribute.
      *
      * @param string $attribute name
-     * @param string $value to hash
-     * @return void
+     * @param string $value     to hash
      */
-    public function setHashingAttribute( $attribute, $value )
+    public function setHashingAttribute($attribute, $value)
     {
         // Set the value which is presumably plain text
         $this->attributes[ $attribute ] = $value;
 
         // Do the hashing if it needs it
-        if ( ! empty($value) && ($this->isDirty( $attribute ) || ! $this->isHashed( $attribute )) )
-        {
-            $this->attributes[ $attribute ] = $this->hash( $value );
+        if ( ! empty($value) && ($this->isDirty($attribute) || ! $this->isHashed($attribute))) {
+            $this->attributes[ $attribute ] = $this->hash($value);
         }
     }
 
     /**
      * Save with hashing even if hashing is disabled.
      *
-     * @return boolean
+     * @return bool
      */
     public function saveWithHashing()
     {
         // Turn hashing on
-        return $this->setHashingAndSave( true );
+        return $this->setHashingAndSave(true);
     }
 
     /**
      * Save without hashing even if hashing is enabled.
      *
-     * @return boolean
+     * @return bool
      */
     public function saveWithoutHashing()
     {
         // Turn hashing off
-        return $this->setHashingAndSave( false );
+        return $this->setHashingAndSave(false);
     }
 
     /**
      * Set hashing state and then save and then reset it.
      *
-     * @param  boolean $hash
-     * @return boolean
+     * @param bool $hash
+     *
+     * @return bool
      */
-    protected function setHashingAndSave( $hash )
+    protected function setHashingAndSave($hash)
     {
         // Set hashing state
         $hashing = $this->getHashing();
-        $this->setHashing( $hash );
+        $this->setHashing($hash);
 
         // Save the model
         $result = $this->save();
 
         // Reset hashing back to it's previous state
-        $this->setHashing( $hashing );
+        $this->setHashing($hashing);
 
         return $result;
     }
-
 }

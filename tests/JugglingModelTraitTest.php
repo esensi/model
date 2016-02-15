@@ -3,19 +3,16 @@
 use Carbon\Carbon;
 use Esensi\Model\Model;
 use Illuminate\Database\Connection;
-use Illuminate\Database\ConnectionResolverInterface;
-use Illuminate\Database\Query\Grammars\Grammar;
-use Illuminate\Database\Query\Processors\Processor;
 use PHPUnit_Framework_TestCase as PHPUnit;
 
 /**
- * Tests for the Purging Model Trait
+ * Tests for the Purging Model Trait.
  *
- * @package Esensi\Model
  * @author Diego Caprioli <diego@emersonmedia.com>
  * @author Dnaiel LaBarge <dalabarge@emersonmedia.com>
  * @copyright 2014 Emerson Media LP
- * @license https://github.com/esensi/model/blob/master/LICENSE.txt MIT License
+ * @license https://github.com/esensi/model/blob/master/license.md MIT License
+ *
  * @link http://www.emersonmedia.com
  */
 class JugglingModelTraitTest extends PHPUnit
@@ -214,7 +211,7 @@ class JugglingModelTraitTest extends PHPUnit
     public function testRemovingAllJugglableAttributes()
     {
         // Remove all attributes
-        $this->model->removeJugglable( array_keys($this->model->tmpAttributes) );
+        $this->model->removeJugglable(array_keys($this->model->tmpAttributes));
 
         // Get the attributes
         $attributes = $this->model->getJugglable();
@@ -308,9 +305,8 @@ class JugglingModelTraitTest extends PHPUnit
     public function testIsJuggleTypeReturnsTrueForValidTypes()
     {
         $types = ['boolean', 'integer', 'float', 'string', 'array', 'date', 'datetime', 'timestamp', 'bar'];
-        foreach($types as $type)
-        {
-            $this->assertTrue($this->model->isJuggleType( $type ));
+        foreach ($types as $type) {
+            $this->assertTrue($this->model->isJuggleType($type));
         }
     }
 
@@ -324,7 +320,7 @@ class JugglingModelTraitTest extends PHPUnit
             ->with('foo')
             ->andReturn('juggleFoo');
 
-        $this->assertFalse($this->model->isJuggleType( 'foo' ));
+        $this->assertFalse($this->model->isJuggleType('foo'));
     }
 
     /**
@@ -337,7 +333,7 @@ class JugglingModelTraitTest extends PHPUnit
             ->with('foo')
             ->andReturn(true);
 
-        $this->assertTrue($this->model->checkJuggleType( 'foo' ));
+        $this->assertTrue($this->model->checkJuggleType('foo'));
     }
 
     /**
@@ -352,7 +348,7 @@ class JugglingModelTraitTest extends PHPUnit
             ->with('foo')
             ->andReturn(false);
 
-        $this->assertFalse($this->model->checkJuggleType( 'foo' ));
+        $this->assertFalse($this->model->checkJuggleType('foo'));
     }
 
     /**
@@ -372,10 +368,8 @@ class JugglingModelTraitTest extends PHPUnit
             'juggleFooBar' => ['foo_bar', 'fooBar', 'FooBar'],
         ];
 
-        foreach($map as $method => $types)
-        {
-            foreach($types as $type)
-            {
+        foreach ($map as $method => $types) {
+            foreach ($types as $type) {
                 $this->assertEquals($method, $this->model->buildJuggleMethod($type));
             }
         }
@@ -414,14 +408,13 @@ class JugglingModelTraitTest extends PHPUnit
             ->times($count);
 
         // Make sure we are dealing with an empty model
-        $this->assertEmpty( $this->model->getAttributes() );
+        $this->assertEmpty($this->model->getAttributes());
 
         // Enable juggling
         $this->model->setJuggling(true);
 
         // Set attributes into the model using fill
-        foreach ($this->model->tmpAttributes as $key => $value)
-        {
+        foreach ($this->model->tmpAttributes as $key => $value) {
             $this->model->{$key} = $value;
         }
 
@@ -462,13 +455,13 @@ class JugglingModelTraitTest extends PHPUnit
     {
         // A date string should cast to a Carbon object
         $date = '1970-01-01';
-        $carbon = $this->model->juggleDate( $date );
-        $this->assertInstanceOf('\Carbon\Carbon', $carbon );
-        $this->assertEquals($carbon->format('Y-m-d'),  $date );
+        $carbon = $this->model->juggleDate($date);
+        $this->assertInstanceOf('\Carbon\Carbon', $carbon);
+        $this->assertEquals($carbon->format('Y-m-d'), $date);
 
         // A Carbon object should return the same Carbon date on a second call
-        $carbon2 = $this->model->juggledate( $carbon );
-        $this->assertEquals($carbon, $carbon2 );
+        $carbon2 = $this->model->juggledate($carbon);
+        $this->assertEquals($carbon, $carbon2);
     }
 
     /**
@@ -476,7 +469,7 @@ class JugglingModelTraitTest extends PHPUnit
      */
     public function testJuggleDateTime()
     {
-        $datetime = $this->model->juggleDateTime( '1970-01-01' );
+        $datetime = $this->model->juggleDateTime('1970-01-01');
         $this->assertEquals('1970-01-01 00:00:00', $datetime);
     }
 
@@ -485,7 +478,7 @@ class JugglingModelTraitTest extends PHPUnit
      */
     public function testJuggleTimestamp()
     {
-        $timestamp = $this->model->juggleTimestamp( '1970-01-01' );
+        $timestamp = $this->model->juggleTimestamp('1970-01-01');
         $this->assertInternalType('integer', $timestamp);
         $this->assertEquals(18000, $timestamp);
     }
@@ -495,22 +488,21 @@ class JugglingModelTraitTest extends PHPUnit
      *
      * Note that settype("false", "boolean") returns true which is why string("true")
      * and string("false") have been left out of this test.
+     *
      * @link http://php.net/manual/en/language.types.boolean.php#language.types.boolean.casting
      */
     public function testJuggleBoolean()
     {
         // Test true values
-        foreach([true, 1, '1'] as $value)
-        {
-            $boolean = $this->model->juggleBoolean( $value );
+        foreach ([true, 1, '1'] as $value) {
+            $boolean = $this->model->juggleBoolean($value);
             $this->assertInternalType('boolean', $boolean);
             $this->assertTrue($boolean);
         }
 
         // Test false values
-        foreach([false, 0, '0'] as $value)
-        {
-            $boolean = $this->model->juggleBoolean( $value );
+        foreach ([false, 0, '0'] as $value) {
+            $boolean = $this->model->juggleBoolean($value);
             $this->assertInternalType('boolean', $boolean);
             $this->assertFalse($boolean);
         }
@@ -521,11 +513,11 @@ class JugglingModelTraitTest extends PHPUnit
      */
     public function testJuggleInteger()
     {
-        $integer = $this->model->juggleInteger( '1' );
+        $integer = $this->model->juggleInteger('1');
         $this->assertInternalType('integer', $integer);
         $this->assertEquals(1, $integer);
 
-        $integer = $this->model->juggleInteger( '1 large pizza' );
+        $integer = $this->model->juggleInteger('1 large pizza');
         $this->assertInternalType('integer', $integer);
         $this->assertEquals(1, $integer);
     }
@@ -535,11 +527,11 @@ class JugglingModelTraitTest extends PHPUnit
      */
     public function testJuggleFloat()
     {
-        $float = $this->model->juggleFloat( '1.23456789' );
+        $float = $this->model->juggleFloat('1.23456789');
         $this->assertInternalType('float', $float);
         $this->assertEquals(1.23456789, $float);
 
-        $float = $this->model->juggleFloat( 1/4 );
+        $float = $this->model->juggleFloat(1 / 4);
         $this->assertInternalType('float', $float);
         $this->assertEquals(0.25, $float);
     }
@@ -549,7 +541,7 @@ class JugglingModelTraitTest extends PHPUnit
      */
     public function testJuggleString()
     {
-        $string = $this->model->juggleString( 1/4 );
+        $string = $this->model->juggleString(1 / 4);
         $this->assertInternalType('string', $string);
         $this->assertEquals('0.25', $string);
     }
@@ -559,32 +551,32 @@ class JugglingModelTraitTest extends PHPUnit
      */
     public function testJuggleArray()
     {
-        $array = $this->model->juggleArray( [] );
+        $array = $this->model->juggleArray([]);
         $this->assertInternalType('array', $array);
         $this->assertEmpty($array);
 
-        $array = $this->model->juggleArray( 'foo' );
+        $array = $this->model->juggleArray('foo');
         $this->assertInternalType('array', $array);
         $this->assertEquals(['foo'], $array);
     }
 }
 
 /**
- * Model Stub for Juggling Tests
+ * Model Stub for Juggling Tests.
  */
 class ModelJugglingStub extends Model
 {
     /**
      * Indicates if the model exists.
      *
-     * @var boolean
+     * @type bool
      */
     public $exists = false;
 
     /**
-     * The attributes to type juggle
+     * The attributes to type juggle.
      *
-     * @var array
+     * @type array
      */
     protected $jugglable = [
         'myString'    => 'string',
@@ -605,7 +597,7 @@ class ModelJugglingStub extends Model
      * in the tests to set the attributes in the object.
      * Make sure the keys align with $jugglabe property on this stub.
      *
-     * @var array
+     * @type array
      */
     public $tmpAttributes = [
         'myString'    => 'Hello world',
@@ -624,10 +616,11 @@ class ModelJugglingStub extends Model
     /**
      * Example custom juggle type.
      *
-     * @param  mixed $value
+     * @param mixed $value
+     *
      * @return string
      */
-    protected function juggleBar( $value )
+    protected function juggleBar($value)
     {
         return 'bar';
     }

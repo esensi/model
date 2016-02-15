@@ -2,90 +2,87 @@
 
 namespace Esensi\Model\Traits;
 
-use Illuminate\Support\Facades\Crypt;
-use Illuminate\Encryption\Encrypter;
 use Illuminate\Contracts\Encryption\DecryptException;
+use Illuminate\Encryption\Encrypter;
+use Illuminate\Support\Facades\Crypt;
 
 /**
- * Trait that implements the Encrypting Model Interface
+ * Trait that implements the Encrypting Model Interface.
  *
- * @package Esensi\Model
  * @author Daniel LaBarge <daniel@emersonmedia.com>
- * @copyright 2015 Emerson Media LP
- * @license https://github.com/esensi/model/blob/master/LICENSE.txt MIT License
- * @link http://www.emersonmedia.com
+ * @copyright 2015-2016 Emerson Media LP
+ * @license https://github.com/esensi/model/blob/master/license.md MIT License
  *
- * @see \Esensi\Model\Contracts\EncryptionModelInterface
+ * @link http://www.emersonmedia.com
+ * @see Esensi\Model\Contracts\EncryptionModelInterface
  */
 trait EncryptingModelTrait
 {
     /**
      * Whether the model is encrypting or not.
      *
-     * @var boolean
+     * @type bool
      */
     protected $encrypting = true;
 
     /**
      * The Encrypter to use for encryption.
      *
-     * @var \Illuminate\Encryption\Encrypter
+     * @type Illuminate\Encryption\Encrypter
      */
     protected $encrypter;
 
     /**
      * Dynamically retrieve attributes.
      *
-     * @param  string $key
+     * @param string $key
+     *
      * @return mixed
      */
-    public function __get( $key )
+    public function __get($key)
     {
         // Dynamically retrieve the encrypted attribute
-        $value = $this->getDynamicEncrypted( $key );
-        if( ! is_null($value) || is_string($value) )
-        {
+        $value = $this->getDynamicEncrypted($key);
+        if ( ! is_null($value) || is_string($value)) {
             return $value;
         }
 
         // Default Eloquent dynamic getter
-        return parent::__get( $key );
+        return parent::__get($key);
     }
 
     /**
      * Dynamically set attributes.
      *
-     * @param  string $key
-     * @param  mixed $value
-     * @return void
+     * @param string $key
+     * @param mixed  $value
      */
-    public function __set( $key, $value )
+    public function __set($key, $value)
     {
         // Dynamically set the encryptable attribute
-        if( ! empty($value) && $this->setDynamicEncryptable( $key, $value ) )
-        {
+        if ( ! empty($value) && $this->setDynamicEncryptable($key, $value)) {
             return;
         }
 
         // Default Eloquent dynamic setter
-        return parent::__set( $key, $value );
+        return parent::__set($key, $value);
     }
 
     /**
      * Get an encrypted attribute dynamically.
      *
-     * @param  string $attribute
+     * @param string $attribute
+     *
      * @return mixed
      */
-    protected function getDynamicEncrypted( $attribute )
+    protected function getDynamicEncrypted($attribute)
     {
         // Dynamically get the encrypted attributes
-        if ( $this->isEncryptable( $attribute ) )
-        {
+        if ($this->isEncryptable($attribute)) {
+
             // Decrypt only encrypted values
-            if( $this->isEncrypted( $attribute ) )
-            {
-                return $this->getEncryptedAttribute( $attribute );
+            if ($this->isEncrypted($attribute)) {
+                return $this->getEncryptedAttribute($attribute);
             }
         }
     }
@@ -93,22 +90,24 @@ trait EncryptingModelTrait
     /**
      * Set an encryptable attribute dynamically.
      *
-     * @param  string $attribute
-     * @param  mixed $value
-     * @return boolean
+     * @param string $attribute
+     * @param mixed  $value
+     *
+     * @return bool
      */
-    protected function setDynamicEncryptable( $attribute, $value )
+    protected function setDynamicEncryptable($attribute, $value)
     {
         // Dynamically set the encryptable attribute
-        if ( $this->isEncryptable( $attribute ) )
-        {
+        if ($this->isEncryptable($attribute)) {
+
             // Encrypt only decrypted values
-            if ( $this->isDecrypted( $attribute ) )
-            {
+            if ($this->isDecrypted($attribute)) {
                 $this->setEncryptingAttribute($attribute, $value);
+
                 return true;
             }
         }
+
         return false;
     }
 
@@ -125,10 +124,9 @@ trait EncryptingModelTrait
     /**
      * Set the encryptable attributes.
      *
-     * @param  array $attributes to encrypt
-     * @return void
+     * @param array $attributes to encrypt
      */
-    public function setEncryptable( array $attributes )
+    public function setEncryptable(array $attributes)
     {
         $this->encryptable = $attributes;
     }
@@ -137,42 +135,41 @@ trait EncryptingModelTrait
      * Add an attribute to the encryptable array.
      *
      * @example addEncryptable( string $attribute, ... )
-     * @param  string $attribute to purge
-     * @return void
+     *
+     * @param string $attribute to purge
      */
-    public function addEncryptable( $attribute )
+    public function addEncryptable($attribute)
     {
-        $this->mergeEncryptable( func_get_args() );
+        $this->mergeEncryptable(func_get_args());
     }
 
     /**
      * Remove an attribute from the encryptable array.
      *
      * @example addEncryptable( string $attribute, ... )
-     * @param  string $attribute to purge
-     * @return void
+     *
+     * @param string $attribute to purge
      */
-    public function removeEncryptable( $attribute )
+    public function removeEncryptable($attribute)
     {
-        $this->encryptable = array_diff( $this->encryptable, func_get_args() );
+        $this->encryptable = array_diff($this->encryptable, func_get_args());
     }
 
     /**
      * Merge an array of attributes with the encryptable array.
      *
-     * @param  array $attributes to purge
-     * @return void
+     * @param array $attributes to purge
      */
-    public function mergeEncryptable( array $attributes )
+    public function mergeEncryptable(array $attributes)
     {
-        $this->encryptable = array_merge( $this->encryptable, $attributes );
+        $this->encryptable = array_merge($this->encryptable, $attributes);
     }
 
     /**
      * Returns whether or not the model will encrypt
      * attributes when setting and decrypt when getting.
      *
-     * @return boolean
+     * @return bool
      */
     public function getEncrypting()
     {
@@ -183,10 +180,9 @@ trait EncryptingModelTrait
      * Set whether or not the model will encrypt attributes
      * when setting and decrypt when getting.
      *
-     * @param  boolean
-     * @return void
+     * @param  bool
      */
-    public function setEncrypting( $value )
+    public function setEncrypting($value)
     {
         $this->encrypting = (bool) $value;
     }
@@ -194,7 +190,7 @@ trait EncryptingModelTrait
     /**
      * Set the Encrypter to use for encryption.
      *
-     * @return \Illuminate\Encryption\Encrypter
+     * @return Illuminate\Encryption\Encrypter
      */
     public function getEncrypter()
     {
@@ -204,10 +200,9 @@ trait EncryptingModelTrait
     /**
      * Set the Encrypter to use for encryption.
      *
-     * @param \Illuminate\Encryption\Encrypter $encrypter
-     * @return void
+     * @param Illuminate\Encryption\Encrypter $encrypter
      */
-    public function setEncrypter( Encrypter $encrypter )
+    public function setEncrypter(Encrypter $encrypter)
     {
         $this->encrypter = $encrypter;
     }
@@ -216,33 +211,31 @@ trait EncryptingModelTrait
      * Returns whether the attribute is encryptable.
      *
      * @param string $attribute name
-     * @return boolean
+     *
+     * @return bool
      */
-    public function isEncryptable( $attribute )
+    public function isEncryptable($attribute)
     {
         return $this->getEncrypting()
-            && in_array( $attribute, $this->getEncryptable() );
+            && in_array($attribute, $this->getEncryptable());
     }
 
     /**
      * Returns whether the attribute is encrypted.
      *
      * @param string $attribute name
-     * @return boolean
+     *
+     * @return bool
      */
-    public function isEncrypted( $attribute )
+    public function isEncrypted($attribute)
     {
-        if( ! array_key_exists($attribute, $this->attributes) )
-        {
+        if ( ! array_key_exists($attribute, $this->attributes)) {
             return false;
         }
 
-        try
-        {
-            $this->decrypt( array_get($this->attributes, $attribute) );
-        }
-        catch (DecryptException $exception)
-        {
+        try {
+            $this->decrypt(array_get($this->attributes, $attribute));
+        } catch (DecryptException $exception) {
             return false;
         }
 
@@ -253,23 +246,21 @@ trait EncryptingModelTrait
      * Returns whether the attribute is decrypted.
      *
      * @param string $attribute name
-     * @return boolean
+     *
+     * @return bool
      */
-    public function isDecrypted( $attribute )
+    public function isDecrypted($attribute)
     {
-        return ! $this->isEncrypted ( $attribute );
+        return ! $this->isEncrypted($attribute);
     }
 
     /**
      * Encrypt attributes that should be encrypted.
-     *
-     * @return void
      */
     public function encryptAttributes()
     {
-        foreach( $this->getEncryptable() as $attribute )
-        {
-            $this->setEncryptingAttribute( $attribute, array_get($this->attributes, $attribute) );
+        foreach ($this->getEncryptable() as $attribute) {
+            $this->setEncryptingAttribute($attribute, array_get($this->attributes, $attribute));
         }
     }
 
@@ -277,48 +268,50 @@ trait EncryptingModelTrait
      * Return an encrypted string for the value.
      *
      * @param string $value
+     *
      * @return string
      */
-    public function encrypt( $value )
+    public function encrypt($value)
     {
         return $this->getEncrypter()
-            ->encrypt( $value );
+            ->encrypt($value);
     }
 
     /**
      * Return a decrypted string for the value.
      *
      * @param string $value
+     *
      * @return string
      */
-    public function decrypt( $value )
+    public function decrypt($value)
     {
         return $this->getEncrypter()
-            ->decrypt( $value );
+            ->decrypt($value);
     }
 
     /**
      * Get the decrypted value for an encrypted attribute.
      *
      * @param string $attribute name
+     *
      * @return string
      */
-    public function getEncryptedAttribute( $attribute )
+    public function getEncryptedAttribute($attribute)
     {
         $value = array_get($this->attributes, $attribute);
-        return $this->isEncrypted( $attribute ) ? $this->decrypt( $value ) : $value;
+
+        return $this->isEncrypted($attribute) ? $this->decrypt($value) : $value;
     }
 
     /**
      * Set an encrypted value for an encryptable attribute.
      *
      * @param string $attribute name
-     * @param string $value to encrypt
-     * @return void
+     * @param string $value     to encrypt
      */
-    public function setEncryptingAttribute( $attribute, $value )
+    public function setEncryptingAttribute($attribute, $value)
     {
-        array_set($this->attributes, $attribute, $this->encrypt( $value ));
+        array_set($this->attributes, $attribute, $this->encrypt($value));
     }
-
 }

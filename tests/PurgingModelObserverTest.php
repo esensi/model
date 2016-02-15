@@ -4,12 +4,12 @@ use Esensi\Model\Observers\PurgingModelObserver;
 use PHPUnit_Framework_TestCase as PHPUnit;
 
 /**
- * Tests for Purging Model Observer
+ * Tests for Purging Model Observer.
  *
- * @package Esensi\Model
  * @author Daniel LaBarge <daniel@emersonmedia.com>
  * @copyright 2014 Emerson Media LP
- * @license https://github.com/esensi/model/blob/master/LICENSE.txt MIT License
+ * @license https://github.com/esensi/model/blob/master/license.md MIT License
+ *
  * @link http://www.emersonmedia.com
  */
 class PurgingModelObserverTest extends PHPUnit
@@ -20,7 +20,7 @@ class PurgingModelObserverTest extends PHPUnit
     public function setUp()
     {
         // Create a new instance of the PurgingModelObserver
-        $this->observer = new PurgingModelObserver;
+        $this->observer = new PurgingModelObserver();
 
         // Mock the model that implements the PurgingModelTrait
         $this->model = Mockery::mock('\Esensi\Model\Model');
@@ -113,5 +113,4 @@ class PurgingModelObserverTest extends PHPUnit
         // Run it
         $this->observer->updating($this->model);
     }
-
 }

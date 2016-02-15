@@ -3,12 +3,12 @@
 namespace Esensi\Model\Contracts;
 
 /**
- * Relating Model Interface
+ * Relating Model Interface.
  *
- * @package Esensi\Model
  * @author Daniel LaBarge <daniel@emersonmedia.com>
- * @copyright 2015 Emerson Media LP
- * @license https://github.com/esensi/model/blob/master/LICENSE.txt MIT License
+ * @copyright 2015-2016 Emerson Media LP
+ * @license https://github.com/esensi/model/blob/master/license.md MIT License
+ *
  * @link http://www.emersonmedia.com
  */
 interface RelatingModelInterface
@@ -17,17 +17,19 @@ interface RelatingModelInterface
      * Return the relationship configurations.
      *
      * @param string $name of related model
+     *
+     * @throws Illuminate\Database\Eloquent\ModelNotFoundException
+     *
      * @return array
-     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
      */
-    public function getRelationship( $name );
+    public function getRelationship($name);
 
     /**
      * Return whether the name is a relationship or not.
      *
      * @param string $name of related model
-     * @return boolean
+     *
+     * @return bool
      */
-    public function isRelationship( $name );
-
+    public function isRelationship($name);
 }

@@ -4,12 +4,12 @@ use Esensi\Model\Model;
 use PHPUnit_Framework_TestCase as PHPUnit;
 
 /**
- * Tests for the Model
+ * Tests for the Model.
  *
- * @package Esensi\Model
  * @author Daniel LaBarge <daniel@emersonmedia.com>
  * @copyright 2014 Emerson Media LP
- * @license https://github.com/esensi/model/blob/master/LICENSE.txt MIT License
+ * @license https://github.com/esensi/model/blob/master/license.md MIT License
+ *
  * @link http://www.emersonmedia.com
  */
 class ModelTest extends PHPUnit
@@ -91,13 +91,11 @@ class ModelTest extends PHPUnit
         // Check Model implements the Relating interface
         $this->assertInstanceOf('\Esensi\Model\Contracts\RelatingModelInterface', $this->model);
     }
-
 }
 
 /**
- * Model Stub for Model Tests
+ * Model Stub for Model Tests.
  */
 class ModelStub extends Model
 {
-
 }

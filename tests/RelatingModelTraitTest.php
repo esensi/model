@@ -1,22 +1,18 @@
 <?php
 
 use Esensi\Model\Model;
-use PHPUnit_Framework_TestCase as PHPUnit;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\Connection;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
-use Illuminate\Database\Connection;
-use Illuminate\Database\ConnectionResolverInterface;
-use Illuminate\Database\Query\Grammars\Grammar;
-use Illuminate\Database\Query\Processors\Processor;
+use PHPUnit_Framework_TestCase as PHPUnit;
 
 /**
- * Tests for the Relating Model Trait
+ * Tests for the Relating Model Trait.
  *
- * @package Esensi\Model
  * @author Daniel LaBarge <daniel@emersonmedia.com>
  * @copyright 2014 Emerson Media LP
- * @license https://github.com/esensi/model/blob/master/LICENSE.txt MIT License
+ * @license https://github.com/esensi/model/blob/master/license.md MIT License
+ *
  * @link http://www.emersonmedia.com
  */
 class RelatingModelTraitTest extends PHPUnit
@@ -50,7 +46,7 @@ class RelatingModelTraitTest extends PHPUnit
             ->andReturn(true);
 
         $relationship = $this->model->getRelationship('foo');
-        $this->assertSame( $relationship, ['belongsTo', 'FooModelStub']);
+        $this->assertSame($relationship, ['belongsTo', 'FooModelStub']);
     }
 
     /**
@@ -163,31 +159,30 @@ class RelatingModelTraitTest extends PHPUnit
         $this->assertContains('foo', $keys);
         $this->assertNotContains('foo.bar', $keys);
     }
-
 }
 
 /**
- * Model Stub for Relationships Tests
+ * Model Stub for Relationships Tests.
  */
 class ModelRelatingStub extends Model
 {
     /**
      * Indicates if the model exists.
      *
-     * @var boolean
+     * @type bool
      */
     public $exists = false;
 
     /**
      * Relationships that the model should set up.
      *
-     * @var array
+     * @type array
      */
     protected $relationships = [
 
         'foo' => [
             'belongsTo',
-            'FooModelStub'
+            'FooModelStub',
         ],
 
         'bar' => [
@@ -204,24 +199,23 @@ class ModelRelatingStub extends Model
     /**
      * Extra attributes to be added to pivot relationships.
      *
-     * @var array
+     * @type array
      */
     protected $relationshipPivots = [
 
-        'many' => [ 'foo', 'timestamps' ],
+        'many' => ['foo', 'timestamps'],
     ];
 }
 
 /**
- * Foo Model Stub for Relationship Tests
+ * Foo Model Stub for Relationship Tests.
  */
 class FooModelStub extends Model
 {
-
     /**
      * Relationships that the model should set up.
      *
-     * @var array
+     * @type array
      */
     protected $relationships = [
 
@@ -233,17 +227,15 @@ class FooModelStub extends Model
 }
 
 /**
- * Bar Model Stub for Relationship Tests
+ * Bar Model Stub for Relationship Tests.
  */
 class BarModelStub extends Model
 {
-
 }
 
 /**
- * Many Model Stub for Relationship Tests
+ * Many Model Stub for Relationship Tests.
  */
 class ManyModelStub extends Model
 {
-
 }

@@ -26,6 +26,7 @@
         "watson/validating": "~1.0.0"
     },
     "require-dev": {
+        "fabpot/php-cs-fixer": "2.0.*@dev",
         "fzaninotto/faker": "~1.4",
         "mockery/mockery": "0.9.*",
         "phpunit/phpunit": "~4.0",
@@ -35,6 +36,19 @@
         "psr-4": {
             "Esensi\\Model\\": "src/"
         }
+    },
+    "scripts": {
+        "fix": [
+            "vendor/bin/php-cs-fixer fix -v"
+        ],
+        "test": [
+            "vendor/bin/phpunit --colors=always",
+            "vendor/bin/php-cs-fixer fix -v --diff --dry-run;"
+        ]
+    },
+    "config": {
+        "preferred-install": "dist",
+        "bin-dir": "vendor/bin"
     },
     "minimum-stability": "stable"
 }

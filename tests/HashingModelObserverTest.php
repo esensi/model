@@ -4,12 +4,12 @@ use Esensi\Model\Observers\HashingModelObserver;
 use PHPUnit_Framework_TestCase as PHPUnit;
 
 /**
- * Tests for Hashing Model Observer
+ * Tests for Hashing Model Observer.
  *
- * @package Esensi\Model
  * @author Daniel LaBarge <daniel@emersonmedia.com>
  * @copyright 2014 Emerson Media LP
- * @license https://github.com/esensi/model/blob/master/LICENSE.txt MIT License
+ * @license https://github.com/esensi/model/blob/master/license.md MIT License
+ *
  * @link http://www.emersonmedia.com
  */
 class HashingModelObserverTest extends PHPUnit
@@ -20,7 +20,7 @@ class HashingModelObserverTest extends PHPUnit
     public function setUp()
     {
         // Create a new instance of the HashingModelObserver
-        $this->observer = new HashingModelObserver;
+        $this->observer = new HashingModelObserver();
 
         // Mock the model that implements the HashingModelTrait
         $this->model = Mockery::mock('\Esensi\Model\Model');
@@ -113,5 +113,4 @@ class HashingModelObserverTest extends PHPUnit
         // Run it
         $this->observer->updating($this->model);
     }
-
 }

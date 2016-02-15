@@ -4,12 +4,12 @@ use Esensi\Model\Model;
 use PHPUnit_Framework_TestCase as PHPUnit;
 
 /**
- * Tests for the Purging Model Trait
+ * Tests for the Purging Model Trait.
  *
- * @package Esensi\Model
  * @author Daniel LaBarge <daniel@emersonmedia.com>
  * @copyright 2014 Emerson Media LP
- * @license https://github.com/esensi/model/blob/master/LICENSE.txt MIT License
+ * @license https://github.com/esensi/model/blob/master/license.md MIT License
+ *
  * @link http://www.emersonmedia.com
  */
 class PurgingModelTraitTest extends PHPUnit
@@ -313,8 +313,8 @@ class PurgingModelTraitTest extends PHPUnit
      */
     public function testPurgeAttributes()
     {
-        $attributes = [ 'foo' => 'fighters', 'bar' => 'soap' ];
-        $purgeables = [ '_hidden' => 'field', 'baz_confirmation' => 'confirmed' ];
+        $attributes = ['foo' => 'fighters', 'bar' => 'soap'];
+        $purgeables = ['_hidden' => 'field', 'baz_confirmation' => 'confirmed'];
         $this->model->setPurgeable(array_keys($purgeables));
         $this->model->unguard();
         $this->model->fill(array_merge($attributes, $purgeables));
@@ -391,19 +391,17 @@ class PurgingModelTraitTest extends PHPUnit
         // Check that purging is still enabled
         $this->assertTrue($this->model->getPurging());
     }
-
 }
 
 /**
- * Model Stub for Purging Tests
+ * Model Stub for Purging Tests.
  */
 class ModelPurgingStub extends Model
 {
     /**
-     * The attributes to purge before saving
+     * The attributes to purge before saving.
      *
-     * @var array
+     * @type array
      */
     protected $purgeable = ['foo'];
-
 }

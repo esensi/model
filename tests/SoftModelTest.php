@@ -4,12 +4,12 @@ use Esensi\Model\SoftModel;
 use PHPUnit_Framework_TestCase as PHPUnit;
 
 /**
- * Tests for the Soft Model
+ * Tests for the Soft Model.
  *
- * @package Esensi\Model
  * @author Daniel LaBarge <daniel@emersonmedia.com>
  * @copyright 2014 Emerson Media LP
- * @license https://github.com/esensi/model/blob/master/LICENSE.txt MIT License
+ * @license https://github.com/esensi/model/blob/master/license.md MIT License
+ *
  * @link http://www.emersonmedia.com
  */
 class SoftModelTest extends PHPUnit
@@ -85,19 +85,17 @@ class SoftModelTest extends PHPUnit
     {
         $this->assertContains('foo', $this->model->getDates());
     }
-
 }
 
 /**
- * Soft Model Stub for Model Tests
+ * Soft Model Stub for Model Tests.
  */
 class SoftModelStub extends SoftModel
 {
     /**
      * The attributes that should be mutated to dates.
      *
-     * @var array
+     * @type array
      */
     protected $dates = ['foo'];
-
 }

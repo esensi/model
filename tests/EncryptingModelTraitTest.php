@@ -5,12 +5,12 @@ use Illuminate\Encryption\Encrypter;
 use PHPUnit_Framework_TestCase as PHPUnit;
 
 /**
- * Tests for the Encrypting Model Trait
+ * Tests for the Encrypting Model Trait.
  *
- * @package Esensi\Model
  * @author Daniel LaBarge <daniel@emersonmedia.com>
  * @copyright 2014 Emerson Media LP
- * @license https://github.com/esensi/model/blob/master/LICENSE.txt MIT License
+ * @license https://github.com/esensi/model/blob/master/license.md MIT License
+ *
  * @link http://www.emersonmedia.com
  */
 class EncryptingModelTraitTest extends PHPUnit
@@ -495,11 +495,10 @@ class EncryptingModelTraitTest extends PHPUnit
         // Check that the attribute is encrypted
         $this->assertTrue($this->model->isEncrypted('foo'));
     }
-
 }
 
 /**
- * Model Stub for Encrypting Tests
+ * Model Stub for Encrypting Tests.
  */
 class ModelEncryptingStub extends Model
 {
@@ -507,7 +506,7 @@ class ModelEncryptingStub extends Model
      * The attributes to encrypt when set and
      * decrypt when gotten.
      *
-     * @var array
+     * @type array
      */
     protected $encryptable = ['foo'];
 
@@ -516,27 +515,27 @@ class ModelEncryptingStub extends Model
      *
      * @return ModelEncryptingStub
      */
-    public function __construct(){
-
+    public function __construct()
+    {
         parent::__construct();
 
         // Assign a default encrypter for mocking purposes
         $this->encrypter = EncrypterStub::newInstance();
     }
-
 }
 
 /**
- * Encrypter Stub for Encrypter Tests
+ * Encrypter Stub for Encrypter Tests.
  */
 class EncrypterStub extends Encrypter
 {
     /**
-     * Construct new instance of EncrypterStub
+     * Construct new instance of EncrypterStub.
      *
      * @return Illuminate\Encryption\Encrypter
      */
-    public static function newInstance(){
-        return new EncrypterStub('TESTL3drFL2P3Rnjw216bOZxkgZ0tKEY', 'AES-256-CBC');
+    public static function newInstance()
+    {
+        return new self('TESTL3drFL2P3Rnjw216bOZxkgZ0tKEY', 'AES-256-CBC');
     }
 }
