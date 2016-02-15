@@ -289,8 +289,12 @@ trait RelatingModelTrait
         // we will pass in the appropriate values so that it behaves as expected.
         else
         {
+            if( method_exists($this, 'getActualClassNameForMorph') ) 
+            {
+                $class = $this->getActualClassNameForMorph($class);
+            }
             $instance = new $class;
-
+            
             return new MorphTo(
                 with($instance)->newQuery(), $this, $id, $instance->getKeyName(), $type, $name
             );
