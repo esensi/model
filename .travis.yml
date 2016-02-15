@@ -1,3 +1,6 @@
+# opt-in to new Travis CI containers
+sudo: false
+
 # see http://about.travis-ci.org/docs/user/languages/php/ for more hints
 language: php
 
