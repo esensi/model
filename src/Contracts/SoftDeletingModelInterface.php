@@ -14,11 +14,6 @@ namespace Esensi\Model\Contracts;
 interface SoftDeletingModelInterface
 {
     /**
-     * Boot the soft deleting trait for a model.
-     */
-    public static function bootSoftDeletingTrait();
-
-    /**
      * Force a hard delete on a soft deleted model.
      */
     public function forceDelete();
