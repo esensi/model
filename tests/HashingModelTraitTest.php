@@ -516,7 +516,7 @@ class ModelHashingStub extends Model
     /**
      * The attributes to hash before saving.
      *
-     * @type array
+     * @var array
      */
     protected $hashable = ['foo'];
 

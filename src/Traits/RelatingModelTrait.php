@@ -120,7 +120,7 @@ trait RelatingModelTrait
             throw $exception;
         }
 
-        return $this->relationships[ $name ];
+        return $this->relationships[$name];
     }
 
     /**
@@ -132,7 +132,7 @@ trait RelatingModelTrait
      */
     public function getPivotAttributes($name)
     {
-        return $this->relationshipPivots[ $name ] ?: [];
+        return $this->relationshipPivots[$name] ?: [];
     }
 
     /**

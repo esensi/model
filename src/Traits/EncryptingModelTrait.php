@@ -21,14 +21,14 @@ trait EncryptingModelTrait
     /**
      * Whether the model is encrypting or not.
      *
-     * @type bool
+     * @var bool
      */
     protected $encrypting = true;
 
     /**
      * The Encrypter to use for encryption.
      *
-     * @type Illuminate\Encryption\Encrypter
+     * @var Illuminate\Encryption\Encrypter
      */
     protected $encrypter;
 

@@ -169,14 +169,14 @@ class ModelRelatingStub extends Model
     /**
      * Indicates if the model exists.
      *
-     * @type bool
+     * @var bool
      */
     public $exists = false;
 
     /**
      * Relationships that the model should set up.
      *
-     * @type array
+     * @var array
      */
     protected $relationships = [
 
@@ -199,7 +199,7 @@ class ModelRelatingStub extends Model
     /**
      * Extra attributes to be added to pivot relationships.
      *
-     * @type array
+     * @var array
      */
     protected $relationshipPivots = [
 
@@ -215,7 +215,7 @@ class FooModelStub extends Model
     /**
      * Relationships that the model should set up.
      *
-     * @type array
+     * @var array
      */
     protected $relationships = [
 

@@ -93,14 +93,14 @@ abstract class Model extends Eloquent implements
     /**
      * The attributes that should be mutated to dates.
      *
-     * @type array
+     * @var array
      */
     protected $dates = [];
 
     /**
      * The default rules that the model will validate against.
      *
-     * @type array
+     * @var array
      */
     protected $rules = [];
 
@@ -109,7 +109,7 @@ abstract class Model extends Eloquent implements
      *
      * @deprecated watson/validating 0.10.9
      *
-     * @type array
+     * @var array
      */
     protected $rulesets = [];
 
@@ -117,42 +117,42 @@ abstract class Model extends Eloquent implements
      * The attributes to encrypt when set and
      * decrypt when gotten.
      *
-     * @type array
+     * @var array
      */
     protected $encryptable = [];
 
     /**
      * The attributes to hash before saving.
      *
-     * @type array
+     * @var array
      */
     protected $hashable = [];
 
     /**
      * Attributes to cast to a different type.
      *
-     * @type array
+     * @var array
      */
     protected $jugglable = [];
 
     /**
      * The attributes to purge before saving.
      *
-     * @type array
+     * @var array
      */
     protected $purgeable = [];
 
     /**
      * Relationships that the model should set up.
      *
-     * @type array
+     * @var array
      */
     protected $relationships = [];
 
     /**
      * Extra attributes to be added to pivot relationships.
      *
-     * @type array
+     * @var array
      */
     protected $relationshipPivots = [];
 

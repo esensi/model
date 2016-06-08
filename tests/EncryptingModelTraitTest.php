@@ -506,7 +506,7 @@ class ModelEncryptingStub extends Model
      * The attributes to encrypt when set and
      * decrypt when gotten.
      *
-     * @type array
+     * @var array
      */
     protected $encryptable = ['foo'];
 

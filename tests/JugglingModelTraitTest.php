@@ -569,14 +569,14 @@ class ModelJugglingStub extends Model
     /**
      * Indicates if the model exists.
      *
-     * @type bool
+     * @var bool
      */
     public $exists = false;
 
     /**
      * The attributes to type juggle.
      *
-     * @type array
+     * @var array
      */
     protected $jugglable = [
         'myString'    => 'string',
@@ -597,7 +597,7 @@ class ModelJugglingStub extends Model
      * in the tests to set the attributes in the object.
      * Make sure the keys align with $jugglabe property on this stub.
      *
-     * @type array
+     * @var array
      */
     public $tmpAttributes = [
         'myString'    => 'Hello world',
