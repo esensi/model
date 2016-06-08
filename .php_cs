@@ -14,7 +14,7 @@ return Config::create()
         'not_operator_with_space' => true,
         'ordered_imports' => true,
         'phpdoc_order' => true,
-        'phpdoc_var_to_type' => true,
+        'phpdoc_type_to_var' => true,
         'psr0' => false,
         'short_array_syntax' => true,
         'unalign_double_arrow' => false,

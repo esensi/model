@@ -21,14 +21,14 @@ trait HashingModelTrait
     /**
      * Whether the model is hashing or not.
      *
-     * @type bool
+     * @var bool
      */
     protected $hashing = true;
 
     /**
      * The Hasher to use for hashing.
      *
-     * @type Illuminate\Contracts\Hashing\Hasher
+     * @var Illuminate\Contracts\Hashing\Hasher
      */
     protected $hasher;
 
@@ -162,7 +162,7 @@ trait HashingModelTrait
             return false;
         }
 
-        $info = password_get_info($this->attributes[ $attribute ]);
+        $info = password_get_info($this->attributes[$attribute]);
 
         return (bool) ($info['algo'] !== 0);
     }
@@ -213,11 +213,11 @@ trait HashingModelTrait
     public function setHashingAttribute($attribute, $value)
     {
         // Set the value which is presumably plain text
-        $this->attributes[ $attribute ] = $value;
+        $this->attributes[$attribute] = $value;
 
         // Do the hashing if it needs it
         if ( ! empty($value) && ($this->isDirty($attribute) || ! $this->isHashed($attribute))) {
-            $this->attributes[ $attribute ] = $this->hash($value);
+            $this->attributes[$attribute] = $this->hash($value);
         }
     }
 

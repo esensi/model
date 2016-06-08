@@ -401,7 +401,7 @@ class ModelPurgingStub extends Model
     /**
      * The attributes to purge before saving.
      *
-     * @type array
+     * @var array
      */
     protected $purgeable = ['foo'];
 }

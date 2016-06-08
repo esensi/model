@@ -14,11 +14,6 @@ namespace Esensi\Model\Contracts;
 interface SoftDeletingModelInterface
 {
     /**
-     * Boot the soft deleting trait for a model.
-     */
-    public static function bootSoftDeletingTrait();
-
-    /**
      * Force a hard delete on a soft deleted model.
      */
     public function forceDelete();
@@ -36,20 +31,6 @@ interface SoftDeletingModelInterface
      * @return bool
      */
     public function trashed();
-
-    /**
-     * Get a new query builder that includes soft deletes.
-     *
-     * @return Illuminate\Database\Eloquent\Builder|static
-     */
-    public static function withTrashed();
-
-    /**
-     * Get a new query builder that only includes soft deletes.
-     *
-     * @return Illuminate\Database\Eloquent\Builder|static
-     */
-    public static function onlyTrashed();
 
     /**
      * Register a restoring model event with the dispatcher.

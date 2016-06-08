@@ -28,7 +28,7 @@ trait SoftDeletingModelTrait
      * We want to boot our own observer so we stub out this
      * boot method. This renders this function void.
      */
-    public static function bootSoftDeletingTrait()
+    public static function bootSoftDeletes()
     {
     }
 

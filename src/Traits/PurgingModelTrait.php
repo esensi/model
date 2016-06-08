@@ -20,7 +20,7 @@ trait PurgingModelTrait
     /**
      * Whether the model is purging or not.
      *
-     * @type bool
+     * @var bool
      */
     protected $purging = true;
 

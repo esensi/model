@@ -95,7 +95,7 @@ class SoftModelStub extends SoftModel
     /**
      * The attributes that should be mutated to dates.
      *
-     * @type array
+     * @var array
      */
     protected $dates = ['foo'];
 }

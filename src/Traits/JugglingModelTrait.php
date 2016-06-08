@@ -21,7 +21,7 @@ trait JugglingModelTrait
     /**
      * Whether the model is type juggling attributes or not.
      *
-     * @type bool
+     * @var bool
      */
     protected $juggling = true;
 
@@ -53,7 +53,7 @@ trait JugglingModelTrait
         parent::__set($key, $value);
 
         // Dynamically set the juggled value
-        $this->setDynamicJuggle($key, $this->attribute[ $key ]);
+        $this->setDynamicJuggle($key, $this->attribute[$key]);
     }
 
     /**
@@ -320,7 +320,7 @@ trait JugglingModelTrait
     {
         $jugglable = $this->getJugglable();
 
-        return $jugglable[ $attribute ];
+        return $jugglable[$attribute];
     }
 
     /**
@@ -331,8 +331,8 @@ trait JugglingModelTrait
         // Iterate the juggable fields, and if the field is present
         // cast the attribute and replace within the attributes array.
         foreach ($this->getJugglable() as $attribute => $type) {
-            if (isset($this->attributes[ $attribute ])) {
-                $this->juggleAttribute($attribute, $this->attributes[ $attribute ]);
+            if (isset($this->attributes[$attribute])) {
+                $this->juggleAttribute($attribute, $this->attributes[$attribute]);
             }
         }
     }
@@ -347,7 +347,7 @@ trait JugglingModelTrait
     public function juggleAttribute($attribute, $value)
     {
         $type = $this->getJuggleType($attribute);
-        $this->attributes[ $attribute ] = $this->juggle($value, $type);
+        $this->attributes[$attribute] = $this->juggle($value, $type);
     }
 
     /**
