@@ -38,20 +38,6 @@ interface SoftDeletingModelInterface
     public function trashed();
 
     /**
-     * Get a new query builder that includes soft deletes.
-     *
-     * @return Illuminate\Database\Eloquent\Builder|static
-     */
-    public static function withTrashed();
-
-    /**
-     * Get a new query builder that only includes soft deletes.
-     *
-     * @return Illuminate\Database\Eloquent\Builder|static
-     */
-    public static function onlyTrashed();
-
-    /**
      * Register a restoring model event with the dispatcher.
      *
      * @param Closure|string $callback
