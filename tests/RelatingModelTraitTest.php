@@ -150,8 +150,8 @@ class RelatingModelTraitTest extends PHPUnit
         // Make sure high level unsetting maintains deep relationships
         $relationships = $model->with('foo.bar')->without('foo')->getEagerLoads();
         $keys = array_keys(array_dot($relationships));
-        $this->assertContains('foo', $keys);
-        $this->assertContains('foo.bar', $keys);
+        $this->assertNotContains('foo', $keys, "foo should NOT be in " . var_export($keys, true));
+        $this->assertContains('foo.bar', $keys, "foo.bar should be in " . var_export($keys, true));
 
         // Make sure high level relationships are not unset by low level
         $relationships = $model->with('foo')->without('foo.bar')->getEagerLoads();
