@@ -144,7 +144,7 @@ trait RelatingModelTrait
      */
     public function isRelationship($name)
     {
-        return array_key_exists($name, $this->relationships);
+        return array_key_exists( $name, $this->relationships ) || method_exists( $this, $name );
     }
 
     /**
@@ -156,7 +156,7 @@ trait RelatingModelTrait
      */
     public function hasPivotAttributes($name)
     {
-        return array_key_exists($name, $this->relationshipPivots);
+        return array_key_exists( $name, $this->relationshipPivots ?: [] );
     }
 
     /**
