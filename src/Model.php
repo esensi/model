@@ -173,7 +173,6 @@ abstract class Model extends Eloquent implements
         // Dynamically retrieve the encryptable attribute
         $value = $this->getDynamicEncrypted($key);
         if (is_null($value) || ! is_string($value)) {
-
             // Fallback to the default Eloquent dynamic getter
             $value = parent::__get($key);
         }
