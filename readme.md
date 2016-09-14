@@ -725,7 +725,7 @@ class Post extends Eloquent implements RelatingModelInterface {
      *     [ 'morphMany', 'related', 'name', 'type', 'id', 'localKey' ]
      *     [ 'morphTo', 'name', 'type', 'id' ]
      *     [ 'morphToMany', 'related', 'name', 'table', 'foreignKey', 'otherKey', 'inverse' ]
-     *     [ 'morphByMany', 'related', 'name', 'table', 'foreignKey', 'otherKey' ]
+     *     [ 'morphedByMany', 'related', 'name', 'table', 'foreignKey', 'otherKey' ]
      *
      * @var array
      */
