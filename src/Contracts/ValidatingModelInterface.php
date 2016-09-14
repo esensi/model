@@ -15,7 +15,7 @@ use Watson\Validating\ValidatingInterface;
  * @deprecated In watson/validating@0.10.9 the custom methods
  *             used below were deprecated in favor of Laravel 5's
  *             form request validation classes. Stop using
- *             rulesets right now as they will be removed.
+ *             rulesets right now as they will be removed
  * @see Watson\Validating\ValidatingInterface
  */
 interface ValidatingModelInterface extends ValidatingInterface

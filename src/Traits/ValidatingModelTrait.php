@@ -16,7 +16,7 @@ use Watson\Validating\ValidatingTrait;
  * @deprecated In watson/validating@0.10.9 the custom methods
  *             used below were deprecated in favor of Laravel 5's
  *             form request validation classes. Stop using
- *             rulesets right now as they will be removed.
+ *             rulesets right now as they will be removed
  * @see Esensi\Model\Contracts\ValidatingModelInterface
  */
 trait ValidatingModelTrait
@@ -98,7 +98,6 @@ trait ValidatingModelTrait
     {
         $rulesets = $this->getRulesets();
         if (array_key_exists($ruleset, $rulesets)) {
-
             // If the ruleset exists and merge with saving is true, return
             // the rulesets merged.
             if ($mergeWithSaving) {

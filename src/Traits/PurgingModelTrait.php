@@ -131,7 +131,6 @@ trait PurgingModelTrait
 
         // Filter out keys that should purged
         $attributes = array_filter($keys, function ($key) {
-
             // Remove attributes that should be purged
             if (in_array($key, $this->getPurgeable())) {
                 return false;

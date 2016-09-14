@@ -150,8 +150,8 @@ class RelatingModelTraitTest extends PHPUnit
         // Make sure high level unsetting maintains deep relationships
         $relationships = $model->with('foo.bar')->without('foo')->getEagerLoads();
         $keys = array_keys(array_dot($relationships));
-        $this->assertNotContains('foo', $keys, "foo should NOT be in " . var_export($keys, true));
-        $this->assertContains('foo.bar', $keys, "foo.bar should be in " . var_export($keys, true));
+        $this->assertNotContains('foo', $keys, 'foo should NOT be in '.var_export($keys, true));
+        $this->assertContains('foo.bar', $keys, 'foo.bar should be in '.var_export($keys, true));
 
         // Make sure high level relationships are not unset by low level
         $relationships = $model->with('foo')->without('foo.bar')->getEagerLoads();
@@ -179,7 +179,6 @@ class ModelRelatingStub extends Model
      * @var array
      */
     protected $relationships = [
-
         'foo' => [
             'belongsTo',
             'FooModelStub',
@@ -202,7 +201,6 @@ class ModelRelatingStub extends Model
      * @var array
      */
     protected $relationshipPivots = [
-
         'many' => ['foo', 'timestamps'],
     ];
 }
@@ -218,7 +216,6 @@ class FooModelStub extends Model
      * @var array
      */
     protected $relationships = [
-
         'bar' => [
             'belongsTo',
             'BarModelStub',

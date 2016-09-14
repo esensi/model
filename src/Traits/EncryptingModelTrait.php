@@ -79,7 +79,6 @@ trait EncryptingModelTrait
     {
         // Dynamically get the encrypted attributes
         if ($this->isEncryptable($attribute)) {
-
             // Decrypt only encrypted values
             if ($this->isEncrypted($attribute)) {
                 return $this->getEncryptedAttribute($attribute);
@@ -99,7 +98,6 @@ trait EncryptingModelTrait
     {
         // Dynamically set the encryptable attribute
         if ($this->isEncryptable($attribute)) {
-
             // Encrypt only decrypted values
             if ($this->isDecrypted($attribute)) {
                 $this->setEncryptingAttribute($attribute, $value);

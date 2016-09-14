@@ -81,7 +81,6 @@ trait RelatingModelTrait
     {
         // Dynamically get the relationship
         if ($this->isRelationship($name)) {
-
             // Use the relationship already loaded
             if (array_key_exists($name, $this->getRelations())) {
                 return $this->getRelation($name);
@@ -144,7 +143,7 @@ trait RelatingModelTrait
      */
     public function isRelationship($name)
     {
-        return array_key_exists( $name, $this->relationships ) || method_exists( $this, $name );
+        return array_key_exists($name, $this->relationships) || method_exists($this, $name);
     }
 
     /**
@@ -156,7 +155,7 @@ trait RelatingModelTrait
      */
     public function hasPivotAttributes($name)
     {
-        return array_key_exists( $name, $this->relationshipPivots ?: [] );
+        return array_key_exists($name, $this->relationshipPivots ?: []);
     }
 
     /**
@@ -178,7 +177,6 @@ trait RelatingModelTrait
 
         // Check to see if this relationship has extended pivot attributes
         if ($this->hasPivotAttributes($name)) {
-
             // Add timestamps to relationship
             $attributes = $this->getPivotAttributes($name);
             if (in_array('timestamps', $attributes)) {

@@ -68,7 +68,6 @@ trait JugglingModelTrait
     {
         // Check if juggling is enabled
         if ($this->getJuggling()) {
-
             // Juggle all the jugglable attributes
             $this->juggleAttributes();
         }
@@ -106,7 +105,6 @@ trait JugglingModelTrait
     {
         // Check that the attribute is jugglable
         if ( ! is_null($value) && $this->isJugglable($key)) {
-
             // Cast the value to the type set for the attribute
             $this->juggleAttribute($key, $value);
         }
@@ -254,7 +252,6 @@ trait JugglingModelTrait
         // If not valid, throw an exception.
         if ( ! $this->isJuggleType($type)) {
             throw new InvalidArgumentException('The type "'.$type.'" is not a valid type cast.');
-
             return false;
         }
 
@@ -275,7 +272,6 @@ trait JugglingModelTrait
 
         // Map the type to it's normalized type
         switch ($type) {
-
             case 'bool':
             case 'boolean':
                 $normalizedType = 'boolean';
@@ -364,12 +360,10 @@ trait JugglingModelTrait
     {
         // Cast non-null values
         if ( ! is_null($value)) {
-
             // Ensure that the type is a valid type to cast.
             // We do this check here because it might not have been done
             // as is the case when the model is first initialized.
             if ($this->checkJuggleType($type)) {
-
                 // Get the method that the type maps to
                 $method = $this->buildJuggleMethod($type);
 
