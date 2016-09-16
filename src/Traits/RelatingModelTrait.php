@@ -143,7 +143,7 @@ trait RelatingModelTrait
      */
     public function isRelationship($name)
     {
-        return array_key_exists($name, $this->relationships) || method_exists($this, $name);
+        return array_key_exists($name, $this->relationships);
     }
 
     /**
