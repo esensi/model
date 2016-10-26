@@ -23,7 +23,7 @@ trait SluggableModelTrait
      */
     public function makeSlug($value)
     {
-        $value = preg_replace('/[^a-zA-Z0-9\-\_]+/', '_', $value);
+        $value = preg_replace('/[^a-zA-Z0-9\-\_]+/', '-', $value);
 
         return strtolower($value);
     }
