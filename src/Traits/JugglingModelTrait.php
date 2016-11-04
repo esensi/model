@@ -252,6 +252,7 @@ trait JugglingModelTrait
         // If not valid, throw an exception.
         if ( ! $this->isJuggleType($type)) {
             throw new InvalidArgumentException('The type "'.$type.'" is not a valid type cast.');
+
             return false;
         }
 
