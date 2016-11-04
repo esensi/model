@@ -17,9 +17,9 @@ return Config::create()
         'phpdoc_type_to_var' => true,
         'psr0' => false,
         'short_array_syntax' => true,
-        'binary_operator_spaces' => false,
+        'unalign_double_arrow' => false,
     ])
-    ->setFinder(
+    ->finder(
         Finder::create()
             ->in(__DIR__.'/src')
             ->in(__DIR__.'/tests')
