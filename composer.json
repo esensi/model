@@ -23,7 +23,7 @@
         "illuminate/hashing": "~5.1",
         "illuminate/support": "~5.1",
         "illuminate/validation": "~5.1",
-        "paragonie/random_compat": "~1.1",
+        "paragonie/random_compat": "~1.4|~2.0",
         "symfony/polyfill-php56": "~1.1",
         "watson/validating": "~1.0.0 || ~2.0.0"
     },
