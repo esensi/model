@@ -18,6 +18,7 @@ return Config::create()
         'psr0' => false,
         'short_array_syntax' => true,
         'unalign_double_arrow' => false,
+        'unalign_equals' => false,
     ])
     ->finder(
         Finder::create()
