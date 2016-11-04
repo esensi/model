@@ -23,12 +23,12 @@
         "illuminate/hashing": "~5.1",
         "illuminate/support": "~5.1",
         "illuminate/validation": "~5.1",
-        "paragonie/random_compat": "~1.4|~2.0",
+        "paragonie/random_compat": "^1|^2",
         "symfony/polyfill-php56": "~1.1",
         "watson/validating": "~1.0.0 || ~2.0.0"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "2.0.*@dev",
+        "friendsofphp/php-cs-fixer": "2.0.0-alpha",
         "fzaninotto/faker": "~1.4",
         "mockery/mockery": "0.9.*",
         "phpunit/phpunit": "~4.0",
