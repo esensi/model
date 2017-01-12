@@ -25,7 +25,7 @@ trait SluggableModelTrait
     {
         $value = preg_replace('/[^a-zA-Z0-9\-\_]+/', '-', $value);
 
-        return strtolower($value);
+        return str_replace(['--', '__'], ['-', '_'], trim(strtolower($value), '-_'));
     }
 
     /**
