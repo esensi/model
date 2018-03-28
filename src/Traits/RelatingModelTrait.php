@@ -245,10 +245,11 @@ trait RelatingModelTrait
      * @param string $name
      * @param string $type
      * @param string $id
+     * @param string $ownerKey
      *
      * @return Illuminate\Database\Eloquent\Relations\MorphTo
      */
-    public function morphTo($name = null, $type = null, $id = null)
+    public function morphTo($name = null, $type = null, $id = null, $ownerKey = null)
     {
         // If no name is provided, we will use the backtrace to get the function name
         // since that is most likely the name of the polymorphic interface. We can
@@ -276,7 +277,7 @@ trait RelatingModelTrait
         // there are multiple types in the morph and we can't use single queries.
         if (is_null($class = $this->$type)) {
             return new MorphTo(
-                $this->newQuery(), $this, $id, null, $type, $name
+                $this->newQuery(), $this, $id, null, $type, $name, $ownerKey
             );
         }
 
@@ -290,7 +291,7 @@ trait RelatingModelTrait
             $instance = new $class();
 
             return new MorphTo(
-                with($instance)->newQuery(), $this, $id, $instance->getKeyName(), $type, $name
+                with($instance)->newQuery(), $this, $id, $instance->getKeyName(), $type, $name, $ownerKey
             );
         }
     }
