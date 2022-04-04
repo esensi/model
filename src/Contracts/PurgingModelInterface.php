@@ -5,11 +5,6 @@ namespace Esensi\Model\Contracts;
 /**
  * Purging Model Interface.
  *
- * @author Daniel LaBarge <daniel@emersonmedia.com>
- * @copyright 2015-2016 Emerson Media LP
- * @license https://github.com/esensi/model/blob/master/license.md MIT License
- *
- * @link http://www.emersonmedia.com
  */
 interface PurgingModelInterface
 {
@@ -23,7 +18,7 @@ interface PurgingModelInterface
     /**
      * Set the purgeable attributes.
      *
-     * @param array $attributes to purge
+     * @param array  $attributes to purge
      */
     public function setPurgeable(array $attributes);
 
@@ -32,7 +27,7 @@ interface PurgingModelInterface
      *
      * @example addPurgeable( string $attribute, ... )
      *
-     * @param string $attribute to purge
+     * @param string  $attribute to purge
      */
     public function addPurgeable($attribute);
 
@@ -41,14 +36,14 @@ interface PurgingModelInterface
      *
      * @example removePurgeable( string $attribute, ... )
      *
-     * @param string $attribute to purge
+     * @param string  $attribute to purge
      */
     public function removePurgeable($attribute);
 
     /**
      * Merge an array of attributes with the purgeable array.
      *
-     * @param array $attributes to purge
+     * @param array  $attributes to purge
      */
     public function mergePurgeable(array $attributes);
 
@@ -71,7 +66,7 @@ interface PurgingModelInterface
     /**
      * Returns whether the attribute is purgeable.
      *
-     * @param string $attribute name
+     * @param string  $attribute name
      *
      * @return bool
      */

@@ -8,13 +8,6 @@ use InvalidArgumentException;
 /**
  * Trait that implements the Juggling Model Interface.
  *
- * @author Diego Caprioli <diego@emersonmedia.com>
- * @author Daniel LaBarge <daniel@emersonmedia.com>
- * @copyright 2015-2016 Emerson Media LP
- * @license https://github.com/esensi/model/blob/master/license.md MIT License
- *
- * @link http://www.emersonmedia.com
- * @see Esensi\Model\Contracts\JugglingModelInterface
  */
 trait JugglingModelTrait
 {
@@ -28,8 +21,7 @@ trait JugglingModelTrait
     /**
      * Dynamically retrieve attributes on the model.
      *
-     * @param string $key
-     *
+     * @param  string  $key
      * @return mixed
      */
     public function __get($key)
@@ -44,7 +36,7 @@ trait JugglingModelTrait
     /**
      * Dynamically set attributes on the model.
      *
-     * @param string $key
+     * @param string  $key
      * @param mixed  $value
      */
     public function __set($key, $value)
@@ -80,7 +72,7 @@ trait JugglingModelTrait
      * If juggling is active, it returns the juggleAttribute.
      * If not it just returns the value as it was passed.
      *
-     * @param string $key
+     * @param string  $key
      * @param mixed  $value
      *
      * @return mixed
@@ -98,13 +90,13 @@ trait JugglingModelTrait
      * If juggling is active, it sets the attribute in the model
      * by type juggling the value first.
      *
-     * @param string $key
+     * @param string  $key
      * @param mixed  $value
      */
     protected function setDynamicJuggle($key, $value)
     {
         // Check that the attribute is jugglable
-        if ( ! is_null($value) && $this->isJugglable($key)) {
+        if (! is_null($value) && $this->isJugglable($key)) {
             // Cast the value to the type set for the attribute
             $this->juggleAttribute($key, $value);
         }
@@ -123,7 +115,7 @@ trait JugglingModelTrait
     /**
      * Set the jugglable attributes.
      *
-     * @param array $attributes to juggle
+     * @param array  $attributes to juggle
      *
      * @throws InvalidArgumentException
      */
@@ -141,8 +133,8 @@ trait JugglingModelTrait
     /**
      * Add an attribute to the jugglable array.
      *
-     * @param string $attribute
-     * @param string $type
+     * @param string  $attribute
+     * @param string  $type
      *
      * @throws InvalidArgumentException
      */
@@ -156,12 +148,12 @@ trait JugglingModelTrait
      *
      * @example removeJugglable( string $attribute, ... )
      *
-     * @param mixed $attributes
+     * @param mixed  $attributes
      */
     public function removeJugglable($attributes)
     {
         // Make sure we are dealing an associative array
-        if ( ! is_array($attributes)) {
+        if (! is_array($attributes)) {
             $attributes = func_get_args();
         }
         $attributes = array_flip($attributes);
@@ -176,7 +168,7 @@ trait JugglingModelTrait
     /**
      * Merge an array of attributes with the jugglable array.
      *
-     * @param array $attributes to juggle
+     * @param array  $attributes to juggle
      *
      * @throws InvalidArgumentException
      */
@@ -208,7 +200,7 @@ trait JugglingModelTrait
     /**
      * Returns whether the attribute is type jugglable.
      *
-     * @param string $attribute name
+     * @param string  $attribute name
      *
      * @return bool
      */
@@ -221,7 +213,7 @@ trait JugglingModelTrait
     /**
      * Returns whether the type is a type that can be juggled to.
      *
-     * @param string $type to cast
+     * @param string  $type to cast
      *
      * @return bool
      */
@@ -231,7 +223,7 @@ trait JugglingModelTrait
         $method = $this->buildJuggleMethod($type);
 
         // Any type that does map to a model method is invalid
-        if ( ! method_exists($this, $method)) {
+        if (! method_exists($this, $method)) {
             return false;
         }
 
@@ -241,7 +233,7 @@ trait JugglingModelTrait
     /**
      * Checks whether the type is a type that can be juggled to.
      *
-     * @param string $type to cast
+     * @param string  $type to cast
      *
      * @throws InvalidArgumentException
      *
@@ -250,7 +242,7 @@ trait JugglingModelTrait
     public function checkJuggleType($type)
     {
         // If not valid, throw an exception.
-        if ( ! $this->isJuggleType($type)) {
+        if (! $this->isJuggleType($type)) {
             throw new InvalidArgumentException('The type "'.$type.'" is not a valid type cast.');
 
             return false;
@@ -262,7 +254,7 @@ trait JugglingModelTrait
     /**
      * Build the method name that the type normalizes to.
      *
-     * @param string $type to cast
+     * @param string  $type to cast
      *
      * @return string
      */
@@ -309,7 +301,7 @@ trait JugglingModelTrait
     /**
      * Gets the type that the attribute will be casted to.
      *
-     * @param string $attribute
+     * @param string  $attribute
      *
      * @return string
      */
@@ -338,8 +330,8 @@ trait JugglingModelTrait
      * Casts a value to the coresponding attribute type and sets
      * it on the attributes array of this model.
      *
-     * @param string $attribute
-     * @param string $value
+     * @param string  $attribute
+     * @param string  $value
      */
     public function juggleAttribute($attribute, $value)
     {
@@ -351,7 +343,7 @@ trait JugglingModelTrait
      * Cast the value to the attribute's type as specified in the juggable array.
      *
      * @param mixed  $value
-     * @param string $type
+     * @param string  $type
      *
      * @throws InvalidArgumentException
      *
@@ -360,7 +352,7 @@ trait JugglingModelTrait
     public function juggle($value, $type)
     {
         // Cast non-null values
-        if ( ! is_null($value)) {
+        if (! is_null($value)) {
             // Ensure that the type is a valid type to cast.
             // We do this check here because it might not have been done
             // as is the case when the model is first initialized.
@@ -379,10 +371,8 @@ trait JugglingModelTrait
     /**
      * Returns the value as a Carbon instance.
      *
-     * @param mixed $value
-     *
+     * @param mixed  $value
      * @return Carbon\Carbon
-     *
      * @see Illuminate\Database\Eloquent\Model::asDateTime()
      */
     public function juggleDate($value)
@@ -402,8 +392,7 @@ trait JugglingModelTrait
     /**
      * Returns a string formated as ISO standard of 0000-00-00 00:00:00.
      *
-     * @param mixed $value
-     *
+     * @param  mixed  $value
      * @return string
      */
     public function juggleDateTime($value)
@@ -418,8 +407,7 @@ trait JugglingModelTrait
     /**
      * Returns the date as a Unix timestamp.
      *
-     * @param mixed $value
-     *
+     * @param  mixed  $value
      * @return int
      */
     public function juggleTimestamp($value)
@@ -434,8 +422,7 @@ trait JugglingModelTrait
     /**
      * Returns the value as a boolean.
      *
-     * @param mixed $value
-     *
+     * @param  mixed  $value
      * @return bool
      */
     public function juggleBoolean($value)
@@ -446,8 +433,7 @@ trait JugglingModelTrait
     /**
      * Returns the value as an integer.
      *
-     * @param mixed $value
-     *
+     * @param  mixed  $value
      * @return int
      */
     public function juggleInteger($value)
@@ -458,8 +444,7 @@ trait JugglingModelTrait
     /**
      * Returns the value as a float.
      *
-     * @param mixed $value
-     *
+     * @param  mixed  $value
      * @return float
      */
     public function juggleFloat($value)
@@ -470,8 +455,7 @@ trait JugglingModelTrait
     /**
      * Returns the value as a string.
      *
-     * @param mixed $value
-     *
+     * @param  mixed  $value
      * @return string
      */
     public function juggleString($value)
@@ -482,8 +466,7 @@ trait JugglingModelTrait
     /**
      * Returns the value as an array.
      *
-     * @param mixed $value
-     *
+     * @param  mixed  $value
      * @return array
      */
     public function juggleArray($value)
@@ -494,8 +477,7 @@ trait JugglingModelTrait
     /**
      * Casts to null on empty.
      *
-     * @param mixed $value
-     *
+     * @param  mixed  $value
      * @return mixed|null
      */
     public function juggleNull($value)
@@ -509,9 +491,8 @@ trait JugglingModelTrait
      *
      * @link http://php.net/manual/en/function.settype.php
      *
-     * @param mixed  $value
-     * @param string $type
-     *
+     * @param  mixed  $value
+     * @param  string  $type
      * @return mixed
      */
     protected function juggleType($value, $type)

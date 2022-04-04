@@ -6,11 +6,6 @@ use PHPUnit_Framework_TestCase as PHPUnit;
 /**
  * Tests for the Purging Model Trait.
  *
- * @author Daniel LaBarge <daniel@emersonmedia.com>
- * @copyright 2014 Emerson Media LP
- * @license https://github.com/esensi/model/blob/master/license.md MIT License
- *
- * @link http://www.emersonmedia.com
  */
 class PurgingModelTraitTest extends PHPUnit
 {

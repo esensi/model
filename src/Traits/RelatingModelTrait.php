@@ -9,19 +9,13 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 /**
  * Trait that implements the Relating Model Interface.
  *
- * @author Daniel LaBarge <daniel@emersonmedia.com>
- * @copyright 2015-2016 Emerson Media LP
- * @license https://github.com/esensi/model/blob/master/license.md MIT License
- *
- * @link http://www.emersonmedia.com
- * @see Esensi\Model\Contracts\RelatingModelInterface
  */
 trait RelatingModelTrait
 {
     /**
      * Dynamically call methods.
      *
-     * @param string $method
+     * @param string  $method
      * @param array  $parameters
      *
      * @return mixed
@@ -40,8 +34,7 @@ trait RelatingModelTrait
     /**
      * Dynamically retrieve attributes.
      *
-     * @param string $key
-     *
+     * @param  string  $key
      * @return mixed
      */
     public function __get($key)
@@ -58,8 +51,7 @@ trait RelatingModelTrait
     /**
      * Call a dynamically resolved relationship.
      *
-     * @param string $name
-     *
+     * @param  string  $name
      * @return mixed
      */
     protected function callDynamicRelationship($name)
@@ -73,8 +65,7 @@ trait RelatingModelTrait
     /**
      * Get a dynamically resolved relationship.
      *
-     * @param string $name
-     *
+     * @param  string  $name
      * @return mixed
      */
     protected function getDynamicRelationship($name)
@@ -113,7 +104,7 @@ trait RelatingModelTrait
     public function getRelationship($name)
     {
         // If relationship does not exist throw an exception
-        if ( ! $this->isRelationship($name)) {
+        if (! $this->isRelationship($name)) {
             $exception = new ModelNotFoundException();
             $exception->setModel($name);
             throw $exception;
@@ -125,8 +116,7 @@ trait RelatingModelTrait
     /**
      * Return the relationship configurations.
      *
-     * @param string $name of related model
-     *
+     * @param  string  $name of related model
      * @return array
      */
     public function getPivotAttributes($name)
@@ -137,8 +127,7 @@ trait RelatingModelTrait
     /**
      * Return whether the name is a relationship or not.
      *
-     * @param string $name of related model
-     *
+     * @param  string  $name of related model
      * @return bool
      */
     public function isRelationship($name)
@@ -149,8 +138,7 @@ trait RelatingModelTrait
     /**
      * Return whether the relationshpi has pivot attributes or not.
      *
-     * @param string $name of related model
-     *
+     * @param  string  $name of related model
      * @return bool
      */
     public function hasPivotAttributes($name)
@@ -162,8 +150,7 @@ trait RelatingModelTrait
      * Proxy call a relationship method using the
      * configuration arguments of the relationship.
      *
-     * @param string $name of related model
-     *
+     * @param  string  $name of related model
      * @return mixed
      */
     protected function callRelationship($name)
@@ -194,10 +181,10 @@ trait RelatingModelTrait
     /**
      * Define an inverse one-to-one or many relationship.
      *
-     * @param string $related
-     * @param string $foreignKey
-     * @param string $otherKey
-     * @param string $relation
+     * @param string  $related
+     * @param string  $foreignKey
+     * @param string  $otherKey
+     * @param string  $relation
      *
      * @return Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -242,10 +229,10 @@ trait RelatingModelTrait
     /**
      * Define an polymorphic, inverse one-to-one or many relationship.
      *
-     * @param string $name
-     * @param string $type
-     * @param string $id
-     * @param string $ownerKey
+     * @param string  $name
+     * @param string  $type
+     * @param string  $id
+     * @param string  $ownerKey
      *
      * @return Illuminate\Database\Eloquent\Relations\MorphTo
      */
@@ -299,9 +286,8 @@ trait RelatingModelTrait
     /**
      * Set the relationships that should not be eager loaded.
      *
-     * @param Illuminate\Database\Query\Builder $query
-     * @param mixed                             $relations
-     *
+     * @param Illuminate\Database\Query\Builder  $query
+     * @param mixed  $relations
      * @return $this
      */
     public function scopeWithout($query, $relations)

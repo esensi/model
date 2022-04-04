@@ -9,12 +9,6 @@ use Illuminate\Support\Facades\Hash;
 /**
  * Trait that implements the Hashing Model Interface.
  *
- * @author Daniel LaBarge <daniel@emersonmedia.com>
- * @copyright 2015-2016 Emerson Media LP
- * @license https://github.com/esensi/model/blob/master/license.md MIT License
- *
- * @link http://www.emersonmedia.com
- * @see Esensi\Model\Contracts\HashingModelInterface
  */
 trait HashingModelTrait
 {
@@ -53,7 +47,7 @@ trait HashingModelTrait
     /**
      * Set the hashable attributes.
      *
-     * @param array $attributes to hash
+     * @param array  $attributes to hash
      */
     public function setHashable(array $attributes)
     {
@@ -64,8 +58,7 @@ trait HashingModelTrait
      * Add an attribute to the hashable array.
      *
      * @example addHashable( string $attribute, ... )
-     *
-     * @param string $attribute to hash
+     * @param string  $attribute to hash
      */
     public function addHashable($attribute)
     {
@@ -76,8 +69,7 @@ trait HashingModelTrait
      * Remove an attribute from the hashable array.
      *
      * @example addHashable( string $attribute, ... )
-     *
-     * @param string $attribute to hash
+     * @param string  $attribute to hash
      */
     public function removeHashable($attribute)
     {
@@ -87,7 +79,7 @@ trait HashingModelTrait
     /**
      * Merge an array of attributes with the hashable array.
      *
-     * @param array $attributes to hash
+     * @param array  $attributes to hash
      */
     public function mergeHashable(array $attributes)
     {
@@ -129,7 +121,7 @@ trait HashingModelTrait
     /**
      * Set the Hasher to use for hashing.
      *
-     * @param Illuminate\Contracts\Hashing\Hasher $hasher
+     * @param Illuminate\Contracts\Hashing\Hasher  $hasher
      */
     public function setHasher(Hasher $hasher)
     {
@@ -139,8 +131,7 @@ trait HashingModelTrait
     /**
      * Returns whether the attribute is hashable.
      *
-     * @param string $attribute name
-     *
+     * @param  string  $attribute name
      * @return bool
      */
     public function isHashable($attribute)
@@ -152,13 +143,12 @@ trait HashingModelTrait
     /**
      * Returns whether the attribute is hashed.
      *
-     * @param string $attribute name
-     *
+     * @param  string $attribute name
      * @return bool
      */
     public function isHashed($attribute)
     {
-        if ( ! array_key_exists($attribute, $this->attributes)) {
+        if (! array_key_exists($attribute, $this->attributes)) {
             return false;
         }
 
@@ -180,8 +170,7 @@ trait HashingModelTrait
     /**
      * Return a hashed string for the value.
      *
-     * @param string $value
-     *
+     * @param  string  $value
      * @return string
      */
     public function hash($value)
@@ -193,8 +182,8 @@ trait HashingModelTrait
     /**
      * Return whether a plain value matches a hashed value.
      *
-     * @param string $value
-     * @param string $hash  to compare to
+     * @param string  $value
+     * @param string  $hash  to compare to
      *
      * @return bool
      */
@@ -207,8 +196,8 @@ trait HashingModelTrait
     /**
      * Set a hashed value for a hashable attribute.
      *
-     * @param string $attribute name
-     * @param string $value     to hash
+     * @param string  $attribute name
+     * @param string  $value  to hash
      */
     public function setHashingAttribute($attribute, $value)
     {
@@ -216,7 +205,7 @@ trait HashingModelTrait
         $this->attributes[$attribute] = $value;
 
         // Do the hashing if it needs it
-        if ( ! empty($value) && ($this->isDirty($attribute) || ! $this->isHashed($attribute))) {
+        if (! empty($value) && ($this->isDirty($attribute) || ! $this->isHashed($attribute))) {
             $this->attributes[$attribute] = $this->hash($value);
         }
     }
@@ -246,8 +235,7 @@ trait HashingModelTrait
     /**
      * Set hashing state and then save and then reset it.
      *
-     * @param bool $hash
-     *
+     * @param  bool  $hash
      * @return bool
      */
     protected function setHashingAndSave($hash)

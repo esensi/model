@@ -8,11 +8,6 @@ use Watson\Validating\ValidatingTrait;
 /**
  * Trait that implements the Validating Model Interface.
  *
- * @author Daniel LaBarge <daniel@emersonmedia.com>
- * @copyright 2015-2016 Emerson Media LP
- * @license https://github.com/esensi/model/blob/master/license.md MIT License
- *
- * @link http://www.emersonmedia.com
  * @deprecated In watson/validating@0.10.9 the custom methods
  *             used below were deprecated in favor of Laravel 5's
  *             form request validation classes. Stop using
@@ -77,7 +72,7 @@ trait ValidatingModelTrait
      *
      * @deprecated watson/validating@0.10.9
      *
-     * @param array $rulesets
+     * @param array  $rulesets
      */
     public function setRulesets(array $rulesets = null)
     {
@@ -89,8 +84,8 @@ trait ValidatingModelTrait
      *
      * @deprecated watson/validating@0.10.9
      *
-     * @param string $ruleset
-     * @param bool   $mergeWithSaving
+     * @param string  $ruleset
+     * @param bool  $mergeWithSaving
      *
      * @return array
      */
@@ -121,7 +116,7 @@ trait ValidatingModelTrait
      * @deprecated watson/validating@0.10.9
      *
      * @param array  $rules
-     * @param string $ruleset
+     * @param string  $ruleset
      */
     public function setRuleset(array $rules, $ruleset)
     {
@@ -134,7 +129,7 @@ trait ValidatingModelTrait
      * @deprecated watson/validating@0.10.9
      *
      * @param array  $rules
-     * @param string $ruleset
+     * @param string  $ruleset
      */
     public function addRules(array $rules, $ruleset = null)
     {
@@ -153,7 +148,7 @@ trait ValidatingModelTrait
      * @deprecated watson/validating@0.10.9
      *
      * @param mixed  $keys
-     * @param string $ruleset
+     * @param string  $ruleset
      */
     public function removeRules($keys, $ruleset = null)
     {
@@ -173,7 +168,7 @@ trait ValidatingModelTrait
      *
      * @deprecated watson/validating@0.10.9
      *
-     * @param array $keys
+     * @param array  $keys
      *
      * @return array
      */
@@ -191,7 +186,7 @@ trait ValidatingModelTrait
     /**
      * Returns whether the model is valid or not.
      *
-     * @param mixed $ruleset         (@deprecated watson/validating@0.10.9)
+     * @param mixed  $ruleset  (@deprecated watson/validating@0.10.9)
      * @param bool  $mergeWithSaving (@deprecated watson/validating@0.10.9)
      *
      * @return bool
@@ -206,7 +201,7 @@ trait ValidatingModelTrait
     /**
      * Returns if the model is valid, otherwise throws an exception.
      *
-     * @param string $ruleset (@deprecated watson/validating@0.10.9)
+     * @param string  $ruleset (@deprecated watson/validating@0.10.9)
      *
      * @throws Watson\Validating\ValidationException
      *
@@ -214,7 +209,7 @@ trait ValidatingModelTrait
      */
     public function isValidOrFail($ruleset = null)
     {
-        if ( ! $this->isValid($ruleset)) {
+        if (! $this->isValid($ruleset)) {
             $this->throwValidationException();
         }
 
@@ -224,7 +219,7 @@ trait ValidatingModelTrait
     /**
      * Returns whether the model is invalid or not.
      *
-     * @param mixed $ruleset         (@deprecated watson/validating@0.10.9)
+     * @param mixed  $ruleset  (@deprecated watson/validating@0.10.9)
      * @param bool  $mergeWithSaving (@deprecated watson/validating@0.10.9)
      *
      * @return bool
@@ -240,7 +235,7 @@ trait ValidatingModelTrait
      *
      * @deprecated watson/validating@0.10.9
      *
-     * @param string $ruleset
+     * @param string  $ruleset
      */
     public function updateRulesetUniques($ruleset = null)
     {
