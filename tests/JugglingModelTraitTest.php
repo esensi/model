@@ -8,12 +8,6 @@ use PHPUnit_Framework_TestCase as PHPUnit;
 /**
  * Tests for the Purging Model Trait.
  *
- * @author Diego Caprioli <diego@emersonmedia.com>
- * @author Dnaiel LaBarge <dalabarge@emersonmedia.com>
- * @copyright 2014 Emerson Media LP
- * @license https://github.com/esensi/model/blob/master/license.md MIT License
- *
- * @link http://www.emersonmedia.com
  */
 class JugglingModelTraitTest extends PHPUnit
 {
@@ -579,17 +573,17 @@ class ModelJugglingStub extends Model
      * @var array
      */
     protected $jugglable = [
-        'myString'    => 'string',
-        'myDate'      => 'date',
-        'myDateTime'  => 'dateTime',
+        'myString' => 'string',
+        'myDate' => 'date',
+        'myDateTime' => 'dateTime',
         'myTimestamp' => 'timestamp',
-        'myInt'       => 'int',
-        'myInteger'   => 'integer',
-        'myBool'      => 'bool',
-        'myBoolean'   => 'boolean',
-        'myDouble'    => 'double',
-        'myFloat'     => 'float',
-        'myArray'     => 'array',
+        'myInt' => 'int',
+        'myInteger' => 'integer',
+        'myBool' => 'bool',
+        'myBoolean' => 'boolean',
+        'myDouble' => 'double',
+        'myFloat' => 'float',
+        'myArray' => 'array',
     ];
 
     /**
@@ -600,17 +594,17 @@ class ModelJugglingStub extends Model
      * @var array
      */
     public $tmpAttributes = [
-        'myString'    => 'Hello world',
-        'myDate'      => '2014-01-01',
-        'myDateTime'  => '2014-01-01',
+        'myString' => 'Hello world',
+        'myDate' => '2014-01-01',
+        'myDateTime' => '2014-01-01',
         'myTimestamp' => '2014-01-01',
-        'myInt'       => '123',
-        'myInteger'   => '123',
-        'myBool'      => '1',
-        'myBoolean'   => '1',
-        'myDouble'    => '1.12',
-        'myFloat'     => '1.12',
-        'myArray'     => 'elem',
+        'myInt' => '123',
+        'myInteger' => '123',
+        'myBool' => '1',
+        'myBoolean' => '1',
+        'myDouble' => '1.12',
+        'myFloat' => '1.12',
+        'myArray' => 'elem',
     ];
 
     /**

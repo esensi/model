@@ -8,11 +8,6 @@ use Watson\Validating\ValidatingObserver;
 /**
  * Model observer for Validating Model Trait.
  *
- * @author Daniel LaBarge <daniel@emersonmedia.com>
- * @copyright 2015-2016 Emerson Media LP
- * @license https://github.com/esensi/model/blob/master/license.md MIT License
- *
- * @link http://www.emersonmedia.com
  * @deprecated In watson/validating@0.10.9 the custom methods
  *             used below were deprecated in favor of Laravel 5's
  *             form request validation classes. Stop using
@@ -25,7 +20,7 @@ class ValidatingModelObserver extends ValidatingObserver
     /**
      * Register the validation event for creating the model.
      *
-     * @param Illuminate\Database\Eloquent\Model $model
+     * @param Illuminate\Database\Eloquent\Model  $model
      *
      * @return bool
      */
@@ -39,7 +34,7 @@ class ValidatingModelObserver extends ValidatingObserver
     /**
      * Register the validation event for updating the model.
      *
-     * @param Illuminate\Database\Eloquent\Model $model
+     * @param Illuminate\Database\Eloquent\Model  $model
      *
      * @return bool
      */
@@ -54,13 +49,13 @@ class ValidatingModelObserver extends ValidatingObserver
      * Register the validation event for saving the model. Saving validation
      * should only occur if creating and updating validation does not.
      *
-     * @param Illuminate\Database\Eloquent\Model $model
+     * @param Illuminate\Database\Eloquent\Model  $model
      *
      * @return bool
      */
     public function saving(Model $model)
     {
-        if ( ! $model->getRuleset('creating') && ! $model->getRuleset('updating')) {
+        if (! $model->getRuleset('creating') && ! $model->getRuleset('updating')) {
             return $this->performValidation($model, 'saving');
         }
     }
@@ -82,7 +77,7 @@ class ValidatingModelObserver extends ValidatingObserver
     /**
      * Register the validation event for restoring the model.
      *
-     * @param Illuminate\Database\Eloquent\Model $model
+     * @param Illuminate\Database\Eloquent\Model  $model
      *
      * @return bool
      */
@@ -96,8 +91,8 @@ class ValidatingModelObserver extends ValidatingObserver
     /**
      * Perform validation with the specified ruleset.
      *
-     * @param Illuminate\Database\Eloquent\Model $model
-     * @param string                             $event
+     * @param Illuminate\Database\Eloquent\Model  $model
+     * @param string $event
      *
      * @return bool
      */

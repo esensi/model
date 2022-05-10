@@ -8,12 +8,6 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 /**
  * Trait that implements the Soft Deleting Model Interface.
  *
- * @author Daniel LaBarge <daniel@emersonmedia.com>
- * @copyright 2015-2016 Emerson Media LP
- * @license https://github.com/esensi/model/blob/master/license.md MIT License
- *
- * @link http://www.emersonmedia.com
- * @see Esensi\Model\Contracts\SoftDeletingModelInterface
  */
 trait SoftDeletingModelTrait
 {

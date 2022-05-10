@@ -5,11 +5,6 @@ namespace Esensi\Model\Contracts;
 /**
  * Soft Deleting Model Interface.
  *
- * @author Daniel LaBarge <daniel@emersonmedia.com>
- * @copyright 2015-2016 Emerson Media LP
- * @license https://github.com/esensi/model/blob/master/license.md MIT License
- *
- * @link http://www.emersonmedia.com
  */
 interface SoftDeletingModelInterface
 {
@@ -35,14 +30,14 @@ interface SoftDeletingModelInterface
     /**
      * Register a restoring model event with the dispatcher.
      *
-     * @param Closure|string $callback
+     * @param Closure|string  $callback
      */
     public static function restoring($callback);
 
     /**
      * Register a restored model event with the dispatcher.
      *
-     * @param Closure|string $callback
+     * @param Closure|string  $callback
      */
     public static function restored($callback);
 

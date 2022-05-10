@@ -5,12 +5,6 @@ namespace Esensi\Model\Contracts;
 /**
  * Juggling Model Interface.
  *
- * @author Diego Caprioli <diego@emersonmedia.com>
- * @author Daniel LaBarge <daniel@emersonmedia.com>
- * @copyright 2015-2016 Emerson Media LP
- * @license https://github.com/esensi/model/blob/master/license.md MIT License
- *
- * @link http://www.emersonmedia.com
  */
 interface JugglingModelInterface
 {
@@ -24,7 +18,7 @@ interface JugglingModelInterface
     /**
      * Set the jugglable attributes.
      *
-     * @param array $attributes to juggle
+     * @param array  $attributes to juggle
      *
      * @throws InvalidArgumentException
      */
@@ -33,8 +27,8 @@ interface JugglingModelInterface
     /**
      * Add an attribute to the jugglable array.
      *
-     * @param string $attribute
-     * @param string $type
+     * @param string  $attribute
+     * @param string  $type
      *
      * @throws InvalidArgumentException
      */
@@ -45,14 +39,14 @@ interface JugglingModelInterface
      *
      * @example removeJugglable( string $attribute, ... )
      *
-     * @param mixed $attributes
+     * @param mixed  $attributes
      */
     public function removeJugglable($attributes);
 
     /**
      * Merge an array of attributes with the jugglable array.
      *
-     * @param array $attributes to juggle
+     * @param array  $attributes to juggle
      *
      * @throws InvalidArgumentException
      */
@@ -75,7 +69,7 @@ interface JugglingModelInterface
     /**
      * Returns whether the attribute is type jugglable.
      *
-     * @param string $attribute name
+     * @param string  $attribute name
      *
      * @return bool
      */
@@ -84,7 +78,7 @@ interface JugglingModelInterface
     /**
      * Returns whether the type is a type that can be juggled to.
      *
-     * @param string $type to cast
+     * @param string  $type to cast
      *
      * @return bool
      */
@@ -93,7 +87,7 @@ interface JugglingModelInterface
     /**
      * Checks whether the type is a type that can be juggled to.
      *
-     * @param string $type to cast
+     * @param string  $type to cast
      *
      * @throws InvalidArgumentException
      *
@@ -104,7 +98,7 @@ interface JugglingModelInterface
     /**
      * Build the method name that the type normalizes to.
      *
-     * @param string $type to cast
+     * @param string  $type to cast
      *
      * @return string
      */
@@ -113,7 +107,7 @@ interface JugglingModelInterface
     /**
      * Gets the type that the attribute will be casted to.
      *
-     * @param string $attribute
+     * @param string  $attribute
      *
      * @return string
      */
@@ -128,8 +122,8 @@ interface JugglingModelInterface
      * Casts a value to the coresponding attribute type and sets
      * it on the attributes array of this model.
      *
-     * @param string $attribute
-     * @param string $value
+     * @param string  $attribute
+     * @param string  $value
      */
     public function juggleAttribute($attribute, $value);
 
@@ -137,7 +131,7 @@ interface JugglingModelInterface
      * Cast the value to the attribute's type as specified in the juggable array.
      *
      * @param mixed  $value
-     * @param string $type
+     * @param string  $type
      *
      * @throws InvalidArgumentException
      *
@@ -148,7 +142,7 @@ interface JugglingModelInterface
     /**
      * Returns the value as a Carbon instance.
      *
-     * @param mixed $value
+     * @param mixed  $value
      *
      * @return Carbon\Carbon
      *
@@ -159,7 +153,7 @@ interface JugglingModelInterface
     /**
      * Returns a string formated as ISO standard of 0000-00-00 00:00:00.
      *
-     * @param mixed $value
+     * @param mixed  $value
      *
      * @return string
      */
@@ -168,7 +162,7 @@ interface JugglingModelInterface
     /**
      * Returns the date as a Unix timestamp.
      *
-     * @param mixed $value
+     * @param mixed  $value
      *
      * @return int
      */
@@ -177,7 +171,7 @@ interface JugglingModelInterface
     /**
      * Returns the value as a boolean.
      *
-     * @param mixed $value
+     * @param mixed  $value
      *
      * @return bool
      */
@@ -186,7 +180,7 @@ interface JugglingModelInterface
     /**
      * Returns the value as an integer.
      *
-     * @param mixed $value
+     * @param mixed  $value
      *
      * @return int
      */
@@ -195,7 +189,7 @@ interface JugglingModelInterface
     /**
      * Returns the value as a float.
      *
-     * @param mixed $value
+     * @param mixed  $value
      *
      * @return float
      */
@@ -204,7 +198,7 @@ interface JugglingModelInterface
     /**
      * Returns the value as a string.
      *
-     * @param mixed $value
+     * @param mixed  $value
      *
      * @return string
      */
@@ -213,7 +207,7 @@ interface JugglingModelInterface
     /**
      * Returns the value as an array.
      *
-     * @param mixed $value
+     * @param mixed  $value
      *
      * @return array
      */
@@ -222,7 +216,7 @@ interface JugglingModelInterface
     /**
      * Casts to null on empty.
      *
-     * @param mixed $value
+     * @param mixed  $value
      *
      * @return mixed|null
      */

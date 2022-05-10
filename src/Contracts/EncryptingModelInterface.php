@@ -7,11 +7,6 @@ use Illuminate\Encryption\Encrypter;
 /**
  * Encrypting Model Interface.
  *
- * @author Daniel LaBarge <daniel@emersonmedia.com>
- * @copyright 2015-2016 Emerson Media LP
- * @license https://github.com/esensi/model/blob/master/license.md MIT License
- *
- * @link http://www.emersonmedia.com
  */
 interface EncryptingModelInterface
 {
@@ -34,7 +29,7 @@ interface EncryptingModelInterface
      *
      * @example addEncryptable( string $attribute, ... )
      *
-     * @param string $attribute to encrypt
+     * @param string  $attribute to encrypt
      */
     public function addEncryptable($attribute);
 
@@ -43,14 +38,14 @@ interface EncryptingModelInterface
      *
      * @example addEncryptable( string $attribute, ... )
      *
-     * @param string $attribute to encrypt
+     * @param string  $attribute to encrypt
      */
     public function removeEncryptable($attribute);
 
     /**
      * Merge an array of attributes with the encryptable array.
      *
-     * @param array $attributes to encrypt
+     * @param array  $attributes to encrypt
      */
     public function mergeEncryptable(array $attributes);
 
@@ -73,14 +68,14 @@ interface EncryptingModelInterface
     /**
      * Set the Encrypter to use for encryption.
      *
-     * @return Illuminate\Encryption\Encrypter $encrypter
+     * @return Illuminate\Encryption\Encrypter  $encrypter
      */
     public function getEncrypter();
 
     /**
      * Set the Encrypter to use for encryption.
      *
-     * @param Illuminate\Encryption\Encrypter $encrypter
+     * @param Illuminate\Encryption\Encrypter  $encrypter
      */
     public function setEncrypter(Encrypter $encrypter);
 

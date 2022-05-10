@@ -20,20 +20,6 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
 /**
  * Base Model.
  *
- * @author Diego Caprioli <diego@emersonmedia.com>
- * @author Daniel LaBarge <daniel@emersonmedia.com>
- * @copyright 2015-2016 Emerson Media LP
- * @license https://github.com/esensi/model/blob/master/license.md MIT License
- *
- * @link http://www.emersonmedia.com
- * @see Illuminate\Database\Eloquent\Model
- * @see Esensi\Model\Contracts\EncryptingModelInterface
- * @see Esensi\Model\Contracts\HashingModelInterface
- * @see Esensi\Model\Contracts\JugglingModelInterface
- * @see Esensi\Model\Contracts\PurgingModelInterface
- * @see Esensi\Model\Contracts\RelatingModelInterface
- * @see Esensi\Model\Contracts\ValidatingModelInterface
- * @see Illuminate\Contracts\Support\MessageProvider
  */
 abstract class Model extends Eloquent implements
     EncryptingModelInterface,
@@ -159,8 +145,7 @@ abstract class Model extends Eloquent implements
     /**
      * Dynamically retrieve attributes.
      *
-     * @param string $key
-     *
+     * @param  string  $key
      * @return mixed
      */
     public function __get($key)
@@ -186,13 +171,13 @@ abstract class Model extends Eloquent implements
     /**
      * Dynamically set attributes.
      *
-     * @param string $key
+     * @param string  $key
      * @param mixed  $value
      */
     public function __set($key, $value)
     {
         // Dynamically set the encryptable attribute
-        if ( ! empty($value) && $this->setDynamicEncryptable($key, $value)) {
+        if (! empty($value) && $this->setDynamicEncryptable($key, $value)) {
             return;
         }
 

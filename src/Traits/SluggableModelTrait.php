@@ -5,20 +5,13 @@ namespace Esensi\Model\Traits;
 /**
  * Trait that implements the Sluggable Model Interface.
  *
- * @author Daniel LaBarge <daniel@emersonmedia.com>
- * @copyright 2015-2016 Emerson Media LP
- * @license https://github.com/esensi/model/blob/master/license.md MIT License
- *
- * @link http://www.emersonmedia.com
- * @see Esensi\Model\Contracts\SluggableModelInterface
  */
 trait SluggableModelTrait
 {
     /**
      * Convert the value into a slug using a regexp replacement.
      *
-     * @param string $value
-     *
+     * @param  string  $value
      * @return string
      */
     public function makeSlug($value)
@@ -41,8 +34,7 @@ trait SluggableModelTrait
     /**
      * Set the key that defines the model's sluggable attribute.
      *
-     * @param string $key
-     *
+     * @param  string  $key
      * @return Illuminate\Database\Eloquent\Model
      */
     public function setSlugKey($key)
@@ -65,7 +57,7 @@ trait SluggableModelTrait
     /**
      * Mutate the value to a slug format and assign to the sluggable key.
      *
-     * @param string $value
+     * @param string  $value
      */
     public function setSlugAttribute($value)
     {

@@ -1,23 +1,14 @@
 ## Esensi Model Traits Package
 
-[![Build Status](https://travis-ci.org/esensi/model.svg)](https://travis-ci.org/esensi/model)
-[![Total Downloads](https://poser.pugx.org/esensi/model/downloads.svg)](https://packagist.org/packages/esensi/model)
-[![Latest Stable Version](https://poser.pugx.org/esensi/model/v/stable.svg)](https://github.com/esensi/model/releases)
-[![License](https://poser.pugx.org/esensi/model/license.svg)](https://github.com/esensi/model#licensing)
+> Version 1
 
-An [Esensi](https://github.com/esensi) package, coded by [Emerson Media](http://www.emersonmedia.com).
+An [Esensi](https://github.com/esensi) package, coded by [SiteRocket Labs®](https://www.siterocket.com).
 
-> **Want to work with us on great Laravel applications?**
-Email us at [careers@emersonmedia.com](http://emersonmedia.com/contact)
+The `Esensi/Model` package is just one package that makes up [Esensi](https://github.com/esensi), a platform built on [Laravel](https://laravel.com). This package uses [PHP traits](https://culttt.com/2014/06/25/php-traits) to extend Laravel's default Eloquent models and traits. Using traits allows for a high-degree of code reusability and extensibility. While this package provides some reasonable base models, developers are free to mix and match traits in any combination needed, being confident that the code complies to a reliable interface and is properly unit tested. For more details on the inner workings of the traits please consult the generously documented source code.
 
-The `Esensi/Model` package is just one package that makes up [Esensi](https://github.com/esensi), a platform built on [Laravel](http://laravel.com). This package uses [PHP traits](http://culttt.com/2014/06/25/php-traits) to extend Laravel's default Eloquent models and traits. Using traits allows for a high-degree of code reusability and extensibility. While this package provides some reasonable base models, developers are free to mix and match traits in any combination needed, being confident that the code complies to a reliable interface and is properly unit tested. For more details on the inner workings of the traits please consult the generously documented source code.
+## Note
 
-> **Have a project in mind?**
-Email us at [sales@emersonmedia.com](http://emersonmedia.com/contact), or call 1.877.439.6665.
-
-## Quick Start
-
-> **Notice:** This code is specifically designed to be compatible with the [Laravel Framework](http://laravel.com) and may not be compatible as a stand-alone dependency or as part of another framework.
+This code is specifically designed to be compatible with the [Laravel Framework](https://laravel.com) and may not be compatible as a stand-alone dependency or as part of another framework.
 
 ### Extend the Default Model
 
@@ -56,7 +47,8 @@ class Post extends SoftModel {
 }
 ```
 
-> **Pro Tip:** While Laravel includes `SoftDeletingTrait`, Esensi expands upon this by also forcing the trait to comply with a [`SoftDeletingModelInterface`](https://github.com/esensi/model/blob/0.5/src/Contracts/SoftDeletingModelInterface.php) contract. This ensures a higher level of compatibility and code integrity. You can then do checks like `$model instanceof SoftDeletingModelInterface` to conditionally handle actions.
+> **Pro Tip:** While Laravel includes `SoftDeletingTrait`, Esensi expands upon this by also forcing the trait to comply with a [`SoftDeletingModelInterface`](https://github.com/esensi/model/blob/1.x/src/Contracts/SoftDeletingModelInterface.php) contract. This ensures a higher level of compatibility and code integrity. You can then do checks like `$model instanceof SoftDeletingModelInterface` to conditionally handle actions.
+
 
 ## Table of Contents
 
@@ -134,7 +126,7 @@ This Esensi package has been featured in various places from university classroo
 
 > **Model validation** is the method of establishing rules to ensure when you’re creating, or updating, an object based on a model, that all of its field values are set appropriately. That all required fields are filled, that all date fields are formatted properly, etc.
 
-- [Read _Laravel 5 Model Validation With the Esensi Model Traits Package_](https://selftaughtcoders.com/from-idea-to-launch/lesson-24/laravel-5-model-validation-esensi-model-traits-package/)
+- [Read _Laravel 8 Model Validation With the Esensi Model Traits Package_](https://selftaughtcoders.com/from-idea-to-launch/lesson-24/laravel-8-model-validation-esensi-model-traits-package/)
 - [Signup for _From Ideas to Launch_](https://selftaughtcoders.com/from-idea-to-launch/)
 
 ### Auto-Validating On Save
@@ -234,7 +226,7 @@ Route::post( 'posts', function()
 
 Calling the `save()` method on the newly created `Post` model would instead use the "updating" ruleset from `Post::$ruleset` while saving. If that ruleset did not exist then it would default to using the `Post::$rules`.
 
-**Pro Tip:** While using this pattern is perfectly fine, try not to actually validate your form requests using such rulesets. Instead use Laravel 5.1's `FormRequest` injection to validate your forms. The `ValidatingModelTrait` is for validating your model's data integrity, not your entry form validation.
+**Pro Tip:** While using this pattern is perfectly fine, try not to actually validate your form requests using such rulesets. Instead use Laravel 8's `FormRequest` injection to validate your forms. The `ValidatingModelTrait` is for validating your model's data integrity, not your entry form validation.
 
 ## Purging Model Trait
 
@@ -545,7 +537,7 @@ This package includes the [`JugglingModelTrait`](https://github.com/esensi/model
 - create custom types to cast to with magic model methods like:
     - Example: `fooBar` => `juggleFooBar()`
 
-Like all the traits, it is self-contained and can be used individually. Be aware, however, that using this trait does overload the magic `__get()` and `__set()` methods of the model (see [Esensi\Model\Model](https://github.com/esensi/model/blob/master/src/Model.php) source code for how to deal with overloading conflicts). Special credit goes to the brilliant [Dayle Rees](https://github.com/daylerees), author of [Code Bright book](https://leanpub.com/codebright), who inspired this trait with his [pull request to Laravel](https://github.com/laravel/framework/pull/4948) which eventually arrived in [Laravel 5.0 as Attribute Casting](http://laravel.com/docs/eloquent-mutators#attribute-casting) which supports basic type casting.
+Like all the traits, it is self-contained and can be used individually. Be aware, however, that using this trait does overload the magic `__get()` and `__set()` methods of the model (see [Esensi\Model\Model](https://github.com/esensi/model/blob/master/src/Model.php) source code for how to deal with overloading conflicts). Special credit goes to the brilliant [Dayle Rees](https://github.com/daylerees), author of [Code Bright book](https://leanpub.com/codebright), who inspired this trait with his [pull request to Laravel](https://github.com/laravel/framework/pull/4948) which eventually arrived in [Laravel 8 as Attribute Casting](http://laravel.com/docs/eloquent-mutators#attribute-casting) which supports basic type casting.
 
 ### Auto-Juggling on Access
 
@@ -790,7 +782,7 @@ Route::get( 'posts/{id}/comments', function( $id )
 
 ## Unit Testing
 
-The [Esensi](http://github.com/esensi) platform includes other great packages just like this [Esensi/Model](http://github.com/esensi/model) package. This package is currently tagged as `0.5.x` because the other platform packages are not ready for public release. While the others may still be under development, this package already includes features that would be mature enough for a `1.x` release including unit testing and extensive testing in real-world applications.
+The [Esensi](http://github.com/esensi) platform includes other great packages just like this [Esensi/Model](http://github.com/esensi/model) package. This package is currently tagged as `1.x` because the other platform packages are not ready for public release. While the others may still be under development, this package already includes features that would be mature enough for a `1.x` release including unit testing and extensive testing in real-world applications.
 
 ### Running the Unit Tests
 
@@ -817,12 +809,10 @@ phpunit ./tests
 
 ## Contributing
 
-[Emerson Media](http://www.emersonmedia.com) is proud to work with some of the most talented developers in the PHP community. The developer team welcomes requests, suggestions, issues, and of course pull requests. When submitting issues please be as detailed as possible and provide code examples where possible. When submitting pull requests please follow the same code formatting and style guides that the Esensi code base uses. Please help the open-source community by including good code test coverage with your pull requests. **All pull requests _must_ be submitted to the version branch to which the code changes apply.**
-
-> **Note:** The Esensi team does its best to address all issues on Wednesdays. Pull requests are reviewed in priority followed by urgent bug fixes. Each week the package dependencies are re-evaluated and updates are made for new tag releases.
+Thank you for considering contributing to Esensi Core!
 
 ## Licensing
 
-Copyright (c) 2015 [Emerson Media, LP](http://www.emersonmedia.com)
+Copyright (c) 2022 [SiteRocket Labs](https://www.siterocket.com)
 
-This package is released under the MIT license. Please see the [LICENSE.txt](https://github.com/esensi/model/blob/master/LICENSE.txt) file distributed with every copy of the code for commercial licensing terms.
+Esensi Core is open-sourced software licensed under the [MIT license](LICENSE.md).
