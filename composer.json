@@ -16,35 +16,14 @@
     "require": {
         "php": "^7.3|^8.0",
         "nesbot/carbon": "^2.53.1",
-        "illuminate/contracts": "^8.0|^9.0",
-        "illuminate/database": "^8.0|^9.0",
-        "illuminate/encryption": "^8.0|^9.0",
-        "illuminate/events": "^8.0|^9.0",
-        "illuminate/hashing": "^8.0|^9.0",
-        "illuminate/support": "^8.0|^9.0",
-        "illuminate/validation": "^8.0|^9.0",
         "paragonie/random_compat": "^8.0|^9.0",
         "symfony/polyfill-php81": "^1.23",
-        "watson/validating": "^6.1"
-
+        "watson/validating": "^7.0"
     },
     "autoload": {
         "psr-4": {
             "Esensi\\Model\\": "src/"
         }
-    },
-    "scripts": {
-        "fix": [
-            "vendor/bin/php-cs-fixer fix -v"
-        ],
-        "test": [
-            "vendor/bin/phpunit --colors=always",
-            "vendor/bin/php-cs-fixer fix -v --diff --dry-run;"
-        ]
-    },
-    "config": {
-        "preferred-install": "dist",
-        "bin-dir": "vendor/bin"
     },
     "minimum-stability": "dev"
 }
