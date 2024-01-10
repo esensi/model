@@ -4,7 +4,7 @@ use Esensi\Model\Model;
 use Illuminate\Database\Connection;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
-use PHPUnit_Framework_TestCase as PHPUnit;
+use PHPUnit\Framework\TestCase as PHPUnit;
 
 /**
  * Tests for the Relating Model Trait.
@@ -15,7 +15,7 @@ class RelatingModelTraitTest extends PHPUnit
     /**
      * Set Up and Prepare Tests.
      */
-    public function setUp()
+    public function setUp(): void
     {
         // Mock the Model that uses the custom trait
         $this->model = Mockery::mock('ModelRelatingStub');
@@ -25,7 +25,7 @@ class RelatingModelTraitTest extends PHPUnit
     /**
      * Tear Down and Clean Up Tests.
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         Mockery::close();
     }

@@ -2,7 +2,7 @@
 
 use Esensi\Model\Model;
 use Illuminate\Encryption\Encrypter;
-use PHPUnit_Framework_TestCase as PHPUnit;
+use PHPUnit\Framework\TestCase as PHPUnit;
 
 /**
  * Tests for the Encrypting Model Trait.
@@ -13,7 +13,7 @@ class EncryptingModelTraitTest extends PHPUnit
     /**
      * Set Up and Prepare Tests.
      */
-    public function setUp()
+    public function setUp(): void
     {
         // Mock the Model that uses the custom trait
         $this->model = Mockery::mock('ModelEncryptingStub');
@@ -23,7 +23,7 @@ class EncryptingModelTraitTest extends PHPUnit
     /**
      * Tear Down and Clean Up Tests.
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         Mockery::close();
     }
@@ -267,7 +267,7 @@ class EncryptingModelTraitTest extends PHPUnit
         // Check that its an Encrypter
         $model = new ModelEncryptingStub();
         $encrypter = $model->getEncrypter();
-        $this->assertInstanceOf('\Illuminate\Encryption\Encrypter', $encrypter, $encrypter);
+        $this->assertInstanceOf('\Illuminate\Encryption\Encrypter', $encrypter);
     }
 
     /**
@@ -515,7 +515,7 @@ class ModelEncryptingStub extends Model
         parent::__construct();
 
         // Assign a default encrypter for mocking purposes
-        $this->encrypter = EncrypterStub::newInstance();
+        $this->encryptor = EncrypterStub::newInstance();
     }
 }
 

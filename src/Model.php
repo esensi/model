@@ -8,6 +8,8 @@ use Esensi\Model\Contracts\JugglingModelInterface;
 use Esensi\Model\Contracts\PurgingModelInterface;
 use Esensi\Model\Contracts\RelatingModelInterface;
 use Esensi\Model\Contracts\ValidatingModelInterface;
+use Esensi\Model\Traits\BackwardCompatibleDatesTrait;
+use Esensi\Model\Traits\DatesToCastsTrait;
 use Esensi\Model\Traits\EncryptingModelTrait;
 use Esensi\Model\Traits\HashingModelTrait;
 use Esensi\Model\Traits\JugglingModelTrait;
@@ -75,6 +77,22 @@ abstract class Model extends Eloquent implements
      * @see Esensi\Model\Traits\RelatingModelTrait
      */
     use RelatingModelTrait;
+
+    /*
+     * This trait is designed for automatic conversion of the $dates property to the $casts property in Laravel Eloquent models.
+     * When a model is being saved, updated, or retrieved from the database, the trait checks for the presence of the $dates property
+     * and adds corresponding values to the $casts array if they are not already defined.
+     *
+     * @see Esensi\Model\Traits\DatesToCastsTrait
+     */
+    use DatesToCastsTrait;
+
+    /*
+     * Get the attributes that should be converted to dates.
+     *
+     * @see Esensi\Model\Traits\BackwardCompatibleDatesTrait
+     */
+    use BackwardCompatibleDatesTrait;
 
     /**
      * The attributes that should be mutated to dates.

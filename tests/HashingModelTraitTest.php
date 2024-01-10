@@ -3,7 +3,7 @@
 use Esensi\Model\Model;
 use Illuminate\Contracts\Hashing\Hasher;
 use Illuminate\Hashing\BcryptHasher;
-use PHPUnit_Framework_TestCase as PHPUnit;
+use PHPUnit\Framework\TestCase as PHPUnit;
 
 /**
  * Tests for the Hashing Model Trait.
@@ -14,7 +14,7 @@ class HashingModelTraitTest extends PHPUnit
     /**
      * Set Up and Prepare Tests.
      */
-    public function setUp()
+    public function setUp(): void
     {
         // Mock the Model that uses the custom trait
         $this->model = Mockery::mock('ModelHashingStub');
@@ -24,7 +24,7 @@ class HashingModelTraitTest extends PHPUnit
     /**
      * Tear Down and Clean Up Tests.
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         Mockery::close();
     }
@@ -267,7 +267,8 @@ class HashingModelTraitTest extends PHPUnit
         // Check that its an Hasher
         $model = new ModelHashingStub();
         $hasher = $model->getHasher();
-        $this->assertInstanceOf('\Illuminate\Hashing\BcryptHasher', $hasher, $hasher);
+
+        $this->assertInstanceOf('\Illuminate\Hashing\BcryptHasher', $hasher);
     }
 
     /**

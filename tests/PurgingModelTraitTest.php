@@ -1,7 +1,7 @@
 <?php
 
 use Esensi\Model\Model;
-use PHPUnit_Framework_TestCase as PHPUnit;
+use PHPUnit\Framework\TestCase as PHPUnit;
 
 /**
  * Tests for the Purging Model Trait.
@@ -12,7 +12,7 @@ class PurgingModelTraitTest extends PHPUnit
     /**
      * Set Up and Prepare Tests.
      */
-    public function setUp()
+    public function setUp(): void
     {
         // Mock the Model that uses the custom trait
         $this->model = Mockery::mock('ModelPurgingStub');
@@ -22,7 +22,7 @@ class PurgingModelTraitTest extends PHPUnit
     /**
      * Tear Down and Clean Up Tests.
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         Mockery::close();
     }
