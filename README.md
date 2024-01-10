@@ -1,6 +1,6 @@
 ## Esensi Model Traits Package
 
-> Version 1
+> Version 3
 
 An [Esensi](https://github.com/esensi) package, coded by [SiteRocket Labs®](https://www.siterocket.com).
 
@@ -8,7 +8,7 @@ The `Esensi/Model` package is just one package that makes up [Esensi](https://gi
 
 ## Note
 
-This code is specifically designed to be compatible with the [Laravel Framework](https://laravel.com) and may not be compatible as a stand-alone dependency or as part of another framework.
+This code is specifically designed to be compatible with the [Laravel Framework ^10](https://laravel.com) and may not be compatible as a stand-alone dependency or as part of another framework.
 
 ### Extend the Default Model
 
@@ -92,7 +92,7 @@ class Post extends SoftModel {
 Add the `esensi/model` package as a dependency to the application. Using [Composer](https://getcomposer.org), this can be done from the command line:
 
 ```bash
-composer require esensi/model 0.6.*
+composer require esensi/model
 ```
 
 Or manually it can be added to the `composer.json` file:
@@ -100,7 +100,7 @@ Or manually it can be added to the `composer.json` file:
 ```json
 {
     "require": {
-        "esensi/model": "0.6.*"
+        "esensi/model": "^3.0"
     }
 }
 ```
@@ -126,7 +126,6 @@ This Esensi package has been featured in various places from university classroo
 
 > **Model validation** is the method of establishing rules to ensure when you’re creating, or updating, an object based on a model, that all of its field values are set appropriately. That all required fields are filled, that all date fields are formatted properly, etc.
 
-- [Read _Laravel 8 Model Validation With the Esensi Model Traits Package_](https://selftaughtcoders.com/from-idea-to-launch/lesson-24/laravel-8-model-validation-esensi-model-traits-package/)
 - [Signup for _From Ideas to Launch_](https://selftaughtcoders.com/from-idea-to-launch/)
 
 ### Auto-Validating On Save
@@ -537,7 +536,7 @@ This package includes the [`JugglingModelTrait`](https://github.com/esensi/model
 - create custom types to cast to with magic model methods like:
     - Example: `fooBar` => `juggleFooBar()`
 
-Like all the traits, it is self-contained and can be used individually. Be aware, however, that using this trait does overload the magic `__get()` and `__set()` methods of the model (see [Esensi\Model\Model](https://github.com/esensi/model/blob/master/src/Model.php) source code for how to deal with overloading conflicts). Special credit goes to the brilliant [Dayle Rees](https://github.com/daylerees), author of [Code Bright book](https://leanpub.com/codebright), who inspired this trait with his [pull request to Laravel](https://github.com/laravel/framework/pull/4948) which eventually arrived in [Laravel 8 as Attribute Casting](http://laravel.com/docs/eloquent-mutators#attribute-casting) which supports basic type casting.
+Like all the traits, it is self-contained and can be used individually. Be aware, however, that using this trait does overload the magic `__get()` and `__set()` methods of the model (see [Esensi\Model\Model](https://github.com/esensi/model/blob/master/src/Model.php) source code for how to deal with overloading conflicts). Special credit goes to the brilliant [Dayle Rees](https://github.com/daylerees), author of [Code Bright book](https://leanpub.com/codebright), who inspired this trait with his [pull request to Laravel](https://github.com/laravel/framework/pull/4948) which eventually arrived in [Laravel as Attribute Casting](http://laravel.com/docs/eloquent-mutators#attribute-casting) which supports basic type casting.
 
 ### Auto-Juggling on Access
 
@@ -791,8 +790,8 @@ This package uses [PHPUnit](http://phpunit.de) to automate the code testing proc
 ```json
 {
     "require-dev": {
-        "phpunit/phpunit": "4.1.*",
-        "mockery/mockery": "0.9.*"
+        "phpunit/phpunit": "10.0.7",
+        "mockery/mockery": "1.5.1"
     }
 }
 ```

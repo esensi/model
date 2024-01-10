@@ -1,7 +1,7 @@
 <?php
 
 use Esensi\Model\Observers\HashingModelObserver;
-use PHPUnit_Framework_TestCase as PHPUnit;
+use PHPUnit\Framework\TestCase as PHPUnit;
 
 /**
  * Tests for Hashing Model Observer.
@@ -12,7 +12,7 @@ class HashingModelObserverTest extends PHPUnit
     /**
      * Set Up and Prepare Tests.
      */
-    public function setUp()
+    public function setUp(): void
     {
         // Create a new instance of the HashingModelObserver
         $this->observer = new HashingModelObserver();
@@ -24,7 +24,7 @@ class HashingModelObserverTest extends PHPUnit
     /**
      * Tear Down and Clean Up Tests.
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         Mockery::close();
     }
